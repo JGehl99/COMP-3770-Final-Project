@@ -330,11 +330,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 305b8c64d7f34a82a4349e4c523db86c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  gameObj: {fileID: 4652878933811409151, guid: 5905249cc4bd24441ac226cfdd0fc59b, type: 3}
-  xInput: 25
-  yRange: 0
-  zInput: 25
-  maxMoveDist: 6
+  tileGameObject: {fileID: 4652878933811409151, guid: 5905249cc4bd24441ac226cfdd0fc59b, type: 3}
+  waterGameObject: {fileID: 1979764370326375753, guid: 40e889274041c5b41965250a579a42fd, type: 3}
+  xInput: 99
+  zInput: 99
+  maxMoveDist: 4
 --- !u!4 &1547389217
 Transform:
   m_ObjectHideFlags: 0

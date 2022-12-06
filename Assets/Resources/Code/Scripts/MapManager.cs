@@ -7,24 +7,25 @@ namespace Resources.Code.Scripts
 {
     public class MapManager : MonoBehaviour
     {
-        public GameObject gameObj;
+        public GameObject tileGameObject;
+        public GameObject waterGameObject;
+
         private int _zMax = 10;
         private int _xMax = 10;
-        private int _yRange = 10;
         private GameObject[,] _mapArray;
 
         public int xInput = 10;
-        public int yRange = 0;
         public int zInput = 10;
         public int maxMoveDist = 2;
+
+        private float _waterHeight = 16.4f;
 
         void Start()
         {
             _xMax = xInput;
             _zMax = zInput;
-            _yRange = yRange;   //TODO: Generate Y height using perlin noise
 
-            _mapArray = new GameObject[_xMax,_zMax];
+            _mapArray = new GameObject[_xMax, _zMax];
             GenerateMap();
         }
 
@@ -41,27 +42,37 @@ namespace Resources.Code.Scripts
         {
             // Clear existing map
             foreach (var go in _mapArray) Destroy(go);
-            
+
             // Create map array
-            _mapArray = new GameObject[_xMax,_zMax];
-            
+            _mapArray = new GameObject[_xMax, _zMax];
+
+            // Create Blue Plane to represent water
+            Instantiate(waterGameObject, new Vector3(0, _waterHeight, 0), Quaternion.identity);
+
             // Get hexagon tile bounds
-            var objBounds = GetBounds(gameObj);
-            
+            var objBounds = GetBounds(tileGameObject);
+
             // Loop over cells in array, instantiate Map Tile game object and instantiate the MapTile script
 
             for (var z = 0; z < _zMax; z++)
             {
                 for (var x = 0; x < _xMax; x++)
                 {
-                    _mapArray[x,z] = Instantiate(gameObj, new Vector3(0, 0, 0), Quaternion.identity, transform);
-                    _mapArray[x,z].GetComponent<MapTile>().Instantiate(x, _yRange, z, objBounds);
-                    
-                    // TODO: Set color based on generated height
-                    _mapArray[x,z].GetComponent<MeshRenderer>().material.color = Color.green;
+                    // Instantiate tile at 0, 0, 0
+                    _mapArray[x, z] = Instantiate(tileGameObject, new Vector3(0, 0, 0), Quaternion.identity, transform);
+
+                    // Map values of x and z from between 0 and 100, to between 0 and 1
+                    var xC = (x - 100) * 1f / (100 - 10);
+                    var zC = (z - 10) * 1f / (100 - 10);
+
+                    // Use perlin noise to generate tile height
+                    float y = Mathf.PerlinNoise(xC * 20f, zC * 20f) * 15;
+
+                    // Instantiate MapTile script which moves tile to final position
+                    _mapArray[x, z].GetComponent<MapTile>().Instantiate(x, y, z, objBounds);
                 }
             }
-            
+
             // Create Neighbour lists, loop over all cells in mapArray
             for (var z = 0; z < _zMax; z++)
             {
@@ -69,25 +80,55 @@ namespace Resources.Code.Scripts
                 {
                     var arList = new List<GameObject>();
                     
-
-                    if (Math.Abs(_mapArray[x, z].transform.position.y - _mapArray[x, z - 1].transform.position.y) < 2)
+                    var tile = _mapArray[x, z];
+                    
+                    try
                     {
-                        arList.Add(_mapArray[x, z - 1]); // Bottom
+                        var bottom = _mapArray[x, z - 1];
+
+                        if (IsValidNeighbour(tile, bottom))
+                        {
+                            arList.Add(bottom);
+                        }
+                    }
+                    catch (IndexOutOfRangeException ignored)
+                    {
                     }
 
-                    if (Math.Abs(_mapArray[x, z].transform.position.y - _mapArray[x - 1, z].transform.position.y) < 2)
+                    try
                     {
-                        arList.Add(_mapArray[x - 1, z]); // Left
+                        var left = _mapArray[x - 1, z];
+                        if (IsValidNeighbour(tile, left))
+                        {
+                            arList.Add(left);
+                        }
+                    }
+                    catch (IndexOutOfRangeException ignored)
+                    {
                     }
 
-                    if (Math.Abs(_mapArray[x, z].transform.position.y - _mapArray[x + 1, z].transform.position.y) < 2)
+                    try
                     {
-                        arList.Add(_mapArray[x + 1, z]); // Right
+                        var right = _mapArray[x + 1, z];
+                        if (IsValidNeighbour(tile, right))
+                        {
+                            arList.Add(right);
+                        }
+                    }
+                    catch (IndexOutOfRangeException ignored)
+                    {
                     }
 
-                    if (Math.Abs(_mapArray[x, z].transform.position.y - _mapArray[x, z + 1].transform.position.y) < 2)
+                    try
                     {
-                        arList.Add(_mapArray[x, z + 1]); // Top
+                        var top = _mapArray[x, z + 1];
+                        if (IsValidNeighbour(tile, top))
+                        {
+                            arList.Add(top);
+                        }
+                    }
+                    catch (IndexOutOfRangeException ignored)
+                    {
                     }
 
                     // Due to the nature of hexagonal grids, the cells which are neighbours will be different for every
@@ -97,41 +138,62 @@ namespace Resources.Code.Scripts
                     //     *                            * * *
                     //   * T *                          * T *
                     //   * * *                            *
-                    
+
                     if (x % 2 == 0)
                     {
-                        if (Math.Abs(
-                            _mapArray[x, z].transform.position.y - _mapArray[x + 1, z - 1].transform.position.y) < 2)
+                        try
                         {
-                            arList.Add(_mapArray[x + 1, z - 1]); // Bottom Right
+                            var bottomRight = _mapArray[x + 1, z - 1];
+                            if (IsValidNeighbour(tile, bottomRight))
+                            {
+                                arList.Add(bottomRight);
+                            }
                         }
-                    
-                        if (Math.Abs(
-                                _mapArray[x, z].transform.position.y -
-                                _mapArray[x - 1, z - 1].transform.position.y) < 2)
+                        catch (IndexOutOfRangeException ignored)
                         {
-                            arList.Add(_mapArray[x - 1, z - 1]); // Bottom Left 
+                        }
+
+                        try
+                        {
+                            var bottomLeft = _mapArray[x - 1, z - 1];
+                            if (IsValidNeighbour(tile, bottomLeft))
+                            {
+                                arList.Add(bottomLeft);
+                            }
+                        }
+                        catch (IndexOutOfRangeException ignored)
+                        {
                         }
                     }
                     else
                     {
-                        if (Math.Abs(
-                            _mapArray[x, z].transform.position.y -
-                            _mapArray[x + 1, z + 1].transform.position.y) < 2)
+                        try
                         {
-                            arList.Add(_mapArray[x + 1, z + 1]); // Top Right
+                            var topRight = _mapArray[x + 1, z + 1];
+                            if (IsValidNeighbour(tile, topRight))
+                            {
+                                arList.Add(topRight);
+                            }
+                        }
+                        catch (IndexOutOfRangeException ignored)
+                        {
                         }
 
-                        if (Math.Abs(
-                                _mapArray[x, z].transform.position.y -
-                                _mapArray[x - 1, z + 1].transform.position.y) < 2)
+                        try
                         {
-                            arList.Add(_mapArray[x - 1, z + 1]); // Top Left 
+                            var topLeft = _mapArray[x - 1, z + 1];
+                            if (IsValidNeighbour(tile, topLeft))
+                            {
+                                arList.Add(topLeft);
+                            }
+                        }
+                        catch (IndexOutOfRangeException ignored)
+                        {
                         }
                     }
-                    
+
                     // Set neighbours list for current Tile
-                    _mapArray[x,z].GetComponent<MapTile>().neighbours = arList;
+                    _mapArray[x, z].GetComponent<MapTile>().neighbours = arList;
                 }
             }
 
@@ -140,23 +202,32 @@ namespace Resources.Code.Scripts
             {
                 for (var x = 0; x < _xMax; x++)
                 {
-                    _mapArray[x,z].GetComponent<MapTile>().movementLists = GenerateMovementList(x, z, maxMoveDist);
+                    _mapArray[x, z].GetComponent<MapTile>().movementLists = GenerateMovementList(x, z, maxMoveDist);
                 }
             }
         }
 
-        public Dictionary<int, List<GameObject>> GenerateMovementList(int x, int z, int n)
+        private bool IsValidNeighbour(GameObject tile, GameObject neighbour)
+        {
+            var neighbourY = neighbour.transform.position.y;
+            // Checks if tile height difference is less than 2 and that the neighbour is above water
+            return Math.Abs(tile.transform.position.y - neighbourY) < 2 && neighbourY > 3.58f;
+        }
+
+        private Dictionary<int, List<GameObject>> GenerateMovementList(int x, int z, int n)
         {
             // Initialize lists
             var visitedList = new List<GameObject>();
             var checkList = new List<List<GameObject>>();
-            
+
             // Initialize movementLists, set movementLists[0] to empty list so we can use it when a tank can't move
-            var movementLists = new Dictionary<int, List<GameObject>>();
-            movementLists[0] = new List<GameObject>();
-            
+            var movementLists = new Dictionary<int, List<GameObject>>
+            {
+                [0] = new()
+            };
+
             // Add first tile to checkList
-            checkList.Add(new List<GameObject> {_mapArray[x,z]});
+            checkList.Add(new List<GameObject> { _mapArray[x, z] });
 
             var steps = 0;
 
@@ -165,26 +236,26 @@ namespace Resources.Code.Scripts
             {
                 // Reinitialize nextStep list
                 var nextStep = new List<GameObject>();
-                
+
                 // Grab the first list from checkList
                 var step = checkList[0];
-                
+
                 // Create notVisited list, all tiles in step that are not already in the visitedList
                 var notVisited = step.Where(tile => !visitedList.Contains(tile)).ToList();
-                
+
                 // Loop over all Tiles in notVisited
                 foreach (var tile in notVisited)
                 {
                     // Add Tile to visitedList
                     visitedList.Add(tile);
-                    
+
                     // Add neighbours of current tile to nextStep list
                     nextStep.AddRange(tile.GetComponent<MapTile>().neighbours);
                 }
-                
+
                 // Add list to movementLists at current step
                 movementLists.Add(++steps, visitedList);
-                
+
                 // Add nextStep to checkList and remove the list that was just checked
                 checkList.Add(nextStep);
                 checkList.RemoveAt(0);
@@ -192,6 +263,7 @@ namespace Resources.Code.Scripts
                 // Once n steps is reached, return movementLists
                 if (steps == n) return movementLists;
             }
+
             // If checkList ever ends up empty, return empty Dictionary
             return new Dictionary<int, List<GameObject>>();
         }
@@ -202,4 +274,3 @@ namespace Resources.Code.Scripts
         }
     }
 }
-

@@ -25,8 +25,15 @@ namespace Resources.Code.Scripts
         private Vector3 _bounds;
         
         // Materials for default color and onHover color
-        public Material hoverMaterial;
-        public Material defaultMaterial;
+        private Material hoverMaterial;
+        private Material defaultMaterial;
+        
+        private Material _grassDefault;
+        private Material _grassHover;
+        private Material _sandDefault;
+        private Material _sandHover;
+        private Material _snowDefault;
+        private Material _snowHover;
         
         // Flag if mouse is hovering
         private bool _hoverFlag;
@@ -42,28 +49,10 @@ namespace Resources.Code.Scripts
         
         // Tile ID
         public string id;
+        private int _tileType = 0;
         
         // Reference to MapManager to get mapArray
         private MapManager _mm;
-        
-
-        // Start is called before the first frame update
-        void Start()
-        {
-            // Set material colors for default color and onHover color
-            defaultMaterial = UnityEngine.Resources.Load("Materials/DefaultMaterial", typeof(Material)) as Material;
-            hoverMaterial = UnityEngine.Resources.Load("Materials/HoverMaterial", typeof(Material)) as Material;
-
-            _r = GetComponent<MeshRenderer>(); // Get MeshRenderer
-
-            // Sets Material to defaultMaterial
-            var mats = new Material[1];
-            mats[0] = defaultMaterial;
-            _r.materials = mats;
-
-            // Get reference to MapManager
-            _mm = GameObject.Find("MapManager").GetComponent<MapManager>();
-        }
 
         // OnMouseOver, highlight all tiles in that movement list for specified step
         void OnMouseOver()
@@ -74,9 +63,9 @@ namespace Resources.Code.Scripts
 
             foreach (var go in movementLists[_mm.maxMoveDist])
             {
-                highlight(go);
+                go.GetComponent<MapTile>().Highlight();
             }
-            highlight(gameObject);
+            Highlight();
         }
 
         // On Mouse Exit, unhighlight all tiles in that movement list for specified step
@@ -85,14 +74,24 @@ namespace Resources.Code.Scripts
             _hoverFlag = false;
             foreach (var go in movementLists[_mm.maxMoveDist])
             {
-                unhighlight(go);
+                go.GetComponent<MapTile>().Unhighlight();
             }
             
-            unhighlight(gameObject);
+            Unhighlight();
         }
 
-        public void Instantiate(int xi, int y, int zi, Vector3 bounds)
+        public void Instantiate(int xi, float y, int zi, Vector3 bounds)
         {
+            // Set material colors for default color and onHover color
+            _grassDefault = UnityEngine.Resources.Load("Materials/GrassDefault", typeof(Material)) as Material;
+            _grassHover = UnityEngine.Resources.Load("Materials/GrassHover", typeof(Material)) as Material;
+            _sandDefault = UnityEngine.Resources.Load("Materials/SandDefault", typeof(Material)) as Material;
+            _sandHover = UnityEngine.Resources.Load("Materials/SandHover", typeof(Material)) as Material;
+            _snowDefault = UnityEngine.Resources.Load("Materials/SnowDefault", typeof(Material)) as Material;
+            _snowHover = UnityEngine.Resources.Load("Materials/SnowHover", typeof(Material)) as Material;
+
+            // Get reference to MapManager
+            _mm = GameObject.Find("MapManager").GetComponent<MapManager>();
             
             // Set x, z
             x = xi;
@@ -116,22 +115,50 @@ namespace Resources.Code.Scripts
             {
                 transform.Translate(x * _xWidth * (3 / 4f), y, (z * _zLength) + _zLength / 2);
             }
+            
+            Debug.Log(y);
+            
+            // Set tile to sand, grass, or snow depending on height
+            if (y <= 4.5f)
+            {
+                defaultMaterial = _sandDefault;
+                hoverMaterial = _sandHover;
+            } 
+            else if (y is > 4.5f and <= 9f)
+            {
+                defaultMaterial = _grassDefault;
+                hoverMaterial = _grassHover;
+            }
+            else
+            {
+                defaultMaterial = _snowDefault;
+                hoverMaterial = _snowHover;
+            }
+
+            _r = GetComponent<MeshRenderer>();
+    
+            // Sets Material to defaultMaterial
+            var mats = _r.materials;
+            mats[0] = defaultMaterial;
+            _r.materials = mats;
         }
 
         // Highlight function changes the material of the gameObject
-        public void highlight(GameObject go)
+        private void Highlight()
         {
-            var mat1 = go.GetComponent<MapTile>().defaultMaterial;
-            var mat2 = go.GetComponent<MapTile>().hoverMaterial;
-            go.GetComponent<MeshRenderer>().material.Lerp(mat1, mat2, 5.0f);
+
+            var mat1 = defaultMaterial;
+            var mat2 = hoverMaterial;
+
+            GetComponent<MeshRenderer>().material.Lerp(mat1, mat2, 5.0f);
         }
 
         //UnHighlight function changes the material of the gameObject
-        public void unhighlight(GameObject go)
+        private void Unhighlight()
         {
-            var mat1 = go.GetComponent<MapTile>().defaultMaterial;
-            var mat2 = go.GetComponent<MapTile>().hoverMaterial;
-            go.GetComponent<MeshRenderer>().material.Lerp(mat2, mat1, 5.0f);
+            var mat1 = defaultMaterial;
+            var mat2 = hoverMaterial;
+            GetComponent<MeshRenderer>().material.Lerp(mat2, mat1, 5.0f);
         }
 
         public Vector3 GetWorldCoords()
