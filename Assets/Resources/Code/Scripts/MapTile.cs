@@ -27,6 +27,7 @@ namespace Resources.Code.Scripts
         // Materials for default color and onHover color
         private Material hoverMaterial;
         private Material defaultMaterial;
+        private Material clickedMaterial;
         
         private Material _grassDefault;
         private Material _grassHover;
@@ -34,6 +35,7 @@ namespace Resources.Code.Scripts
         private Material _sandHover;
         private Material _snowDefault;
         private Material _snowHover;
+        private Material _clickedTile;
         
         // Flag if mouse is hovering
         private bool _hoverFlag;
@@ -54,6 +56,14 @@ namespace Resources.Code.Scripts
         // Reference to MapManager to get mapArray
         private MapManager _mm;
 
+        GameObject _gm;
+        GameObject selectedTile;
+        bool tileActive = false;
+
+        void Start(){
+            _gm = GameObject.FindGameObjectWithTag("GameController");
+        }
+
         // OnMouseOver, highlight all tiles in that movement list for specified step
         void OnMouseOver()
         {
@@ -61,23 +71,57 @@ namespace Resources.Code.Scripts
             
             _hoverFlag = true;
 
-            foreach (var go in movementLists[_mm.maxMoveDist])
-            {
-                go.GetComponent<MapTile>().Highlight();
+            if(tileActive == false){
+                foreach (var go in movementLists[_mm.maxMoveDist])
+                {
+                    if(go.GetComponent<MapTile>().tileActive == false){
+                        go.GetComponent<MapTile>().Highlight();
+                    }
+                    
+                }
+                Highlight();
+
             }
-            Highlight();
+            
         }
 
         // On Mouse Exit, unhighlight all tiles in that movement list for specified step
         void OnMouseExit()
         {
             _hoverFlag = false;
-            foreach (var go in movementLists[_mm.maxMoveDist])
-            {
-                go.GetComponent<MapTile>().Unhighlight();
+
+            if(tileActive == false){
+                foreach (var go in movementLists[_mm.maxMoveDist])
+                {
+                    if(go.GetComponent<MapTile>().tileActive == false){
+                        go.GetComponent<MapTile>().Unhighlight();
+                    }
+                    
+                }
+                
+                Unhighlight();
             }
             
-            Unhighlight();
+        }
+
+        void OnMouseDown(){
+            if(_gm.GetComponent<selectTile>().tileSelected == false){
+                SelectTile();
+            }else if(_gm.GetComponent<selectTile>().tileSelected == true){
+                selectedTile =  _gm.GetComponent<selectTile>().selectedTileGM;
+                selectedTile.GetComponent<MapTile>().UnclickedTile();
+
+                SelectTile();
+            }
+            
+        }
+
+        void Update(){
+            if(Input.GetMouseButtonDown(1)){
+                GetComponent<MapTile>().UnclickedTile();
+                _gm.GetComponent<selectTile>().tileSelected = false;
+                tileActive = false;
+            }
         }
 
         public void Instantiate(int xi, float y, int zi, Vector3 bounds)
@@ -89,6 +133,7 @@ namespace Resources.Code.Scripts
             _sandHover = UnityEngine.Resources.Load("Materials/SandHover", typeof(Material)) as Material;
             _snowDefault = UnityEngine.Resources.Load("Materials/SnowDefault", typeof(Material)) as Material;
             _snowHover = UnityEngine.Resources.Load("Materials/SnowHover", typeof(Material)) as Material;
+            _clickedTile = UnityEngine.Resources.Load("Materials/ClickedTile", typeof(Material)) as Material;
 
             // Get reference to MapManager
             _mm = GameObject.Find("MapManager").GetComponent<MapManager>();
@@ -135,6 +180,8 @@ namespace Resources.Code.Scripts
                 hoverMaterial = _snowHover;
             }
 
+            clickedMaterial = _clickedTile;
+
             _r = GetComponent<MeshRenderer>();
     
             // Sets Material to defaultMaterial
@@ -161,6 +208,25 @@ namespace Resources.Code.Scripts
             GetComponent<MeshRenderer>().material.Lerp(mat2, mat1, 5.0f);
         }
 
+        private void ClickedTile()
+        {
+
+            var mat1 = defaultMaterial;
+            var mat2 = clickedMaterial;
+
+            GetComponent<MeshRenderer>().material.Lerp(mat1, mat2, 5.0f);
+        }
+
+        private void UnclickedTile()
+        {
+
+            var mat1 = defaultMaterial;
+            var mat2 = clickedMaterial;
+
+            GetComponent<MeshRenderer>().material.Lerp(mat2, mat1, 5.0f);
+        }
+
+
         public Vector3 GetWorldCoords()
         {
             return transform.position;
@@ -170,5 +236,19 @@ namespace Resources.Code.Scripts
         {
             return new Vector2(x, z);
         }
+
+        void SelectTile(){
+            GetComponent<MapTile>().ClickedTile();
+
+            _gm.GetComponent<selectTile>().currentTile = GetComponent<MapTile>().id;
+            _gm.GetComponent<selectTile>().tileSelected = true;
+            _gm.GetComponent<selectTile>().selectedTileGM = this.gameObject;
+            tileActive = true;
+
+            Debug.Log(GetComponent<MapTile>().id);
+        }
+
     }
+
+
 }
