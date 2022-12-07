@@ -170,5 +170,11 @@ namespace Resources.Code.Scripts
         {
             return new Vector2(x, z);
         }
+
+        public Vector3 GetTop()
+        {
+            var position = transform.position;
+            return new Vector3(position.x, position.y + _bounds.y/2, position.z);
+        }
     }
 }

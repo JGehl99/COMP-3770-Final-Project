@@ -2,6 +2,8 @@
 using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
+using Random = UnityEngine.Random;
+
 
 namespace Resources.Code.Scripts
 {
@@ -66,7 +68,7 @@ namespace Resources.Code.Scripts
                     var zC = (z - 10) * 1f / (100 - 10);
 
                     // Use perlin noise to generate tile height
-                    float y = Mathf.PerlinNoise(xC * 20f, zC * 20f) * 15;
+                    float y = Mathf.PerlinNoise(xC * 30f, zC * 10f + Random.Range(1, 10)) * 15;
 
                     // Instantiate MapTile script which moves tile to final position
                     _mapArray[x, z].GetComponent<MapTile>().Instantiate(x, y, z, objBounds);
