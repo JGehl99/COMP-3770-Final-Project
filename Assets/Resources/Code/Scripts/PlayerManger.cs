@@ -1,14 +1,12 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using UnityEngine;
-using UnityEngine.Serialization;
 
 namespace Resources.Code.Scripts
 {
     public class PlayerManger : MonoBehaviour
     {
         private List<Player> _playerList;
-        [FormerlySerializedAs("_selection")] public List<int> selection;
+        public List<int> selection;
         public int numPlayers;
         private Player _lt = new Player("Lt", 100);
         private Player _sgt = new Player("Sgt", 100);
@@ -17,42 +15,77 @@ namespace Resources.Code.Scripts
         private Player _psc = new Player("Psc", 100);
 
         public GameObject tank;
+        public MapManager mapManager;
+
         public void Start()
         {
             _playerList = new List<Player>();
-            /*
-             * On start, instantiate the player game objects, based on number of players
-             * that the user selects
-             */
+
+            //Determining which of the characters the player has selected
             foreach (var i in selection)
             {
-                switch (selection[i])
-                {
-                    case 0:
-                        _playerList.Add(_lt);
-                        break;
-                    case 1:
-                        _playerList.Add(_sgt);
-                        break;
-                    case 2:
-                        _playerList.Add(_cpl);
-                        break;
-                    case 3:
-                        _playerList.Add(_fm);
-                        break;
-                    case 4:
-                        _playerList.Add(_psc);
-                        break;
-                }
+                _playerList.Add(SelectPlayerFromList(selection, i));
             }
 
+            var arr = mapManager.GetMapArray();
+            
+            //Spawning the player objects
             foreach (var player in _playerList)
             {
-                //TODO set a position using the MapTile.GetTop(), at a random tile in X range
-                player.Position = new Vector3(0, 0, 0);
+                //Setting the spawn location for each player object if it is a valid location
+                var tile = IsValidSpawn(arr);
+                var spawnLocation = tile.GetTop();
+                
+                spawnLocation.y = spawnLocation.y + 6.25f;
+                player.Position = spawnLocation;
+                
                 Instantiate(tank, player.Position, Quaternion.identity);
             }
         }
         
+        /*
+         * Checks to see if the given MapTile is a valid spawning location
+         * by checking to see how many neighbours it has, if it is greater than
+         * 0, then the players are able to spawn on it.
+         */
+        private MapTile IsValidSpawn(GameObject[,] arr)
+        {
+            while (true)
+            {
+                var ranX = Random.Range(0, 10);
+                var ranY = Random.Range(0, 10);
+
+                var tile = arr[ranX, ranY].GetComponent<MapTile>();
+
+                if (tile.neighbours.Count > 1)
+                    return tile;
+            }
+        }
+
+        /* Given the index of the list, return the selected player*/
+        private Player SelectPlayerFromList(List<int> list, int i)
+        {
+            switch (list.IndexOf(i))
+            {
+                case 0:
+                    return _lt;
+                case 1:
+                    return _sgt;
+                case 2:
+                    return _cpl;
+                case 3:
+                    return _fm;
+                case 4:
+                    return _psc;
+                default:
+                    return _lt;
+            }
+        }
+
+        public MapManager MapManager
+        {
+            get => mapManager;
+            set => mapManager = value;
+        }
     }
 }

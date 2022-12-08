@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
+using Debug = System.Diagnostics.Debug;
 using Random = UnityEngine.Random;
 
 
@@ -11,7 +12,7 @@ namespace Resources.Code.Scripts
     {
         public GameObject tileGameObject;
         public GameObject waterGameObject;
-
+        private GameObject _pm;
         private int _zMax = 10;
         private int _xMax = 10;
         private GameObject[,] _mapArray;
@@ -207,6 +208,13 @@ namespace Resources.Code.Scripts
                     _mapArray[x, z].GetComponent<MapTile>().movementLists = GenerateMovementList(x, z, maxMoveDist);
                 }
             }
+            
+            //Instan the player manager
+            _pm = UnityEngine.Resources.Load("Prefabs/PlayerManager") as GameObject;
+            // Debug.Assert(_pm != null, nameof(_pm) + " != null");
+            _pm.GetComponent<PlayerManger>().MapManager = this;
+            Instantiate(_pm, new Vector3(0, 0, 0), Quaternion.identity);
+
         }
 
         private bool IsValidNeighbour(GameObject tile, GameObject neighbour)

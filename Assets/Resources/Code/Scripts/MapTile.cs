@@ -116,7 +116,7 @@ namespace Resources.Code.Scripts
                 transform.Translate(x * _xWidth * (3 / 4f), y, (z * _zLength) + _zLength / 2);
             }
             
-            Debug.Log(y);
+            // Debug.Log(y);
             
             // Set tile to sand, grass, or snow depending on height
             if (y <= 4.5f)
