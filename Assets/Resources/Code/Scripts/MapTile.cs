@@ -46,6 +46,8 @@ namespace Resources.Code.Scripts
         
         // Dictionary that holds lists of which tiles can be stepped to in n moves
         public Dictionary<int, List<GameObject>> movementLists;
+
+        public bool isHighlighted;
         
         // Tile ID
         public string id;
@@ -116,8 +118,11 @@ namespace Resources.Code.Scripts
         {
             foreach (var go in movementLists[moveDistance])
             {
-                var mat1 = go.GetComponent<MapTile>().defaultMaterial;
-                var mat2 = go.GetComponent<MapTile>().hoverMaterial;
+                var mapTile = go.GetComponent<MapTile>();
+                mapTile.isHighlighted = true;
+                
+                var mat1 = mapTile.defaultMaterial;
+                var mat2 = mapTile.hoverMaterial;
 
                 go.GetComponent<MeshRenderer>().material.Lerp(mat1, mat2, 1.0f);
             }
@@ -128,8 +133,11 @@ namespace Resources.Code.Scripts
         {
             foreach (var go in movementLists[moveDistance])
             {
-                var mat1 = go.GetComponent<MapTile>().defaultMaterial;
-                var mat2 = go.GetComponent<MapTile>().hoverMaterial;
+                var mapTile = go.GetComponent<MapTile>();
+                mapTile.isHighlighted = false;
+                
+                var mat1 = mapTile.defaultMaterial;
+                var mat2 = mapTile.hoverMaterial;
                 
                 go.GetComponent<MeshRenderer>().material.Lerp(mat2, mat1, 1.0f);
             }

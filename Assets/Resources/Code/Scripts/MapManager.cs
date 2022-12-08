@@ -200,6 +200,12 @@ namespace Resources.Code.Scripts
         private bool IsValidNeighbour(GameObject tile, GameObject neighbour)
         {
             var neighbourY = neighbour.transform.position.y;
+            if (neighbourY < 3.75)
+            {
+                var p = neighbour.transform.position;
+                p.y -= 10f;
+                neighbour.transform.position = p;
+            }
             // Checks if tile height difference is less than 2 and that the neighbour is above water
             return Math.Abs(tile.transform.position.y - neighbourY) < 2 && neighbourY > 3.58f;
         }

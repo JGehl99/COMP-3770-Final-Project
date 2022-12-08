@@ -6,14 +6,12 @@ namespace Resources.Code.Scripts
 {
     public class PlayerManager : MonoBehaviour
     {
-        private List<GameObject> _tankList;
+        public List<GameObject> tankList;
         private List<int> _selection;
         
         private int _numberOfPlayers;
 
         private GameObject _tankGameObject;
-
-        private float _moveSpeed = 50f;
 
         public void LoadModels()
         {
@@ -25,7 +23,7 @@ namespace Resources.Code.Scripts
             _selection = playerSelection;
             _numberOfPlayers = playerSelection.Count;
             
-            _tankList = new List<GameObject>();
+            tankList = new List<GameObject>();
             
             foreach (var i in _selection)
             {
@@ -41,7 +39,7 @@ namespace Resources.Code.Scripts
                     _ => CreateTankGameObject("Lt", 100, 3, tile)
                 };
                 
-                _tankList.Add(tempTank);
+                tankList.Add(tempTank);
             }
         }
         /*
@@ -65,9 +63,12 @@ namespace Resources.Code.Scripts
             }
         }
 
-        public void MoveTank(GameObject tank, Vector3 targetPosition)
+        public void MoveTank(GameObject tank, GameObject tile)
         {
-            Vector3.MoveTowards(tank.transform.position, targetPosition, _moveSpeed * Time.deltaTime);
+            tank.GetComponent<Tank>().currentTile = tile;
+            var target = tile.GetComponent<MapTile>().GetTop();
+            target.y += 6.25f;   // Adjust for tank model height
+            tank.GetComponent<Tank>().target = target;
         }
 
         private GameObject CreateTankGameObject(string tankName, int health, int moveDistance, GameObject tile)

@@ -1,4 +1,5 @@
-﻿using UnityEngine;
+﻿using System;
+using UnityEngine;
 
 namespace Resources.Code.Scripts
 {
@@ -10,11 +11,22 @@ namespace Resources.Code.Scripts
         public int moveDistance;
         
         public GameObject currentTile;
+        public Vector3 target;
 
-        public bool hasMoved;
+        private const float MoveSpeed = 50f;
 
-        public bool hasAttacked;
+        public bool hasMoved = false;
+        public bool hasAttacked = false;
 
+        private void Update()
+        {
+            if (transform.position != target)
+            {
+                var t = transform;
+                t.position = Vector3.MoveTowards(t.position, target, MoveSpeed * Time.deltaTime);
+                t.LookAt(target);
+            }
+        }
 
         public void Create(string tankNameIn, int healthIn, int moveDistanceIn, GameObject tile)
         {
@@ -23,6 +35,8 @@ namespace Resources.Code.Scripts
             moveDistance = moveDistanceIn;
             
             currentTile = tile;
+            
+            target = transform.position;
         }
     }
 }

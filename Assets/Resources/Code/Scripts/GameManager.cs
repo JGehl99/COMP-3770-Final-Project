@@ -122,54 +122,85 @@ namespace Resources.Code.Scripts
             
         }
 
+        //***************************
+        // If the player left clicks
+        //***************************
         private void OnLeftClick()
         {
             Debug.Log("Left Clicked!");
-
-            //The raycast hit object
+            
+            //***************************************
+            // If the player left clicks on anything
+            //***************************************
             if (Physics.Raycast(_camera.ScreenPointToRay(Mouse.current.position.ReadValue()), out var hit))
             {
-                Debug.Log(hit.transform.gameObject.name);
-
+                // Get clicked GameObjects
                 var go = hit.transform.gameObject;
                 
+                // If tile is clicked
                 if (go.CompareTag("Tile"))
                 {
-                    Debug.Log(go.GetComponent<MapTile>().id);
+                    var tile = go.GetComponent<MapTile>();
+                    
+                    Debug.Log(tile.id);
+                    
+                    // If a tank is already selected
+                    if (_selectedTank != null)
+                    {
+                        // If a highlighted tile is clicked
+                        if (tile.isHighlighted)
+                        {
+                            // Unhighlight currently highlighted tiles
+                            var tankScript = _selectedTank.GetComponent<Tank>();
+                            tankScript.currentTile.GetComponent<MapTile>().Unhighlight(tankScript.moveDistance);
+
+                            if (!tankScript.hasMoved)
+                            {
+                                // Move tank then unselect tank
+                                _playerManager.MoveTank(_selectedTank, go);
+                                tankScript.hasMoved = true;
+                                UnselectTank();
+                            }
+                        }
+                    }
                 }
+                
+                // If friendly tank is clicked
                 else if (go.CompareTag("Tank"))
                 {
-                    if (_selectedTank != go && _selectedTank != null)
-                    {
-                        UnhighlightRange();
-                    }
-                    
-                    _selectedTank = go;
-                    HighlightRange();
+                    // If another tank was already selected, unselect the current selected tank
+                    if (_selectedTank != go && _selectedTank != null) UnselectTank();
+
+                    // Select new tank
+                    SelectTank(go);
                 }
             }
         }
         
+        //****************************
+        // If the player right clicks
+        //****************************
         private void OnRightClick()
         {
             Debug.Log("Right Clicked!");
             
-            UnhighlightRange();
+            // When the user right clicks anywhere, deselect the currently selected tank
+            UnselectTank();
         }
-
-
-        private void HighlightRange()
+        
+        private void SelectTank(GameObject go)
         {
-            if (_selectedTank == null) return;
-            
+            _selectedTank = go;
             var tank = _selectedTank.GetComponent<Tank>();
             var currentTile = tank.currentTile.gameObject.GetComponent<MapTile>();
-            currentTile.Highlight(tank.moveDistance);
+            
+            // If tank hasn't moved, highlight movement tiles
+            if(!tank.hasMoved) currentTile.Highlight(tank.moveDistance);
         }
 
-        private void UnhighlightRange()
+        private void UnselectTank()
         {
-            
+            if (_selectedTank == null) return;
             
             var tank = _selectedTank.GetComponent<Tank>();
             var currentTile = tank.currentTile.gameObject.GetComponent<MapTile>();
