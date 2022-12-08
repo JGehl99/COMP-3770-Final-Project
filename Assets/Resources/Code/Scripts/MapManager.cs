@@ -55,8 +55,12 @@ namespace Resources.Code.Scripts
                     var xC = (x - 100) * 1f / (100 - 10);
                     var zC = (z - 10) * 1f / (100 - 10);
 
+                    var r1 = Random.Range(0f, 0.2f);
+                    var r2 = Random.Range(0.4f, 0.6f);
+                    var rand = Random.Range(r1, r2);
+
                     // Use perlin noise to generate tile height
-                    float y = Mathf.PerlinNoise(xC * 20f, zC * 20f) * 15;
+                    var y = Mathf.PerlinNoise(xC * 20f + rand, zC * 20f + rand) * 15;
 
                     // Instantiate MapTile script which moves tile to final position
                     MapArray[x, z].GetComponent<MapTile>().Instantiate(x, y, z, objBounds);
