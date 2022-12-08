@@ -36,7 +36,7 @@ namespace Resources.Code.Scripts
                     if (hit.transform.gameObject.name == "Hex - Copy(Clone)")
                     {
                         var go = hit.transform.gameObject.GetComponent<MapTile>();
-                        // targetPosition = hit.transform.position; //Sets the target positon to the position of the hit
+                        // targetPosition = hit.transform.position; //Sets the target position to the position of the hit
                         //Move the character to the targetPosition
                         targetPosition = go.GetTop();
                     }

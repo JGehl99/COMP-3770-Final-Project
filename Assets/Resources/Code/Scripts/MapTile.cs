@@ -45,40 +45,11 @@ namespace Resources.Code.Scripts
         public List<GameObject> neighbours = new();
         
         // Dictionary that holds lists of which tiles can be stepped to in n moves
-        public Dictionary<int, List<GameObject>> movementLists = new();
+        public Dictionary<int, List<GameObject>> movementLists;
         
         // Tile ID
         public string id;
         private int _tileType = 0;
-        
-        // Reference to MapManager to get mapArray
-        private MapManager _mm;
-
-        // OnMouseOver, highlight all tiles in that movement list for specified step
-        void OnMouseOver()
-        {
-            if (_hoverFlag) return;
-            
-            _hoverFlag = true;
-
-            foreach (var go in movementLists[_mm.maxMoveDist])
-            {
-                go.GetComponent<MapTile>().Highlight();
-            }
-            Highlight();
-        }
-
-        // On Mouse Exit, unhighlight all tiles in that movement list for specified step
-        void OnMouseExit()
-        {
-            _hoverFlag = false;
-            foreach (var go in movementLists[_mm.maxMoveDist])
-            {
-                go.GetComponent<MapTile>().Unhighlight();
-            }
-            
-            Unhighlight();
-        }
 
         public void Instantiate(int xi, float y, int zi, Vector3 bounds)
         {
@@ -90,9 +61,6 @@ namespace Resources.Code.Scripts
             _snowDefault = UnityEngine.Resources.Load("Materials/SnowDefault", typeof(Material)) as Material;
             _snowHover = UnityEngine.Resources.Load("Materials/SnowHover", typeof(Material)) as Material;
 
-            // Get reference to MapManager
-            _mm = GameObject.Find("MapManager").GetComponent<MapManager>();
-            
             // Set x, z
             x = xi;
             z = zi;
@@ -144,31 +112,27 @@ namespace Resources.Code.Scripts
         }
 
         // Highlight function changes the material of the gameObject
-        private void Highlight()
+        public void Highlight(int moveDistance)
         {
+            foreach (var go in movementLists[moveDistance])
+            {
+                var mat1 = go.GetComponent<MapTile>().defaultMaterial;
+                var mat2 = go.GetComponent<MapTile>().hoverMaterial;
 
-            var mat1 = defaultMaterial;
-            var mat2 = hoverMaterial;
-
-            GetComponent<MeshRenderer>().material.Lerp(mat1, mat2, 5.0f);
+                go.GetComponent<MeshRenderer>().material.Lerp(mat1, mat2, 1.0f);
+            }
         }
 
         //UnHighlight function changes the material of the gameObject
-        private void Unhighlight()
+        public void Unhighlight(int moveDistance)
         {
-            var mat1 = defaultMaterial;
-            var mat2 = hoverMaterial;
-            GetComponent<MeshRenderer>().material.Lerp(mat2, mat1, 5.0f);
-        }
-
-        public Vector3 GetWorldCoords()
-        {
-            return transform.position;
-        }
-
-        public Vector2 GetMapCoords()
-        {
-            return new Vector2(x, z);
+            foreach (var go in movementLists[moveDistance])
+            {
+                var mat1 = go.GetComponent<MapTile>().defaultMaterial;
+                var mat2 = go.GetComponent<MapTile>().hoverMaterial;
+                
+                go.GetComponent<MeshRenderer>().material.Lerp(mat2, mat1, 1.0f);
+            }
         }
 
         public Vector3 GetTop()

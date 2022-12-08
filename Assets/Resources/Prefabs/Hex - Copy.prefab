@@ -46,7 +46,7 @@ GameObject:
   - component: {fileID: 1167969867}
   m_Layer: 0
   m_Name: Hex - Copy
-  m_TagString: Untagged
+  m_TagString: Tile
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -131,6 +131,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   x: 0
   z: 0
+  neighbours: []
+  id: 
 --- !u!64 &1167969867
 MeshCollider:
   m_ObjectHideFlags: 0

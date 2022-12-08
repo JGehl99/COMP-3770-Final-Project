@@ -2,58 +2,45 @@
 using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
-using Debug = System.Diagnostics.Debug;
 using Random = UnityEngine.Random;
-
 
 namespace Resources.Code.Scripts
 {
     public class MapManager : MonoBehaviour
     {
-        public GameObject tileGameObject;
-        public GameObject waterGameObject;
+        private GameObject _tileGameObject;
+        private GameObject _waterGameObject;
         private GameObject _pm;
-        private int _zMax = 10;
-        private int _xMax = 10;
-        private GameObject[,] _mapArray;
+        private int _zMax;
+        private int _xMax;
+        private int _maxMoveDist;
 
-        public int xInput = 10;
-        public int zInput = 10;
-        public int maxMoveDist = 2;
+        private const float WaterHeight = 16.4f;
 
-        private float _waterHeight = 16.4f;
-
-        void Start()
+        public void LoadModels()
         {
-            _xMax = xInput;
-            _zMax = zInput;
-
-            _mapArray = new GameObject[_xMax, _zMax];
-            GenerateMap();
+            // Set Water Plane and Tile objects
+            _waterGameObject = UnityEngine.Resources.Load("Prefabs/WaterPlane") as GameObject;
+            _tileGameObject = UnityEngine.Resources.Load("Prefabs/Hex - Copy") as GameObject;
         }
 
-        private static Vector3 GetBounds(GameObject go)
+        public void GenerateMap(int xx, int zz, int maxMoveDist)
         {
-            // Create temp object, return bounds of MeshCollider
-            var temp = Instantiate(go, new Vector3(0, 0, 0), Quaternion.identity);
-            var bounds = temp.GetComponent<MeshCollider>().bounds.size;
-            Destroy(temp);
-            return bounds;
-        }
 
-        public void GenerateMap()
-        {
-            // Clear existing map
-            foreach (var go in _mapArray) Destroy(go);
-
+            // Set Variables
+            _xMax = xx;
+            _zMax = zz;
+            _maxMoveDist = maxMoveDist;
+            
             // Create map array
-            _mapArray = new GameObject[_xMax, _zMax];
+            MapArray = new GameObject[_xMax, _zMax];
 
             // Create Blue Plane to represent water
-            Instantiate(waterGameObject, new Vector3(0, _waterHeight, 0), Quaternion.identity);
+            Instantiate(_waterGameObject, new Vector3(0, WaterHeight, 0), Quaternion.identity);
 
             // Get hexagon tile bounds
-            var objBounds = GetBounds(tileGameObject);
+            var objBounds = GetBounds(_tileGameObject);
+            Debug.Log(objBounds);
 
             // Loop over cells in array, instantiate Map Tile game object and instantiate the MapTile script
 
@@ -62,17 +49,17 @@ namespace Resources.Code.Scripts
                 for (var x = 0; x < _xMax; x++)
                 {
                     // Instantiate tile at 0, 0, 0
-                    _mapArray[x, z] = Instantiate(tileGameObject, new Vector3(0, 0, 0), Quaternion.identity, transform);
+                    MapArray[x, z] = Instantiate(_tileGameObject, new Vector3(0, 0, 0), Quaternion.identity, transform);
 
                     // Map values of x and z from between 0 and 100, to between 0 and 1
                     var xC = (x - 100) * 1f / (100 - 10);
                     var zC = (z - 10) * 1f / (100 - 10);
 
                     // Use perlin noise to generate tile height
-                    float y = Mathf.PerlinNoise(xC * 30f, zC * 10f + Random.Range(1, 10)) * 15;
+                    float y = Mathf.PerlinNoise(xC * 20f, zC * 20f) * 15;
 
                     // Instantiate MapTile script which moves tile to final position
-                    _mapArray[x, z].GetComponent<MapTile>().Instantiate(x, y, z, objBounds);
+                    MapArray[x, z].GetComponent<MapTile>().Instantiate(x, y, z, objBounds);
                 }
             }
 
@@ -83,54 +70,54 @@ namespace Resources.Code.Scripts
                 {
                     var arList = new List<GameObject>();
                     
-                    var tile = _mapArray[x, z];
+                    var tile = MapArray[x, z];
                     
                     try
                     {
-                        var bottom = _mapArray[x, z - 1];
+                        var bottom = MapArray[x, z - 1];
 
                         if (IsValidNeighbour(tile, bottom))
                         {
                             arList.Add(bottom);
                         }
                     }
-                    catch (IndexOutOfRangeException ignored)
+                    catch (IndexOutOfRangeException)
                     {
                     }
 
                     try
                     {
-                        var left = _mapArray[x - 1, z];
+                        var left = MapArray[x - 1, z];
                         if (IsValidNeighbour(tile, left))
                         {
                             arList.Add(left);
                         }
                     }
-                    catch (IndexOutOfRangeException ignored)
+                    catch (IndexOutOfRangeException)
                     {
                     }
 
                     try
                     {
-                        var right = _mapArray[x + 1, z];
+                        var right = MapArray[x + 1, z];
                         if (IsValidNeighbour(tile, right))
                         {
                             arList.Add(right);
                         }
                     }
-                    catch (IndexOutOfRangeException ignored)
+                    catch (IndexOutOfRangeException)
                     {
                     }
 
                     try
                     {
-                        var top = _mapArray[x, z + 1];
+                        var top = MapArray[x, z + 1];
                         if (IsValidNeighbour(tile, top))
                         {
                             arList.Add(top);
                         }
                     }
-                    catch (IndexOutOfRangeException ignored)
+                    catch (IndexOutOfRangeException)
                     {
                     }
 
@@ -146,25 +133,25 @@ namespace Resources.Code.Scripts
                     {
                         try
                         {
-                            var bottomRight = _mapArray[x + 1, z - 1];
+                            var bottomRight = MapArray[x + 1, z - 1];
                             if (IsValidNeighbour(tile, bottomRight))
                             {
                                 arList.Add(bottomRight);
                             }
                         }
-                        catch (IndexOutOfRangeException ignored)
+                        catch (IndexOutOfRangeException)
                         {
                         }
 
                         try
                         {
-                            var bottomLeft = _mapArray[x - 1, z - 1];
+                            var bottomLeft = MapArray[x - 1, z - 1];
                             if (IsValidNeighbour(tile, bottomLeft))
                             {
                                 arList.Add(bottomLeft);
                             }
                         }
-                        catch (IndexOutOfRangeException ignored)
+                        catch (IndexOutOfRangeException)
                         {
                         }
                     }
@@ -172,31 +159,31 @@ namespace Resources.Code.Scripts
                     {
                         try
                         {
-                            var topRight = _mapArray[x + 1, z + 1];
+                            var topRight = MapArray[x + 1, z + 1];
                             if (IsValidNeighbour(tile, topRight))
                             {
                                 arList.Add(topRight);
                             }
                         }
-                        catch (IndexOutOfRangeException ignored)
+                        catch (IndexOutOfRangeException)
                         {
                         }
 
                         try
                         {
-                            var topLeft = _mapArray[x - 1, z + 1];
+                            var topLeft = MapArray[x - 1, z + 1];
                             if (IsValidNeighbour(tile, topLeft))
                             {
                                 arList.Add(topLeft);
                             }
                         }
-                        catch (IndexOutOfRangeException ignored)
+                        catch (IndexOutOfRangeException)
                         {
                         }
                     }
 
                     // Set neighbours list for current Tile
-                    _mapArray[x, z].GetComponent<MapTile>().neighbours = arList;
+                    MapArray[x, z].GetComponent<MapTile>().neighbours = arList;
                 }
             }
 
@@ -205,16 +192,9 @@ namespace Resources.Code.Scripts
             {
                 for (var x = 0; x < _xMax; x++)
                 {
-                    _mapArray[x, z].GetComponent<MapTile>().movementLists = GenerateMovementList(x, z, maxMoveDist);
+                    MapArray[x, z].GetComponent<MapTile>().movementLists = GenerateMovementList(x, z, maxMoveDist);
                 }
             }
-            
-            //Instan the player manager
-            _pm = UnityEngine.Resources.Load("Prefabs/PlayerManager") as GameObject;
-            // Debug.Assert(_pm != null, nameof(_pm) + " != null");
-            _pm.GetComponent<PlayerManger>().MapManager = this;
-            Instantiate(_pm, new Vector3(0, 0, 0), Quaternion.identity);
-
         }
 
         private bool IsValidNeighbour(GameObject tile, GameObject neighbour)
@@ -222,6 +202,15 @@ namespace Resources.Code.Scripts
             var neighbourY = neighbour.transform.position.y;
             // Checks if tile height difference is less than 2 and that the neighbour is above water
             return Math.Abs(tile.transform.position.y - neighbourY) < 2 && neighbourY > 3.58f;
+        }
+        
+        private static Vector3 GetBounds(GameObject go)
+        {
+            // Create temp object, return bounds of MeshCollider
+            var temp = Instantiate(go, new Vector3(0, 0, 0), Quaternion.identity);
+            var bounds = temp.GetComponent<MeshCollider>().bounds.size;
+            Destroy(temp);
+            return bounds;
         }
 
         private Dictionary<int, List<GameObject>> GenerateMovementList(int x, int z, int n)
@@ -231,13 +220,10 @@ namespace Resources.Code.Scripts
             var checkList = new List<List<GameObject>>();
 
             // Initialize movementLists, set movementLists[0] to empty list so we can use it when a tank can't move
-            var movementLists = new Dictionary<int, List<GameObject>>
-            {
-                [0] = new()
-            };
+            var movementLists = new Dictionary<int, List<GameObject>>();
 
             // Add first tile to checkList
-            checkList.Add(new List<GameObject> { _mapArray[x, z] });
+            checkList.Add(new List<GameObject> { MapArray[x, z] });
 
             var steps = 0;
 
@@ -264,7 +250,16 @@ namespace Resources.Code.Scripts
                 }
 
                 // Add list to movementLists at current step
-                movementLists.Add(++steps, visitedList);
+                movementLists.Add(steps++, visitedList.ToList());
+
+                // if (x == 0 && z == 0)
+                // {
+                //     foreach(var p in movementLists[steps-1])
+                //     {
+                //         var q = p.gameObject.GetComponent<MapTile>().id;
+                //         Debug.Log(steps + ": " + q);
+                //     }
+                // }
 
                 // Add nextStep to checkList and remove the list that was just checked
                 checkList.Add(nextStep);
@@ -278,9 +273,8 @@ namespace Resources.Code.Scripts
             return new Dictionary<int, List<GameObject>>();
         }
 
-        public GameObject[,] GetMapArray()
-        {
-            return _mapArray;
-        }
+
+        // Properties
+        public GameObject[,] MapArray { get; private set; }
     }
 }
