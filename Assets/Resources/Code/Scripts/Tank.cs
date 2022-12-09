@@ -38,5 +38,16 @@ namespace Resources.Code.Scripts
             
             target = transform.position;
         }
+
+        public void Recoilless(Vector3 selectedTile)
+        {
+            Debug.Log(selectedTile);
+        }
+        public void Special(Vector3 selectedTile)
+        {
+            
+        }
+
+
     }
 }

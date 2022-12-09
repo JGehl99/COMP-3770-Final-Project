@@ -1,6 +1,8 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Linq.Expressions;
 using UnityEngine;
+using UnityEngine.EventSystems;
 using UnityEngine.InputSystem;
 using UnityEngine.Timeline;
 
@@ -35,6 +37,12 @@ namespace Resources.Code.Scripts
         private GameObject _mapManagerGameObject;
         private GameObject _playerManagerGameObject;
         private GameObject _cameraGameObject;
+        private GameObject _canvasGameObject;
+        private GameObject _attackInfoGameObject;
+        private GameObject _fireButton;
+        private GameObject _moveButton;
+        private GameObject _shot1Button;
+        private GameObject _shot2Button;
         
         
         //**********************
@@ -46,12 +54,19 @@ namespace Resources.Code.Scripts
         private Camera _camera;
         
         
-        //***************************************
-        // Variables for Currently Selected Tank
-        //***************************************
+        //*********************************************
+        // Variables for Currently Selected Tank & Tile
+        //*********************************************
 
         private GameObject _selectedTank;
+        private GameObject _selectedTile;
         
+        
+        //Variables
+        private int _attackType;
+        private bool _isAttacking = false;
+        private bool _isMoving = false;
+        private Vector3 _coordinates;
         
         
         private void Start()
@@ -88,6 +103,25 @@ namespace Resources.Code.Scripts
             // // Set up EnemyManager
             // _enemyManagerGameObject = CreateEnemyManagerGameObject();
             // _enemyManager = _enemyManagerGameObject.GetComponent<EnemyManager>();
+            
+            //Setup canvas
+            _canvasGameObject = GameObject.Find("Canvas");
+            
+            //Get UI object for AttackInfo
+            _attackInfoGameObject = _canvasGameObject.transform.GetChild(0).gameObject;
+            _attackInfoGameObject.SetActive(false);
+            
+            _shot1Button = _attackInfoGameObject.transform.GetChild(1).gameObject;
+            _shot1Button.SetActive(true);
+            
+            _shot2Button = _attackInfoGameObject.transform.GetChild(2).gameObject;
+            _shot2Button.SetActive(true);
+            
+            _fireButton = _attackInfoGameObject.transform.GetChild(4).gameObject;
+            _fireButton.SetActive(false);
+            
+            _moveButton = _attackInfoGameObject.transform.GetChild(5).gameObject;
+            _moveButton.SetActive(true);
             
             
             //**********************
@@ -128,7 +162,7 @@ namespace Resources.Code.Scripts
         private void OnLeftClick()
         {
             Debug.Log("Left Clicked!");
-            
+            if (EventSystem.current.IsPointerOverGameObject()) return;
             //***************************************
             // If the player left clicks on anything
             //***************************************
@@ -148,7 +182,7 @@ namespace Resources.Code.Scripts
                     if (_selectedTank != null)
                     {
                         // If a highlighted tile is clicked
-                        if (tile.isHighlighted)
+                        if (tile.isHighlighted && _isMoving)
                         {
                             // Unhighlight currently highlighted tiles
                             var tankScript = _selectedTank.GetComponent<Tank>();
@@ -159,8 +193,12 @@ namespace Resources.Code.Scripts
                                 // Move tank then unselect tank
                                 _playerManager.MoveTank(_selectedTank, go);
                                 tankScript.hasMoved = true;
+                                _isMoving = false;
                                 UnselectTank();
                             }
+                        }else if (_selectedTank != null && _isAttacking)
+                        {
+                            SelectTile(go);
                         }
                     }
                 }
@@ -184,18 +222,64 @@ namespace Resources.Code.Scripts
         {
             Debug.Log("Right Clicked!");
             
-            // When the user right clicks anywhere, deselect the currently selected tank
+            // When the user right clicks anywhere, deselect the currently selected tank and tile
+            UnselectTile();
             UnselectTank();
+            
         }
         
         private void SelectTank(GameObject go)
         {
+            UnselectTile();
             _selectedTank = go;
             var tank = _selectedTank.GetComponent<Tank>();
-            var currentTile = tank.currentTile.gameObject.GetComponent<MapTile>();
+
+            if (!tank.hasMoved)
+            {
+                _moveButton.SetActive(true);
+            }
+            else
+            {
+                _moveButton.SetActive(false);
+            }
             
-            // If tank hasn't moved, highlight movement tiles
-            if(!tank.hasMoved) currentTile.Highlight(tank.moveDistance);
+
+            if (!tank.hasAttacked)
+            {
+                _shot1Button.SetActive(true);
+                _shot2Button.SetActive(true);
+                _fireButton.SetActive(false);
+            }
+            else
+            {
+                _fireButton.SetActive(false);
+                _shot1Button.SetActive(false);
+                _shot2Button.SetActive(false);
+            }
+            _attackInfoGameObject.SetActive(true);
+        }
+        
+        private void SelectTile(GameObject go)
+        {
+            
+            
+            if(_selectedTile != null) UnselectTile();
+            
+            _fireButton.SetActive(true);
+            
+            _selectedTile = go;
+            _selectedTile.GetComponent<MapTile>().HighlightAttack();
+            _attackInfoGameObject.SetActive(true);
+        }
+        
+        private void UnselectTile()
+        {
+            if (_selectedTile == null) return;
+            
+            _selectedTile.GetComponent<MapTile>().UnhighlightAttack();
+            _selectedTile = null;
+            
+            _fireButton.SetActive(false);
         }
 
         private void UnselectTank()
@@ -207,6 +291,8 @@ namespace Resources.Code.Scripts
             currentTile.Unhighlight(tank.moveDistance);
             
             _selectedTank = null;
+            
+            _attackInfoGameObject.SetActive(false);
         }
 
 
@@ -234,6 +320,53 @@ namespace Resources.Code.Scripts
             return go1;
         }
         
+        public void Recoilless()
+        {
+            _isMoving = false;
+            _isAttacking = true;
+            _attackType = 0;
+        }
+
+        public void Move()
+        {
+            var tank = _selectedTank.GetComponent<Tank>();
+            var currentTile = tank.currentTile.gameObject.GetComponent<MapTile>();
+            
+            // If tank hasn't moved, highlight movement tiles
+            if (!tank.hasMoved)
+            {
+                currentTile.Highlight(tank.moveDistance);
+                
+            }
+
+            _isAttacking = false;
+            _isMoving = true;
+            
+            _moveButton.SetActive(false);
+        }
+
+        public void Fire()
+        {
+            _selectedTank.GetComponent<Tank>().hasAttacked = true;
+            
+            switch (_attackType)
+            {
+                case 0:
+                    _selectedTank.GetComponent<Tank>().Recoilless(_selectedTile.GetComponent<MapTile>().GetTop());
+                    break;
+                case 1:
+                    _selectedTank.GetComponent<Tank>().Special(_selectedTile.GetComponent<MapTile>().GetTop());
+                    break;
+            }
+            _shot1Button.SetActive(false);
+            _shot2Button.SetActive(false);
+            
+            UnselectTile();
+            UnselectTank();
+
+        }
+
+
         // private static GameObject CreateEnemyManagerGameObject()
         // {
         //     var go = new GameObject(); 

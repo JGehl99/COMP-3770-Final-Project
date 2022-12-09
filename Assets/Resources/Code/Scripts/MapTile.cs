@@ -25,15 +25,17 @@ namespace Resources.Code.Scripts
         private Vector3 _bounds;
         
         // Materials for default color and onHover color
-        private Material hoverMaterial;
-        private Material defaultMaterial;
-        
+        private Material _hoverMaterial;
+        private Material _defaultMaterial;
+        private Material _AttackMaterial;
+
         private Material _grassDefault;
         private Material _grassHover;
         private Material _sandDefault;
         private Material _sandHover;
         private Material _snowDefault;
         private Material _snowHover;
+        
         
         // Flag if mouse is hovering
         private bool _hoverFlag;
@@ -62,6 +64,7 @@ namespace Resources.Code.Scripts
             _sandHover = UnityEngine.Resources.Load("Materials/SandHover", typeof(Material)) as Material;
             _snowDefault = UnityEngine.Resources.Load("Materials/SnowDefault", typeof(Material)) as Material;
             _snowHover = UnityEngine.Resources.Load("Materials/SnowHover", typeof(Material)) as Material;
+            _AttackMaterial = UnityEngine.Resources.Load("Materials/AttackTile", typeof(Material)) as Material;
 
             // Set x, z
             x = xi;
@@ -91,25 +94,25 @@ namespace Resources.Code.Scripts
             // Set tile to sand, grass, or snow depending on height
             if (y <= 4.5f)
             {
-                defaultMaterial = _sandDefault;
-                hoverMaterial = _sandHover;
+                _defaultMaterial = _sandDefault;
+                _hoverMaterial = _sandHover;
             } 
             else if (y is > 4.5f and <= 9f)
             {
-                defaultMaterial = _grassDefault;
-                hoverMaterial = _grassHover;
+                _defaultMaterial = _grassDefault;
+                _hoverMaterial = _grassHover;
             }
             else
             {
-                defaultMaterial = _snowDefault;
-                hoverMaterial = _snowHover;
+                _defaultMaterial = _snowDefault;
+                _hoverMaterial = _snowHover;
             }
 
             _r = GetComponent<MeshRenderer>();
     
             // Sets Material to defaultMaterial
             var mats = _r.materials;
-            mats[0] = defaultMaterial;
+            mats[0] = _defaultMaterial;
             _r.materials = mats;
         }
 
@@ -121,8 +124,8 @@ namespace Resources.Code.Scripts
                 var mapTile = go.GetComponent<MapTile>();
                 mapTile.isHighlighted = true;
                 
-                var mat1 = mapTile.defaultMaterial;
-                var mat2 = mapTile.hoverMaterial;
+                var mat1 = mapTile._defaultMaterial;
+                var mat2 = mapTile._hoverMaterial;
 
                 go.GetComponent<MeshRenderer>().material.Lerp(mat1, mat2, 1.0f);
             }
@@ -136,11 +139,20 @@ namespace Resources.Code.Scripts
                 var mapTile = go.GetComponent<MapTile>();
                 mapTile.isHighlighted = false;
                 
-                var mat1 = mapTile.defaultMaterial;
-                var mat2 = mapTile.hoverMaterial;
+                var mat1 = mapTile._defaultMaterial;
+                var mat2 = mapTile._hoverMaterial;
                 
                 go.GetComponent<MeshRenderer>().material.Lerp(mat2, mat1, 1.0f);
             }
+        }
+
+        public void HighlightAttack()
+        {
+            GetComponent<MeshRenderer>().material.Lerp(_defaultMaterial, _AttackMaterial, 1.0f);
+        }
+        public void UnhighlightAttack()
+        {
+            GetComponent<MeshRenderer>().material.Lerp(_AttackMaterial, _defaultMaterial, 1.0f);
         }
 
         public Vector3 GetTop()

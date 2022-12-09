@@ -102,8 +102,18 @@ public class CameraController : MonoBehaviour
         _cameraTransform.LookAt(transform);
     }
 
+    private void CenterCameraToPlayer()
+    {
+        
+    }
+
     private void Update()
     {
+        if (Input.GetKeyDown(KeyCode.Tab))
+        {
+            
+        }
+
         GetMovement();
 
         UpdatePosition();
