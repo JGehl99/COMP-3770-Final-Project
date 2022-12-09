@@ -23,10 +23,23 @@ public class CameraController : MonoBehaviour
 
     private float _zoomDis = 40f;
 
+    private float _lowerBoundX;
+    private float _lowerBoundZ;
+    private float _upperBoundX;
+    private float _upperBoundZ;
+    
     private void Awake()
     {
         _cameraControls = new CameraControls();
         _cameraTransform = GetComponentInChildren<Camera>().transform;
+    }
+
+    public void SetupCameraBounds(float lowerBoundX, float lowerBoundY, float upperBoundX, float upperBoundY)
+    {
+        _lowerBoundX = lowerBoundX;
+        _lowerBoundZ = lowerBoundY;
+        _upperBoundX = upperBoundX;
+        _upperBoundZ = upperBoundY;
     }
 
     private void OnEnable()
@@ -88,7 +101,30 @@ public class CameraController : MonoBehaviour
 
     private void UpdatePosition()
     {
-        transform.position += _targetPos * (maxSpeed * Time.deltaTime);
+        var t = transform.position;
+        
+        t += _targetPos * (maxSpeed * Time.deltaTime);
+
+        
+        
+        if (t.x < _lowerBoundX)
+        {
+            t.x = _lowerBoundX;
+        } else if (t.x > _upperBoundX)
+        {
+            t.x = _upperBoundX;
+        }
+        
+        if (t.z < _lowerBoundZ)
+        {
+            t.z = _lowerBoundZ;
+        } else if (t.z > _upperBoundZ)
+        {
+            t.z = _upperBoundZ;
+        }
+
+        transform.position = t;
+        
         _targetPos = Vector3.zero;
     }
 

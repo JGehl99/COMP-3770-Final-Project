@@ -75,17 +75,6 @@ namespace Resources.Code.Scripts
             // Set up GameManager
             //**********************
             
-            
-            
-            
-            //**********************
-            // Set up Camera
-            //**********************
-            
-            //TODO: Clamp Camera to size of map
-
-            _cameraGameObject = CreateCameraGameObject();
-            _camera = Camera.main;
 
             //**********************
             // Set up Managers
@@ -149,6 +138,29 @@ namespace Resources.Code.Scripts
             //TODO: Get selection list from Setup Scene
             // Spawn Characters on map
             _playerManager.SpawnTanks(new List<int>{0, 1, 2}, _mapManager.MapArray);
+            
+            
+            //**********************
+            // Set up Camera
+            //**********************
+            
+            //TODO: Clamp Camera to size of map
+
+            _cameraGameObject = CreateCameraGameObject();
+
+            var lowerLeftTile = _mapManager.MapArray[0, 0].GetComponent<MapTile>().GetTop();
+            var topRightTile = _mapManager.MapArray[maxMapX-1, maxMapZ-1].GetComponent<MapTile>().GetTop();
+
+
+            _cameraGameObject.GetComponentInChildren<CameraController>().SetupCameraBounds(
+                lowerLeftTile.x, 
+                lowerLeftTile.z, 
+                topRightTile.x, 
+                topRightTile.z
+            );
+            
+            _camera = Camera.main;
+            
         }
 
         private void Update()
