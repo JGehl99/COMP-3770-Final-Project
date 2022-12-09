@@ -27,7 +27,8 @@ namespace Resources.Code.Scripts
         // Materials for default color and onHover color
         private Material _hoverMaterial;
         private Material _defaultMaterial;
-        private Material _AttackMaterial;
+        private Material _attackMaterial;
+        private Material _selectedTankMaterial;
 
         private Material _grassDefault;
         private Material _grassHover;
@@ -64,7 +65,8 @@ namespace Resources.Code.Scripts
             _sandHover = UnityEngine.Resources.Load("Materials/SandHover", typeof(Material)) as Material;
             _snowDefault = UnityEngine.Resources.Load("Materials/SnowDefault", typeof(Material)) as Material;
             _snowHover = UnityEngine.Resources.Load("Materials/SnowHover", typeof(Material)) as Material;
-            _AttackMaterial = UnityEngine.Resources.Load("Materials/AttackTile", typeof(Material)) as Material;
+            _attackMaterial = UnityEngine.Resources.Load("Materials/AttackTile", typeof(Material)) as Material;
+            _selectedTankMaterial = UnityEngine.Resources.Load("Materials/SelectedTank", typeof(Material)) as Material;
 
             // Set x, z
             x = xi;
@@ -148,11 +150,20 @@ namespace Resources.Code.Scripts
 
         public void HighlightAttack()
         {
-            GetComponent<MeshRenderer>().material.Lerp(_defaultMaterial, _AttackMaterial, 1.0f);
+            GetComponent<MeshRenderer>().material.Lerp(_defaultMaterial, _attackMaterial, 1.0f);
         }
         public void UnhighlightAttack()
         {
-            GetComponent<MeshRenderer>().material.Lerp(_AttackMaterial, _defaultMaterial, 1.0f);
+            GetComponent<MeshRenderer>().material.Lerp(_attackMaterial, _defaultMaterial, 1.0f);
+        }
+        
+        public void HighlightSelect()
+        {
+            GetComponent<MeshRenderer>().material.Lerp(_defaultMaterial, _selectedTankMaterial, 1.0f);
+        }
+        public void UnhighlightSelect()
+        {
+            GetComponent<MeshRenderer>().material.Lerp(_selectedTankMaterial, _defaultMaterial, 1.0f);
         }
 
         public Vector3 GetTop()

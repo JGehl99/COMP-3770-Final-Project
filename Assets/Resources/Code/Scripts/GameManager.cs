@@ -233,7 +233,7 @@ namespace Resources.Code.Scripts
             UnselectTile();
             _selectedTank = go;
             var tank = _selectedTank.GetComponent<Tank>();
-
+            tank.currentTile.GetComponent<MapTile>().HighlightSelect();
             if (!tank.hasMoved)
             {
                 _moveButton.SetActive(true);
@@ -259,10 +259,21 @@ namespace Resources.Code.Scripts
             _attackInfoGameObject.SetActive(true);
         }
         
+        private void UnselectTank()
+        {
+            if (_selectedTank == null) return;
+            
+            var tank = _selectedTank.GetComponent<Tank>();
+            var currentTile = tank.currentTile.gameObject.GetComponent<MapTile>();
+            currentTile.Unhighlight(tank.moveDistance);
+            
+            _selectedTank = null;
+            tank.currentTile.GetComponent<MapTile>().UnhighlightSelect();
+            _attackInfoGameObject.SetActive(false);
+        }
+        
         private void SelectTile(GameObject go)
         {
-            
-            
             if(_selectedTile != null) UnselectTile();
             
             _fireButton.SetActive(true);
@@ -281,21 +292,7 @@ namespace Resources.Code.Scripts
             
             _fireButton.SetActive(false);
         }
-
-        private void UnselectTank()
-        {
-            if (_selectedTank == null) return;
-            
-            var tank = _selectedTank.GetComponent<Tank>();
-            var currentTile = tank.currentTile.gameObject.GetComponent<MapTile>();
-            currentTile.Unhighlight(tank.moveDistance);
-            
-            _selectedTank = null;
-            
-            _attackInfoGameObject.SetActive(false);
-        }
-
-
+        
         private static GameObject CreateMapManagerGameObject()
         {
             var go = new GameObject();
