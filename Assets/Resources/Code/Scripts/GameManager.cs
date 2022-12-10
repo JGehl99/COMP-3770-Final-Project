@@ -157,11 +157,7 @@ namespace Resources.Code.Scripts
 
             _camera = Camera.main;
         }
-
-        private void Update()
-        {
-        }
-
+        
         //***************************
         // If the player left clicks
         //***************************
@@ -361,7 +357,9 @@ namespace Resources.Code.Scripts
 
             _moveButton.SetActive(false);
         }
-        
+
+
+        //TODO - Needs testing
         /* OnEnemyMove
          * On the enemies turn, this function will run.
          * It will go through the list of enemy tanks, select a player at random
@@ -374,16 +372,43 @@ namespace Resources.Code.Scripts
             {
                 var rand = Random.Range(0, numPlayers - 1);
                 var player = players[rand].GetComponent<Tank>();
-                /* TODO - Adjust this so that the enemy tank gets the direction of pTile
-                 * and then moves through it's movement list to the next closest tile. */
+
                 var playerTileGo = player.currentTile;
                 var playerTile = playerTileGo.GetComponent<MapTile>();
                 var tankTile = tank.GetComponent<Tank>().currentTile.GetComponent<MapTile>();
 
-                
-                //var moveTile = tankTile.movementLists ..... Something like this
-                _enemyManager.MoveTank(tank, playerTileGo); //TODO This should be the move tile
+                var deltaInitDistance = CalculateDistance(tankTile.GetTop(), playerTile.GetTop());
+                //Temp variables
+                var targetTile = tank.GetComponent<Tank>().currentTile;
+                var targetDistance = deltaInitDistance;
+
+                //Iterate through each of the tiles that are in the movementList dictionary
+                foreach (var tile in tankTile.movementLists[3])
+                {
+                    //Get the Vec3 that holds the top position of the tile on the map
+                    var pos2 = tile.GetComponent<MapTile>().GetTop();
+                    /*Compute the distance between position and the current tank position */
+                    //Distance = | pos2 - tankTile.GetTop()|
+                    var deltaD = CalculateDistance(pos2, tankTile.GetTop());
+
+                    //Checking to see if the distance player from the selected tile 
+                    if (!(deltaD <= targetDistance)) continue;
+                    targetTile = tile;
+                    targetDistance = deltaD;
+                }
+
+                //Move the enemy tank to the target tile
+                _enemyManager.MoveTank(tank, targetTile);
             }
+        }
+
+        /* Returns the distance between 2 gi ven points in Vector3 space
+         * Param1: Unity::Vector3
+         * Param2: Unity::Vector3
+         */
+        private float CalculateDistance(Vector3 pos1, Vector3 pos2)
+        {
+            return (pos2 - pos1).magnitude;
         }
 
         public void Fire()
