@@ -112,7 +112,7 @@ public class CameraController : MonoBehaviour
         
         t += _targetPos * (maxSpeed * Time.deltaTime);
 
-        CheckBounds(t);
+        t = CheckBounds(t);
         
         transform.position = t;
         
@@ -123,7 +123,7 @@ public class CameraController : MonoBehaviour
     {
         Vector3 tankPos = tanks[tankCount].transform.position;
         
-        CheckBounds(tankPos);
+        tankPos = CheckBounds(tankPos);
         
         transform.position = tankPos;
         
@@ -139,7 +139,7 @@ public class CameraController : MonoBehaviour
         _cameraTransform.LookAt(transform);
     }
 
-    private void CheckBounds(Vector3 t)
+    private Vector3 CheckBounds(Vector3 t)
     {
         if (t.x < _lowerBoundX)
         {
@@ -156,6 +156,8 @@ public class CameraController : MonoBehaviour
         {
             t.z = _upperBoundZ;
         }
+
+        return t;
     }
     
     private void Update()
