@@ -361,6 +361,30 @@ namespace Resources.Code.Scripts
 
             _moveButton.SetActive(false);
         }
+        
+        /* OnEnemyMove
+         * On the enemies turn, this function will run.
+         * It will go through the list of enemy tanks, select a player at random
+         * and then move towards them. */
+        public void OnEnemyMove()
+        {
+            var numPlayers = _playerManager.tankList.Count;
+            var players = _playerManager.tankList;
+            foreach (var tank in _enemyManager.tankList)
+            {
+                var rand = Random.Range(0, numPlayers - 1);
+                var player = players[rand].GetComponent<Tank>();
+                /* TODO - Adjust this so that the enemy tank gets the direction of pTile
+                 * and then moves through it's movement list to the next closest tile. */
+                var playerTileGo = player.currentTile;
+                var playerTile = playerTileGo.GetComponent<MapTile>();
+                var tankTile = tank.GetComponent<Tank>().currentTile.GetComponent<MapTile>();
+
+                
+                //var moveTile = tankTile.movementLists ..... Something like this
+                _enemyManager.MoveTank(tank, playerTileGo); //TODO This should be the move tile
+            }
+        }
 
         public void Fire()
         {
