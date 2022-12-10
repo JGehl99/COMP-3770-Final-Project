@@ -1,3 +1,4 @@
+using System.Collections.Generic;
 using UnityEngine;
 
 namespace Resources.Code.Scripts
@@ -6,20 +7,26 @@ namespace Resources.Code.Scripts
     {
         // private int _numOfEnemies = 3;
         private GameObject _tankGameObject;
+        public List<GameObject> tankList;
 
         public void LoadModels()
         {
             _tankGameObject = UnityEngine.Resources.Load("Prefabs/Tank") as GameObject;
         }
 
-        public void SpawnTanks(int numOfEnemies, GameObject[,] mapArray)
+        public void SpawnTanks(int numOfEnemies, GameObject[,] mapArray, int max)
         {
+            
+            tankList = new List<GameObject>();
+
+            max = max - 1;
+            var min = max - 10;
             //Spawning the enemies on the field at the opposite corner than the player
-            for (int i = 0; i < numOfEnemies; i++)
+            for (var i = 0; i < numOfEnemies; i++)
             {
-                //TODO - Get the max size of the map as the max, - 10 for the min. 
-                var tile = GetValidSpawn(mapArray, 0, 10);
-                CreateTankGameObject($"EnemyTank{i}", 100, 3, tile);
+                var tile = GetValidSpawn(mapArray, min, max);
+                var tank = CreateTankGameObject($"EnemyTank{i}", 100, 3, tile);
+                tankList.Add(tank);
             }
         }
 
@@ -35,7 +42,7 @@ namespace Resources.Code.Scripts
                 var ranX = Random.Range(min, max);
                 var ranY = Random.Range(min, max);
 
-                var tile = arr[ranX, ranY];
+                var tile = arr[ranX - 1, ranY - 1];
 
                 var mapTile = tile.GetComponent<MapTile>();
 
@@ -59,6 +66,7 @@ namespace Resources.Code.Scripts
             spawnLocation.y += 6.25f; // Adjust for tank model height
 
             var go = Instantiate(_tankGameObject, spawnLocation, Quaternion.identity);
+            go.tag = "Enemy";
             go.GetComponent<Tank>().Create(tankName, health, moveDistance, tile);
             go.name = "Enemy-" + tankName;
             return go;
