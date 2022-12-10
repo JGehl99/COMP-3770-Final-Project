@@ -157,7 +157,7 @@ namespace Resources.Code.Scripts
 
             _camera = Camera.main;
         }
-        
+
         //***************************
         // If the player left clicks
         //***************************
@@ -358,35 +358,64 @@ namespace Resources.Code.Scripts
             _moveButton.SetActive(false);
         }
 
-
-        
+        //TODO Test the enemy turn functionality
         public void EnemyTurn()
         {
             var numPlayers = _playerManager.tankList.Count;
             var players = _playerManager.tankList;
-            
+
             foreach (var tank in _enemyManager.tankList)
             {
                 //Target a random player
                 var rand = Random.Range(0, numPlayers - 1);
-                var player = players[rand].GetComponent<Tank>();
-                
+                var player = players[rand];
+                var playerTank = player.GetComponent<Tank>();
+
                 //GameObjects
-                var playerTileGo = player.currentTile;
+                var playerTileGo = playerTank.currentTile;
                 var targetTile = tank.GetComponent<Tank>().currentTile;
-                
+
                 //Map Tiles
                 var tankTile = tank.GetComponent<Tank>().currentTile.GetComponent<MapTile>();
                 var playerTile = playerTileGo.GetComponent<MapTile>();
-                
+
                 //Distance variables
                 var deltaInitDistance = CalculateDistance(tankTile.GetTop(), playerTile.GetTop());
                 var targetDistance = deltaInitDistance;
+                
                 //Randomly decide if the enemy is going to move or attack, and execute the corresponding function
-                EnemyMove(tank, tankTile, targetTile, targetDistance);
+                var turnType = Random.Range(0, 1);
+                switch (turnType)
+                {
+                    case 0:
+                        EnemyMove(tank, tankTile, targetTile, targetDistance);
+                        break;
+                    default:
+                        EnemyAttack(tank, playerTile, targetDistance);
+                        break;
+                }
             }
         }
-        //TODO - Needs testing
+        
+        /* EnemyAttack
+         * Param1: GameObject - The tank that is firing
+         * Param2: MapTile - The tile that the tank will be firing on
+         * Param3: float - The distance to the target tile*/
+        public void EnemyAttack(GameObject tank, MapTile targetTile, float distance)
+        {
+            tank.GetComponent<Tank>().hasAttacked = true;
+            var attackType = Random.Range(0, 1);
+            switch (attackType)
+            {
+                case 0:
+                    tank.GetComponent<Tank>().Recoilless(targetTile.GetTop());
+                    break;
+                case 1:
+                    tank.GetComponent<Tank>().Special(targetTile.GetTop());
+                    break;
+            }
+        }
+
         /* EnemyMove
          * On the enemies turn, this function will run.
          * It will go through the list of enemy tanks, select a player at random
@@ -407,6 +436,7 @@ namespace Resources.Code.Scripts
                 targetTile = tile;
                 targetDistance = deltaD;
             }
+
             _enemyManager.MoveTank(tank, targetTile);
         }
 
