@@ -1,5 +1,4 @@
 ﻿using System.Collections.Generic;
-using Unity.VisualScripting;
 using UnityEngine;
 
 namespace Resources.Code.Scripts
@@ -10,7 +9,7 @@ namespace Resources.Code.Scripts
         private List<int> _selection;
         
         private int _numberOfPlayers;
-
+        private int _numOfEnemies = 3; //TODO - This should not be hardcoded, it is just for testing.
         private GameObject _tankGameObject;
 
         public void LoadModels()
@@ -24,11 +23,11 @@ namespace Resources.Code.Scripts
             _numberOfPlayers = playerSelection.Count;
             
             tankList = new List<GameObject>();
-            
+            //Spawn each of the tanks in the selection list
             foreach (var i in _selection)
             {
-                var tile = GetValidSpawn(mapArray);
-
+                //Determine if the tile they are spawning on is valid, see GetValidSpawn
+                var tile = GetValidSpawn(mapArray, 0, 10);
                 var tempTank = i switch
                 {
                     0 => CreateTankGameObject("Lt", 100, 3, tile),
@@ -41,18 +40,27 @@ namespace Resources.Code.Scripts
                 
                 tankList.Add(tempTank);
             }
+            
+            //Spawning the enemies on the field at the opposite corner than the player
+            for (int i = 0; i < _numOfEnemies; i++)
+            {
+                //TODO - Get the max size of the map as the max, - 10 for the min. 
+                var tile = GetValidSpawn(mapArray, 0, 10);
+                print("Spawn Enemy"); //TODO Comment out
+                CreateTankGameObject($"EnemyTank{i}", 100, 3, tile);
+            }
         }
         /*
          * Checks to see if the given MapTile is a valid spawning location
          * by checking to see how many neighbours it has, if it is greater than
          * 0, then the players are able to spawn on it.
          */
-        private GameObject GetValidSpawn(GameObject[,] arr)
+        private GameObject GetValidSpawn(GameObject[,] arr, int min, int max)
         {
             while (true)
             {
-                var ranX = Random.Range(0, 10);
-                var ranY = Random.Range(0, 10);
+                var ranX = Random.Range(min, max);
+                var ranY = Random.Range(min, max);
 
                 var tile = arr[ranX, ranY];
 
