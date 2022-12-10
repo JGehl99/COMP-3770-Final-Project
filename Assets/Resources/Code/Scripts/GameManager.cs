@@ -359,47 +359,55 @@ namespace Resources.Code.Scripts
         }
 
 
-        //TODO - Needs testing
-        /* OnEnemyMove
-         * On the enemies turn, this function will run.
-         * It will go through the list of enemy tanks, select a player at random
-         * and then move towards them. */
-        public void OnEnemyMove()
+        
+        public void EnemyTurn()
         {
             var numPlayers = _playerManager.tankList.Count;
             var players = _playerManager.tankList;
+            
             foreach (var tank in _enemyManager.tankList)
             {
+                //Target a random player
                 var rand = Random.Range(0, numPlayers - 1);
                 var player = players[rand].GetComponent<Tank>();
-
+                
+                //GameObjects
                 var playerTileGo = player.currentTile;
-                var playerTile = playerTileGo.GetComponent<MapTile>();
-                var tankTile = tank.GetComponent<Tank>().currentTile.GetComponent<MapTile>();
-
-                var deltaInitDistance = CalculateDistance(tankTile.GetTop(), playerTile.GetTop());
-                //Temp variables
                 var targetTile = tank.GetComponent<Tank>().currentTile;
+                
+                //Map Tiles
+                var tankTile = tank.GetComponent<Tank>().currentTile.GetComponent<MapTile>();
+                var playerTile = playerTileGo.GetComponent<MapTile>();
+                
+                //Distance variables
+                var deltaInitDistance = CalculateDistance(tankTile.GetTop(), playerTile.GetTop());
                 var targetDistance = deltaInitDistance;
-
-                //Iterate through each of the tiles that are in the movementList dictionary
-                foreach (var tile in tankTile.movementLists[3])
-                {
-                    //Get the Vec3 that holds the top position of the tile on the map
-                    var pos2 = tile.GetComponent<MapTile>().GetTop();
-                    /*Compute the distance between position and the current tank position */
-                    //Distance = | pos2 - tankTile.GetTop()|
-                    var deltaD = CalculateDistance(pos2, tankTile.GetTop());
-
-                    //Checking to see if the distance player from the selected tile 
-                    if (!(deltaD <= targetDistance)) continue;
-                    targetTile = tile;
-                    targetDistance = deltaD;
-                }
-
-                //Move the enemy tank to the target tile
-                _enemyManager.MoveTank(tank, targetTile);
+                //Randomly decide if the enemy is going to move or attack, and execute the corresponding function
+                EnemyMove(tank, tankTile, targetTile, targetDistance);
             }
+        }
+        //TODO - Needs testing
+        /* EnemyMove
+         * On the enemies turn, this function will run.
+         * It will go through the list of enemy tanks, select a player at random
+         * and then move towards them. */
+        public void EnemyMove(GameObject tank, MapTile currentTile, GameObject targetTile, float targetDistance)
+        {
+            //Iterate through each of the tiles that are in the movementList dictionary
+            foreach (var tile in currentTile.movementLists[3])
+            {
+                //Get the Vec3 that holds the top position of the tile on the map
+                var pos2 = tile.GetComponent<MapTile>().GetTop();
+                /*Compute the distance between position and the current tank position */
+                //Distance = | pos2 - tankTile.GetTop()|
+                var deltaD = CalculateDistance(pos2, currentTile.GetTop());
+
+                //Checking to see if the distance player from the selected tile 
+                if (!(deltaD <= targetDistance)) continue;
+                targetTile = tile;
+                targetDistance = deltaD;
+            }
+            _enemyManager.MoveTank(tank, targetTile);
         }
 
         /* Returns the distance between 2 gi ven points in Vector3 space
