@@ -1,4 +1,6 @@
 using System;
+using System.Collections.Generic;
+using Resources.Code.Scripts;
 using UnityEngine;
 using UnityEngine.InputSystem;
 
@@ -23,6 +25,9 @@ public class CameraController : MonoBehaviour
 
     private float _zoomDis = 40f;
 
+    private List<GameObject> tanks;
+    private int tankCount = 0;
+
     private float _lowerBoundX;
     private float _lowerBoundZ;
     private float _upperBoundX;
@@ -32,14 +37,16 @@ public class CameraController : MonoBehaviour
     {
         _cameraControls = new CameraControls();
         _cameraTransform = GetComponentInChildren<Camera>().transform;
+        
     }
 
-    public void SetupCameraBounds(float lowerBoundX, float lowerBoundY, float upperBoundX, float upperBoundY)
+    public void Setup(float lowerBoundX, float lowerBoundY, float upperBoundX, float upperBoundY, List<GameObject> tankList)
     {
         _lowerBoundX = lowerBoundX;
         _lowerBoundZ = lowerBoundY;
         _upperBoundX = upperBoundX;
         _upperBoundZ = upperBoundY;
+        tanks = tankList;
     }
 
     private void OnEnable()
@@ -105,8 +112,35 @@ public class CameraController : MonoBehaviour
         
         t += _targetPos * (maxSpeed * Time.deltaTime);
 
+        CheckBounds(t);
         
+        transform.position = t;
         
+        _targetPos = Vector3.zero;
+    }
+    
+    private void CenterCameraToPlayer(int tankCount)
+    {
+        Vector3 tankPos = tanks[tankCount].transform.position;
+        
+        CheckBounds(tankPos);
+        
+        transform.position = tankPos;
+        
+    }
+    
+    private void UpdaterCameraPosition()
+    {
+        var localPos = _cameraTransform.localPosition;
+        
+        var zoom = new Vector3(localPos.x, _zoomDis, localPos.z);
+
+        _cameraTransform.localPosition = zoom;
+        _cameraTransform.LookAt(transform);
+    }
+
+    private void CheckBounds(Vector3 t)
+    {
         if (t.x < _lowerBoundX)
         {
             t.x = _lowerBoundX;
@@ -122,38 +156,32 @@ public class CameraController : MonoBehaviour
         {
             t.z = _upperBoundZ;
         }
-
-        transform.position = t;
-        
-        _targetPos = Vector3.zero;
     }
-
-    private void UpdaterCameraPosition()
-    {
-        var localPos = _cameraTransform.localPosition;
-        
-        var zoom = new Vector3(localPos.x, _zoomDis, localPos.z);
-
-        _cameraTransform.localPosition = zoom;
-        _cameraTransform.LookAt(transform);
-    }
-
-    private void CenterCameraToPlayer()
-    {
-        
-    }
-
+    
     private void Update()
     {
         if (Input.GetKeyDown(KeyCode.Tab))
         {
+            CenterCameraToPlayer(tankCount);
+            if (tankCount < 2)
+            {
+                tankCount++; 
+            }
+            else
+            {
+                tankCount = 0;
+            }
+        }
+        else
+        {
+            GetMovement();
+
+            UpdatePosition();
             
         }
-
-        GetMovement();
-
-        UpdatePosition();
+        
         UpdaterCameraPosition();
+        
     }
 }
 
