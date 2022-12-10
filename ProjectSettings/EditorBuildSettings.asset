@@ -4,5 +4,26 @@
 EditorBuildSettings:
   m_ObjectHideFlags: 0
   serializedVersion: 2
-  m_Scenes: []
+  m_Scenes:
+  - enabled: 1
+    path: Assets/Resources/Scenes/Lindsey_Scenes/DONTDESTROYONLOAD.unity
+    guid: 332951907fa50a04499c785062465dc9
+  - enabled: 1
+    path: Assets/Resources/Scenes/Lindsey_Scenes/GameSettings.unity
+    guid: 01c8d339b8603454796d4eb68c31225b
+  - enabled: 1
+    path: Assets/Resources/Scenes/Lindsey_Scenes/GameSetUp.unity
+    guid: 8d4d78d2e1d9ed648a7883cc6b004d9d
+  - enabled: 1
+    path: Assets/Resources/Scenes/Lindsey_Scenes/HighScores.unity
+    guid: 506282dac4605724f955177b3df820f3
+  - enabled: 1
+    path: Assets/Resources/Scenes/Lindsey_Scenes/Instructions.unity
+    guid: 9fadb2544e7de6947947c302c981968f
+  - enabled: 1
+    path: Assets/Resources/Scenes/Lindsey_Scenes/Main Menu.unity
+    guid: b3b9e8bfc647a6f4584d5366e9fcc86e
+  - enabled: 1
+    path: Assets/Resources/Scenes/Lindsey_Scenes/TankSelection.unity
+    guid: 19aa14576d7dcff44a1ed18dacd7eefc
   m_configObjects: {}

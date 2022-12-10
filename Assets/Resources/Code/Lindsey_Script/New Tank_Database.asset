@@ -1,0 +1,35 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 192600d8dd0e035409d715b713a8e46a, type: 3}
+  m_Name: New Tank_Database
+  m_EditorClassIdentifier: 
+  tank:
+  - Tank_Name: Private 1st Class Hull
+    Tank: {fileID: 8137661484639146203, guid: 5e034c693fa06424a883c6e2a707b8c8, type: 3}
+    Tank_Information: 'Scout:\nFighting Type:\nLow Damage, High Health, Can Move
+      Further\nAttacks: Recoilless, Shrapnel, EMP'
+  - Tank_Name: Private 2nd Class Clutch
+    Tank: {fileID: 1360866686235990610, guid: 105f8a4d85477de4d8a5edd43f0997de, type: 3}
+    Tank_Information: 'DPS: Fighting Type: High Damage, Low Health, Precision Shot.
+      Attacks: Recoilless, Shrapnel, Smoke Bombs'
+  - Tank_Name: Field Medic Cpl. Sprocket
+    Tank: {fileID: 6273680772663901963, guid: 65bf008f67793334fbb50ae281826f28, type: 3}
+    Tank_Information: 'Healer:\nFighting Type:\nLow Damage, Med Health, Can Heal
+      Others\nAttacks: Recoilless, Shrapnel, Repair Kit'
+  - Tank_Name: Sergeant-Major Diesel
+    Tank: {fileID: 5703464092344850424, guid: 85d9597e2af57424897481e34488c1d2, type: 3}
+    Tank_Information: 'Tank: Fighting Type: Low Damage, High Health, Air Strike\nAttacks:
+      Recoilless, Shrapnel, Recon'
+  - Tank_Name: Lieutenant Piston
+    Tank: {fileID: 3038116446313639924, guid: c2a646cc4588c3749b8405b57c1a8001, type: 3}
+    Tank_Information: 'Assassin:\nFighting Type:\nHigh Damage, Low Health, Smoke
+      Bombs\nAttacks: Recoilless, Shrapnel, SmkReSmoke Bomb'
