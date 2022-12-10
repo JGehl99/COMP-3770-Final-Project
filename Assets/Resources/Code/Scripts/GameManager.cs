@@ -88,7 +88,7 @@ namespace Resources.Code.Scripts
             _playerManagerGameObject = CreatePlayerManagerGameObject();
             _playerManager = _playerManagerGameObject.GetComponent<PlayerManager>();
             
-            //TODO: Create EnemyManager
+            //TODO: Set up EnemyManager inside of GameManager
             // // Set up EnemyManager
             // _enemyManagerGameObject = CreateEnemyManagerGameObject();
             // _enemyManager = _enemyManagerGameObject.GetComponent<EnemyManager>();
