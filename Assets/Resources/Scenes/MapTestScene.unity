@@ -681,8 +681,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e43ba75021e543ed94041ff28b1502f5, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  maxMapX: 99
-  maxMapZ: 99
+  maxMapX: 45
+  maxMapZ: 45
   maxMoveDistance: 6
   numberOfPlayers: 0
   numberOfEnemies: 0

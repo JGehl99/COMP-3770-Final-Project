@@ -152,11 +152,12 @@ namespace Resources.Code.Scripts
             var topRightTile = _mapManager.MapArray[maxMapX-1, maxMapZ-1].GetComponent<MapTile>().GetTop();
 
 
-            _cameraGameObject.GetComponentInChildren<CameraController>().SetupCameraBounds(
+            _cameraGameObject.GetComponentInChildren<CameraController>().Setup(
                 lowerLeftTile.x, 
                 lowerLeftTile.z, 
                 topRightTile.x, 
-                topRightTile.z
+                topRightTile.z,
+                _playerManager.tankList
             );
             
             _camera = Camera.main;
@@ -287,21 +288,26 @@ namespace Resources.Code.Scripts
         private void SelectTile(GameObject go)
         {
             if(_selectedTile != null) UnselectTile();
+            if(_selectedTank.GetComponent<Tank>().currentTile == _selectedTile) return;
+            
             
             _fireButton.SetActive(true);
             
             _selectedTile = go;
             _selectedTile.GetComponent<MapTile>().HighlightAttack();
             _attackInfoGameObject.SetActive(true);
+            
+            _selectedTank.GetComponent<Tank>().transform.LookAt(_selectedTile.GetComponent<MapTile>().GetTop());
+            
         }
-        
+
         private void UnselectTile()
         {
             if (_selectedTile == null) return;
             
             _selectedTile.GetComponent<MapTile>().UnhighlightAttack();
-            _selectedTile = null;
             
+            _selectedTile = null;
             _fireButton.SetActive(false);
         }
         
@@ -374,8 +380,8 @@ namespace Resources.Code.Scripts
             UnselectTank();
 
         }
-
-
+        
+        
         // private static GameObject CreateEnemyManagerGameObject()
         // {
         //     var go = new GameObject(); 
