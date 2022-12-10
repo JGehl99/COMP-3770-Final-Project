@@ -54,6 +54,13 @@ namespace Resources.Code.Scripts
         private Camera _camera;
         
         
+        //*************
+        // Audio
+        //*************
+
+        private AudioSource _audioSource;
+        private AudioClip _backgroundMusic;
+        
         //*********************************************
         // Variables for Currently Selected Tank & Tile
         //*********************************************
@@ -162,6 +169,17 @@ namespace Resources.Code.Scripts
             
             _camera = Camera.main;
             
+            
+            //**************
+            // Set up Audio
+            //**************
+            
+            _audioSource = gameObject.AddComponent<AudioSource>();
+
+            _backgroundMusic = UnityEngine.Resources.Load<AudioClip>("Audio/backgroundMusic");
+
+            _audioSource.clip = _backgroundMusic;
+            _audioSource.Play();
         }
 
         private void Update()
@@ -367,10 +385,10 @@ namespace Resources.Code.Scripts
             switch (_attackType)
             {
                 case 0:
-                    _selectedTank.GetComponent<Tank>().Recoilless(_selectedTile.GetComponent<MapTile>().GetTop());
+                    _selectedTank.GetComponent<Tank>().Recoilless(_selectedTile);
                     break;
                 case 1:
-                    _selectedTank.GetComponent<Tank>().Special(_selectedTile.GetComponent<MapTile>().GetTop());
+                    _selectedTank.GetComponent<Tank>().Special(_selectedTile);
                     break;
             }
             _shot1Button.SetActive(false);
@@ -378,16 +396,6 @@ namespace Resources.Code.Scripts
             
             UnselectTile();
             UnselectTank();
-
         }
-        
-        
-        // private static GameObject CreateEnemyManagerGameObject()
-        // {
-        //     var go = new GameObject(); 
-        //     go.AddComponent<EnemyManager>();
-        //     go.gameObject.name = "EnemyManager";
-        //     return go;
-        // }
     }
 }

@@ -1,4 +1,5 @@
 using System;
+using System.Collections;
 using System.Collections.Generic;
 using TMPro;
 using UnityEngine;
@@ -36,7 +37,11 @@ namespace Resources.Code.Scripts
         private Material _sandHover;
         private Material _snowDefault;
         private Material _snowHover;
+
+        private ParticleSystem _explosionParticles;
         
+        private AudioSource _explosionAudioSource;
+        private AudioClip _tankShotExplosionSound;
         
         // Flag if mouse is hovering
         private bool _hoverFlag;
@@ -56,6 +61,12 @@ namespace Resources.Code.Scripts
         public string id;
         private int _tileType = 0;
 
+        public void Start()
+        {
+            _explosionAudioSource = gameObject.AddComponent<AudioSource>();
+            _tankShotExplosionSound = UnityEngine.Resources.Load<AudioClip>("Audio/tankShotExplosion");
+        }
+
         public void Instantiate(int xi, float y, int zi, Vector3 bounds)
         {
             // Set material colors for default color and onHover color
@@ -67,6 +78,8 @@ namespace Resources.Code.Scripts
             _snowHover = UnityEngine.Resources.Load("Materials/SnowHover", typeof(Material)) as Material;
             _attackMaterial = UnityEngine.Resources.Load("Materials/AttackTile", typeof(Material)) as Material;
             _selectedTankMaterial = UnityEngine.Resources.Load("Materials/SelectedTank", typeof(Material)) as Material;
+
+            _explosionParticles = transform.GetComponentInChildren<ParticleSystem>();
 
             // Set x, z
             x = xi;
@@ -170,6 +183,14 @@ namespace Resources.Code.Scripts
         {
             var position = transform.position;
             return new Vector3(position.x, position.y + _bounds.y/2, position.z);
+        }
+
+        public IEnumerator TriggerExplosion()
+        {
+            yield return new WaitForSeconds(2f);
+            _explosionAudioSource.PlayOneShot(_tankShotExplosionSound, 1.0f);
+            yield return new WaitForSeconds(0.75f);
+            _explosionParticles.Play();
         }
     }
 }
