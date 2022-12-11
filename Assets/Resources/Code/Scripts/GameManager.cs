@@ -363,7 +363,8 @@ namespace Resources.Code.Scripts
         {
             var numPlayers = _playerManager.tankList.Count;
             var players = _playerManager.tankList;
-
+            
+            print("Enemies Turn");
             foreach (var tank in _enemyManager.tankList)
             {
                 //Target a random player
@@ -373,7 +374,7 @@ namespace Resources.Code.Scripts
 
                 //GameObjects
                 var playerTileGo = playerTank.currentTile;
-                var targetTile = tank.GetComponent<Tank>().currentTile;
+                // var targetTile = tank.GetComponent<Tank>().currentTile;
 
                 //Map Tiles
                 var tankTile = tank.GetComponent<Tank>().currentTile.GetComponent<MapTile>();
@@ -385,10 +386,11 @@ namespace Resources.Code.Scripts
                 
                 //Randomly decide if the enemy is going to move or attack, and execute the corresponding function
                 var turnType = Random.Range(0, 1);
+                print($"TurnType: {turnType}");
                 switch (turnType)
                 {
                     case 0:
-                        EnemyMove(tank, tankTile, targetTile, targetDistance);
+                        EnemyMove(tank, tankTile, playerTileGo, targetDistance);
                         break;
                     default:
                         EnemyAttack(tank, playerTile, targetDistance);
@@ -409,9 +411,11 @@ namespace Resources.Code.Scripts
             {
                 case 0:
                     tank.GetComponent<Tank>().Recoilless(targetTile.GetTop());
+                    print("Recoiless Attack");
                     break;
                 case 1:
                     tank.GetComponent<Tank>().Special(targetTile.GetTop());
+                    print("Special Attack");
                     break;
             }
         }
@@ -422,6 +426,7 @@ namespace Resources.Code.Scripts
          * and then move towards them. */
         public void EnemyMove(GameObject tank, MapTile currentTile, GameObject targetTile, float targetDistance)
         {
+            print("Moving!!!");
             //Iterate through each of the tiles that are in the movementList dictionary
             foreach (var tile in currentTile.movementLists[3])
             {
@@ -429,10 +434,10 @@ namespace Resources.Code.Scripts
                 var pos2 = tile.GetComponent<MapTile>().GetTop();
                 /*Compute the distance between position and the current tank position */
                 //Distance = | pos2 - tankTile.GetTop()|
-                var deltaD = CalculateDistance(pos2, currentTile.GetTop());
-
+                var deltaD = CalculateDistance(pos2, targetTile.GetComponent<MapTile>().GetTop());
+                print("DeltaD "+ deltaD);
                 //Checking to see if the distance player from the selected tile 
-                if (!(deltaD <= targetDistance)) continue;
+                if (!(deltaD <= targetDistance) && deltaD != 0) continue;
                 targetTile = tile;
                 targetDistance = deltaD;
             }
