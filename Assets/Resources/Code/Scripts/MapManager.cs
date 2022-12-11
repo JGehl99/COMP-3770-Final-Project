@@ -72,7 +72,8 @@ namespace Resources.Code.Scripts
             {
                 for (var x = 0; x < _xMax; x++)
                 {
-                    var arList = new List<GameObject>();
+                    var neighbourList = new List<GameObject>();
+                    var enemyNeighbourList = new List<GameObject>();
                     
                     var tile = MapArray[x, z];
                     
@@ -82,7 +83,12 @@ namespace Resources.Code.Scripts
 
                         if (IsValidNeighbour(tile, bottom))
                         {
-                            arList.Add(bottom);
+                            neighbourList.Add(bottom);
+                        }
+
+                        if (IsValidEnemyNeighbour(bottom))
+                        {
+                            enemyNeighbourList.Add(bottom);
                         }
                     }
                     catch (IndexOutOfRangeException)
@@ -94,7 +100,11 @@ namespace Resources.Code.Scripts
                         var left = MapArray[x - 1, z];
                         if (IsValidNeighbour(tile, left))
                         {
-                            arList.Add(left);
+                            neighbourList.Add(left);
+                        }
+                        if (IsValidEnemyNeighbour(left))
+                        {
+                            enemyNeighbourList.Add(left);
                         }
                     }
                     catch (IndexOutOfRangeException)
@@ -106,7 +116,11 @@ namespace Resources.Code.Scripts
                         var right = MapArray[x + 1, z];
                         if (IsValidNeighbour(tile, right))
                         {
-                            arList.Add(right);
+                            neighbourList.Add(right);
+                        }
+                        if (IsValidEnemyNeighbour(right))
+                        {
+                            enemyNeighbourList.Add(right);
                         }
                     }
                     catch (IndexOutOfRangeException)
@@ -118,7 +132,11 @@ namespace Resources.Code.Scripts
                         var top = MapArray[x, z + 1];
                         if (IsValidNeighbour(tile, top))
                         {
-                            arList.Add(top);
+                            neighbourList.Add(top);
+                        }
+                        if (IsValidEnemyNeighbour(top))
+                        {
+                            enemyNeighbourList.Add(top);
                         }
                     }
                     catch (IndexOutOfRangeException)
@@ -140,7 +158,11 @@ namespace Resources.Code.Scripts
                             var bottomRight = MapArray[x + 1, z - 1];
                             if (IsValidNeighbour(tile, bottomRight))
                             {
-                                arList.Add(bottomRight);
+                                neighbourList.Add(bottomRight);
+                            }
+                            if (IsValidEnemyNeighbour(bottomRight))
+                            {
+                                enemyNeighbourList.Add(bottomRight);
                             }
                         }
                         catch (IndexOutOfRangeException)
@@ -152,7 +174,11 @@ namespace Resources.Code.Scripts
                             var bottomLeft = MapArray[x - 1, z - 1];
                             if (IsValidNeighbour(tile, bottomLeft))
                             {
-                                arList.Add(bottomLeft);
+                                neighbourList.Add(bottomLeft);
+                            }
+                            if (IsValidEnemyNeighbour(bottomLeft))
+                            {
+                                enemyNeighbourList.Add(bottomLeft);
                             }
                         }
                         catch (IndexOutOfRangeException)
@@ -166,7 +192,11 @@ namespace Resources.Code.Scripts
                             var topRight = MapArray[x + 1, z + 1];
                             if (IsValidNeighbour(tile, topRight))
                             {
-                                arList.Add(topRight);
+                                neighbourList.Add(topRight);
+                            }
+                            if (IsValidEnemyNeighbour(topRight))
+                            {
+                                enemyNeighbourList.Add(topRight);
                             }
                         }
                         catch (IndexOutOfRangeException)
@@ -178,7 +208,11 @@ namespace Resources.Code.Scripts
                             var topLeft = MapArray[x - 1, z + 1];
                             if (IsValidNeighbour(tile, topLeft))
                             {
-                                arList.Add(topLeft);
+                                neighbourList.Add(topLeft);
+                            }
+                            if (IsValidEnemyNeighbour(topLeft))
+                            {
+                                enemyNeighbourList.Add(topLeft);
                             }
                         }
                         catch (IndexOutOfRangeException)
@@ -187,7 +221,8 @@ namespace Resources.Code.Scripts
                     }
 
                     // Set neighbours list for current Tile
-                    MapArray[x, z].GetComponent<MapTile>().neighbours = arList;
+                    MapArray[x, z].GetComponent<MapTile>().neighbours = neighbourList;
+                    MapArray[x, z].GetComponent<MapTile>().enemyNeighbours = enemyNeighbourList;
                 }
             }
 
@@ -196,7 +231,8 @@ namespace Resources.Code.Scripts
             {
                 for (var x = 0; x < _xMax; x++)
                 {
-                    MapArray[x, z].GetComponent<MapTile>().movementLists = GenerateMovementList(x, z, maxMoveDist);
+                    MapArray[x, z].GetComponent<MapTile>().movementLists = GenerateMovementList(x, z, maxMoveDist, false);
+                    MapArray[x, z].GetComponent<MapTile>().enemyMovementLists = GenerateMovementList(x, z, maxMoveDist, true);
                 }
             }
         }
@@ -214,6 +250,19 @@ namespace Resources.Code.Scripts
             return Math.Abs(tile.transform.position.y - neighbourY) < 2 && neighbourY > 3.58f;
         }
         
+        private bool IsValidEnemyNeighbour(GameObject neighbour)
+        {
+            var neighbourY = neighbour.transform.position.y;
+            if (neighbourY < 3.75)
+            {
+                var p = neighbour.transform.position;
+                p.y -= 10f;
+                neighbour.transform.position = p;
+            }
+            // Checks if tile height difference is less than 2 and that the neighbour is above water
+            return neighbourY > 3.58f;
+        }
+        
         private static Vector3 GetBounds(GameObject go)
         {
             // Create temp object, return bounds of MeshCollider
@@ -223,7 +272,7 @@ namespace Resources.Code.Scripts
             return bounds;
         }
 
-        private Dictionary<int, List<GameObject>> GenerateMovementList(int x, int z, int n)
+        private Dictionary<int, List<GameObject>> GenerateMovementList(int x, int z, int n, bool isEnemy)
         {
             // Initialize lists
             var visitedList = new List<GameObject>();
@@ -256,20 +305,13 @@ namespace Resources.Code.Scripts
                     visitedList.Add(tile);
 
                     // Add neighbours of current tile to nextStep list
-                    nextStep.AddRange(tile.GetComponent<MapTile>().neighbours);
+                    nextStep.AddRange(isEnemy
+                        ? tile.GetComponent<MapTile>().enemyNeighbours
+                        : tile.GetComponent<MapTile>().neighbours);
                 }
 
                 // Add list to movementLists at current step
                 movementLists.Add(steps++, visitedList.ToList());
-
-                // if (x == 0 && z == 0)
-                // {
-                //     foreach(var p in movementLists[steps-1])
-                //     {
-                //         var q = p.gameObject.GetComponent<MapTile>().id;
-                //         Debug.Log(steps + ": " + q);
-                //     }
-                // }
 
                 // Add nextStep to checkList and remove the list that was just checked
                 checkList.Add(nextStep);

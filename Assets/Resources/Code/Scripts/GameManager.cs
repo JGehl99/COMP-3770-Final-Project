@@ -1,4 +1,5 @@
 ﻿using System.Collections.Generic;
+using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.EventSystems;
 using UnityEngine.InputSystem;
@@ -361,39 +362,33 @@ namespace Resources.Code.Scripts
         //TODO Test the enemy turn functionality
         public void EnemyTurn()
         {
-            var numPlayers = _playerManager.tankList.Count;
-            var players = _playerManager.tankList;
             
-            print("Enemies Turn");
-            foreach (var tank in _enemyManager.tankList)
+            Debug.Log("Enemies Turn");
+
+            foreach (var enemyTankGameObject in _enemyManager.tankList)
             {
                 //Target a random player
-                var rand = Random.Range(0, numPlayers - 1);
-                var player = players[rand];
-                var playerTank = player.GetComponent<Tank>();
+                var rand = Random.Range(0, _playerManager.tankList.Count - 1);
+                var targetedPlayerTank = _playerManager.tankList[rand].GetComponent<Tank>();
 
                 //GameObjects
-                var playerTileGo = playerTank.currentTile;
-                // var targetTile = tank.GetComponent<Tank>().currentTile;
+                var targetedPlayerTileGameObject = targetedPlayerTank.currentTile;
 
                 //Map Tiles
-                var tankTile = tank.GetComponent<Tank>().currentTile.GetComponent<MapTile>();
-                var playerTile = playerTileGo.GetComponent<MapTile>();
+                var enemyTankTile = enemyTankGameObject.GetComponent<Tank>().currentTile.GetComponent<MapTile>();
+                var targetedPlayerTile = targetedPlayerTileGameObject.GetComponent<MapTile>();
 
                 //Distance variables
-                var deltaInitDistance = CalculateDistance(tankTile.GetTop(), playerTile.GetTop());
-                var targetDistance = deltaInitDistance;
+                var distEnemyToPlayer = CalculateDistance(enemyTankTile.GetTop(), targetedPlayerTile.GetTop());
                 
                 //Randomly decide if the enemy is going to move or attack, and execute the corresponding function
-                var turnType = Random.Range(0, 1);
-                print($"TurnType: {turnType}");
-                switch (turnType)
+                switch (Random.Range(0, 1))
                 {
                     case 0:
-                        EnemyMove(tank, tankTile, playerTileGo, targetDistance);
+                        EnemyMove(enemyTankGameObject, targetedPlayerTileGameObject);
                         break;
                     default:
-                        EnemyAttack(tank, playerTile, targetDistance);
+                        EnemyAttack(enemyTankGameObject, targetedPlayerTile, distEnemyToPlayer);
                         break;
                 }
             }
@@ -424,25 +419,33 @@ namespace Resources.Code.Scripts
          * On the enemies turn, this function will run.
          * It will go through the list of enemy tanks, select a player at random
          * and then move towards them. */
-        public void EnemyMove(GameObject tank, MapTile currentTile, GameObject targetTile, float targetDistance)
+        public void EnemyMove(GameObject enemyTank, GameObject targetedPlayerTileGameObject)
         {
-            print("Moving!!!");
-            //Iterate through each of the tiles that are in the movementList dictionary
-            foreach (var tile in currentTile.movementLists[3])
+            Debug.Log("Moving!!!");
+
+            var enemyTileMovementList =
+                enemyTank.GetComponent<Tank>().currentTile.GetComponent<MapTile>().enemyMovementLists[2];
+            
+            var playerTilePos = targetedPlayerTileGameObject.GetComponent<MapTile>().GetTop();
+            playerTilePos.y = 0;
+
+            var closestTile = enemyTank.GetComponent<Tank>().currentTile;
+            
+            foreach (var tile in enemyTileMovementList)
             {
-                //Get the Vec3 that holds the top position of the tile on the map
-                var pos2 = tile.GetComponent<MapTile>().GetTop();
-                /*Compute the distance between position and the current tank position */
-                //Distance = | pos2 - tankTile.GetTop()|
-                var deltaD = CalculateDistance(pos2, targetTile.GetComponent<MapTile>().GetTop());
-                print("DeltaD "+ deltaD);
-                //Checking to see if the distance player from the selected tile 
-                if (!(deltaD <= targetDistance) && deltaD != 0) continue;
-                targetTile = tile;
-                targetDistance = deltaD;
+                var candidateTilePos = tile.GetComponent<MapTile>().GetTop();
+                candidateTilePos.y = 0;
+
+                var closestTilePos = closestTile.GetComponent<MapTile>().GetTop();
+                closestTilePos.y = 0;
+
+                if (Vector3.Distance(playerTilePos, closestTilePos) > Vector3.Distance(playerTilePos, candidateTilePos))
+                {
+                    closestTile = tile;
+                }
             }
 
-            _enemyManager.MoveTank(tank, targetTile);
+            _enemyManager.MoveTank(enemyTank, closestTile);
         }
 
         /* Returns the distance between 2 gi ven points in Vector3 space
@@ -451,7 +454,9 @@ namespace Resources.Code.Scripts
          */
         private float CalculateDistance(Vector3 pos1, Vector3 pos2)
         {
-            return (pos2 - pos1).magnitude;
+            pos1.y = 0;
+            pos2.y = 0;
+            return Vector3.Distance(pos1, pos2);
         }
 
         public void Fire()
