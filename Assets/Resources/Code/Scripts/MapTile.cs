@@ -51,9 +51,11 @@ namespace Resources.Code.Scripts
         
         // Adjacency list
         public List<GameObject> neighbours = new();
+        public List<GameObject> enemyNeighbours = new();
         
         // Dictionary that holds lists of which tiles can be stepped to in n moves
         public Dictionary<int, List<GameObject>> movementLists;
+        public Dictionary<int, List<GameObject>> enemyMovementLists;
 
         public bool isHighlighted;
         

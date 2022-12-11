@@ -1,51 +1,40 @@
-﻿using System.Collections.Generic;
+using System.Collections.Generic;
 using UnityEngine;
 
 namespace Resources.Code.Scripts
 {
-    public class PlayerManager : MonoBehaviour
+    public class EnemyManager : MonoBehaviour
     {
-        public List<GameObject> tankList;
-        private List<int> _selection;
-
-        private int _numberOfPlayers;
+        // private int _numOfEnemies = 3;
         private GameObject _tankGameObject;
+        public List<GameObject> tankList;
 
         public void LoadModels()
         {
             _tankGameObject = UnityEngine.Resources.Load("Prefabs/Tank") as GameObject;
         }
 
-        public void SpawnTanks(List<int> playerSelection, GameObject[,] mapArray)
+        public void SpawnTanks(int numOfEnemies, GameObject[,] mapArray, int max)
         {
-            _selection = playerSelection;
-            _numberOfPlayers = playerSelection.Count;
-
+            
             tankList = new List<GameObject>();
-            //Spawn each of the tanks in the selection list
-            foreach (var i in _selection)
-            {
-                //Determine if the tile they are spawning on is valid, see GetValidSpawn
-                var tile = GetValidSpawn(mapArray, 0, 10);
-                var tempTank = i switch
-                {
-                    0 => CreateTankGameObject("Lt", 100, 3, tile),
-                    1 => CreateTankGameObject("Sgt", 100, 3, tile),
-                    2 => CreateTankGameObject("Cpl", 100, 3, tile),
-                    3 => CreateTankGameObject("Fm", 100, 3, tile),
-                    4 => CreateTankGameObject("Psc", 100, 3, tile),
-                    _ => CreateTankGameObject("Lt", 100, 3, tile)
-                };
 
-                tankList.Add(tempTank);
+            max = max - 1;
+            var min = max - 10;
+            //Spawning the enemies on the field at the opposite corner than the player
+            for (var i = 0; i < numOfEnemies; i++)
+            {
+                var tile = GetValidSpawn(mapArray, min, max);
+                var tank = CreateTankGameObject($"EnemyTank{i}", 100, 3, tile);
+                tankList.Add(tank);
             }
         }
 
         /*
-         * Checks to see if the given MapTile is a valid spawning location
-         * by checking to see how many neighbours it has, if it is greater than
-         * 0, then the players are able to spawn on it.
-         */
+        * Checks to see if the given MapTile is a valid spawning location
+        * by checking to see how many neighbours it has, if it is greater than
+        * 0, then the players are able to spawn on it.
+        */
         private GameObject GetValidSpawn(GameObject[,] arr, int min, int max)
         {
             while (true)
@@ -53,7 +42,7 @@ namespace Resources.Code.Scripts
                 var ranX = Random.Range(min, max);
                 var ranY = Random.Range(min, max);
 
-                var tile = arr[ranX, ranY];
+                var tile = arr[ranX - 1, ranY - 1];
 
                 var mapTile = tile.GetComponent<MapTile>();
 
@@ -77,8 +66,9 @@ namespace Resources.Code.Scripts
             spawnLocation.y += 6.25f; // Adjust for tank model height
 
             var go = Instantiate(_tankGameObject, spawnLocation, Quaternion.identity);
+            go.tag = "Enemy";
             go.GetComponent<Tank>().Create(tankName, health, moveDistance, tile);
-            go.name = "Tank-" + tankName;
+            go.name = "Enemy-" + tankName;
             return go;
         }
     }
