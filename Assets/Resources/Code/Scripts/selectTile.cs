@@ -1,15 +1,13 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
 public class selectTile : MonoBehaviour
 {
-
     public string currentTile;
     public bool tileSelected = false;
     public GameObject tileOptionsUI;
 
     public GameObject selectedTileGM;
+
     // Start is called before the first frame update
     void Start()
     {
@@ -19,9 +17,12 @@ public class selectTile : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        if(tileSelected){
+        if (tileSelected)
+        {
             tileOptionsUI.SetActive(true);
-        }else{
+        }
+        else
+        {
             tileOptionsUI.SetActive(false);
         }
     }

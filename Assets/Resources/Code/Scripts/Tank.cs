@@ -1,15 +1,13 @@
-﻿using System;
-using UnityEngine;
+﻿using UnityEngine;
 
 namespace Resources.Code.Scripts
 {
     public class Tank : MonoBehaviour
     {
-
         public string tankName;
         public float health;
         public int moveDistance;
-        
+
         public GameObject currentTile;
         public Vector3 target;
 
@@ -33,9 +31,9 @@ namespace Resources.Code.Scripts
             tankName = tankNameIn;
             health = healthIn;
             moveDistance = moveDistanceIn;
-            
+
             currentTile = tile;
-            
+
             target = transform.position;
         }
 
@@ -43,11 +41,9 @@ namespace Resources.Code.Scripts
         {
             Debug.Log(selectedTile);
         }
+
         public void Special(Vector3 selectedTile)
         {
-            
         }
-
-
     }
 }

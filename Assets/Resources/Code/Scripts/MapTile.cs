@@ -1,8 +1,6 @@
 using System;
 using System.Collections.Generic;
-using TMPro;
 using UnityEngine;
-using Random = UnityEngine.Random;
 
 namespace Resources.Code.Scripts
 {
