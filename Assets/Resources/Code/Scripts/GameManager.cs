@@ -300,14 +300,27 @@ namespace Resources.Code.Scripts
         {
             if (_selectedTile != null) UnselectTile();
             if (_selectedTank.GetComponent<Tank>().currentTile == _selectedTile) return;
-
-
+            
             _fireButton.SetActive(true);
 
             _selectedTile = go;
-            _selectedTile.GetComponent<MapTile>().HighlightAttack();
-            _attackInfoGameObject.SetActive(true);
 
+            if (_attackType == 0)
+            {
+                _selectedTile.GetComponent<MapTile>().HighlightAttack();
+            }else if (_attackType == 1)
+            {
+                foreach (var go1 in _selectedTile.GetComponent<MapTile>().movementLists[1])
+                {
+                    var mapTile = go1.GetComponent<MapTile>();
+                    
+                    mapTile.HighlightAttack();
+                    
+                }
+            }
+            
+            _attackInfoGameObject.SetActive(true);
+            
             _selectedTank.GetComponent<Tank>().transform.LookAt(_selectedTile.GetComponent<MapTile>().GetTop());
         }
 
@@ -315,8 +328,22 @@ namespace Resources.Code.Scripts
         {
             if (_selectedTile == null) return;
 
-            _selectedTile.GetComponent<MapTile>().UnhighlightAttack();
-
+            
+            if (_attackType == 0)
+            {
+                _selectedTile.GetComponent<MapTile>().UnhighlightAttack();
+            }
+            else if (_attackType == 1)
+            {
+                foreach (var go in _selectedTile.GetComponent<MapTile>().movementLists[1])
+                {
+                    var mapTile = go.GetComponent<MapTile>();
+                    
+                    mapTile.UnhighlightAttack();
+                    
+                }
+            }
+            
             _selectedTile = null;
             _fireButton.SetActive(false);
         }
@@ -357,9 +384,20 @@ namespace Resources.Code.Scripts
 
         public void Recoilless()
         {
+            if(_selectedTile != null) UnselectTile();
             _isMoving = false;
             _isAttacking = true;
             _attackType = 0;
+            
+            
+        }
+        
+        public void Shrapnel()
+        {
+            if(_selectedTile != null) UnselectTile();
+            _isMoving = false;
+            _isAttacking = true;
+            _attackType = 1;
         }
 
         public void Move()
@@ -377,6 +415,29 @@ namespace Resources.Code.Scripts
             _isMoving = true;
 
             _moveButton.SetActive(false);
+        }
+        public void Fire()
+        {
+            _selectedTank.GetComponent<Tank>().hasAttacked = true;
+
+            switch (_attackType)
+            {
+                case 0:
+                    _selectedTank.GetComponent<Tank>().Recoilless(_selectedTile);
+                    break;
+                case 1:
+                    _selectedTank.GetComponent<Tank>().Shrapnel(_selectedTile);
+                    break;
+                case 2:
+                    _selectedTank.GetComponent<Tank>().Special(_selectedTile);
+                    break;
+            }
+
+            _shot1Button.SetActive(false);
+            _shot2Button.SetActive(false);
+
+            UnselectTile();
+            UnselectTank();
         }
 
         //TODO Test the enemy turn functionality
@@ -429,6 +490,10 @@ namespace Resources.Code.Scripts
                     print("Recoiless Attack");
                     break;
                 case 1:
+                    tank.GetComponent<Tank>().Shrapnel(targetTile);
+                    print("Shrapnel Attack");
+                    break;
+                case 2:
                     tank.GetComponent<Tank>().Special(targetTile);
                     print("Special Attack");
                     break;
@@ -478,26 +543,6 @@ namespace Resources.Code.Scripts
             pos2.y = 0;
             return Vector3.Distance(pos1, pos2);
         }
-
-        public void Fire()
-        {
-            _selectedTank.GetComponent<Tank>().hasAttacked = true;
-
-            switch (_attackType)
-            {
-                case 0:
-                    _selectedTank.GetComponent<Tank>().Recoilless(_selectedTile);
-                    break;
-                case 1:
-                    _selectedTank.GetComponent<Tank>().Special(_selectedTile);
-                    break;
-            }
-
-            _shot1Button.SetActive(false);
-            _shot2Button.SetActive(false);
-
-            UnselectTile();
-            UnselectTank();
-        }
+        
     }
 }
