@@ -38,6 +38,8 @@ namespace Resources.Code.Scripts
         private GameObject _moveButton;
         private GameObject _shot1Button;
         private GameObject _shot2Button;
+        
+        private List<GameObject> tanks;
 
 
         //**********************
@@ -70,6 +72,7 @@ namespace Resources.Code.Scripts
         private int _attackType;
         private bool _isAttacking = false;
         private bool _isMoving = false;
+        private bool _EnemyTurnDone = false;
         private Vector3 _coordinates;
 
 
@@ -381,7 +384,10 @@ namespace Resources.Code.Scripts
             go1.gameObject.name = "Camera";
             return go1;
         }
-
+        
+        /*
+         * Recoilless type shot for every tank, called on button press
+         */
         public void Recoilless()
         {
             if(_selectedTile != null) UnselectTile();
@@ -391,7 +397,9 @@ namespace Resources.Code.Scripts
             
             
         }
-        
+        /*
+         * Shrapnel type shot for every tank, called on button press
+         */
         public void Shrapnel()
         {
             if(_selectedTile != null) UnselectTile();
@@ -399,7 +407,7 @@ namespace Resources.Code.Scripts
             _isAttacking = true;
             _attackType = 1;
         }
-
+        
         public void Move()
         {
             var tank = _selectedTank.GetComponent<Tank>();
@@ -416,6 +424,10 @@ namespace Resources.Code.Scripts
 
             _moveButton.SetActive(false);
         }
+        
+        /*
+         * Fire is called on button press from the UI, after an attack and tile(s) to be attacked has been selected
+         */
         public void Fire()
         {
             _selectedTank.GetComponent<Tank>().hasAttacked = true;
@@ -473,8 +485,26 @@ namespace Resources.Code.Scripts
                         break;
                 }
             }
+            
+            ResetTanks();
+            
         }
-        
+
+        /*
+         * Resets the tanks functionality after the enemy's turn is complete.
+         */
+        private void ResetTanks()
+        {
+            foreach (var go in _playerManager.tankList)
+            {
+                var tank = go.GetComponent<Tank>();
+
+                tank.hasMoved = false;
+                tank.hasAttacked = false;
+
+            }
+        }
+
         /* EnemyAttack
          * Param1: GameObject - The tank that is firing
          * Param2: MapTile - The tile that the tank will be firing on
