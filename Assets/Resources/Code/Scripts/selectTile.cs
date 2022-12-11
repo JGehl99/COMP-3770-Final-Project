@@ -1,27 +1,29 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.Serialization;
 
 public class selectTile : MonoBehaviour
 {
-
     public string currentTile;
     public bool tileSelected = false;
     public GameObject tileOptionsUI;
 
-    public GameObject selectedTileGM;
+    [FormerlySerializedAs("selectedTileGM")]
+    public GameObject selectedTileGm;
     // Start is called before the first frame update
-    void Start()
-    {
-        // tileOptionsUI = GameObject.FindGameObjectWithTag("TileInfoUI");
-    }
+    // void Start()
+    // {
+    //     // tileOptionsUI = GameObject.FindGameObjectWithTag("TileInfoUI");
+    // }
 
     // Update is called once per frame
     void Update()
     {
-        if(tileSelected){
+        if (tileSelected)
+        {
             tileOptionsUI.SetActive(true);
-        }else{
+        }
+        else
+        {
             tileOptionsUI.SetActive(false);
         }
     }

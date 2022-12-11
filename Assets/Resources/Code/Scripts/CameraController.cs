@@ -1,6 +1,4 @@
-using System;
 using System.Collections.Generic;
-using Resources.Code.Scripts;
 using UnityEngine;
 using UnityEngine.InputSystem;
 
@@ -25,8 +23,8 @@ public class CameraController : MonoBehaviour
 
     private float _zoomDis = 40f;
 
-    private List<GameObject> tanks;
-    private int tankCount = 0;
+    private List<GameObject> _tanks;
+    private int _tankCount = 0;
 
     private float _lowerBoundX;
     private float _lowerBoundZ;
@@ -46,7 +44,7 @@ public class CameraController : MonoBehaviour
         _lowerBoundZ = lowerBoundY;
         _upperBoundX = upperBoundX;
         _upperBoundZ = upperBoundY;
-        tanks = tankList;
+        _tanks = tankList;
     }
 
     private void OnEnable()
@@ -121,7 +119,7 @@ public class CameraController : MonoBehaviour
     
     private void CenterCameraToPlayer(int tankCount)
     {
-        Vector3 tankPos = tanks[tankCount].transform.position;
+        Vector3 tankPos = _tanks[tankCount].transform.position;
         
         tankPos = CheckBounds(tankPos);
         
@@ -164,14 +162,14 @@ public class CameraController : MonoBehaviour
     {
         if (Input.GetKeyDown(KeyCode.Tab))
         {
-            CenterCameraToPlayer(tankCount);
-            if (tankCount < 2)
+            CenterCameraToPlayer(_tankCount);
+            if (_tankCount < 2)
             {
-                tankCount++; 
+                _tankCount++; 
             }
             else
             {
-                tankCount = 0;
+                _tankCount = 0;
             }
         }
         else

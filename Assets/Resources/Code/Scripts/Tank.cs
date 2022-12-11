@@ -1,12 +1,9 @@
-﻿using System;
-using UnityEngine;
-using UnityEngine.Tilemaps;
+﻿using UnityEngine;
 
 namespace Resources.Code.Scripts
 {
     public class Tank : MonoBehaviour
     {
-
         public string tankName;
         public float health;
         public int moveDistance;
@@ -37,7 +34,6 @@ namespace Resources.Code.Scripts
             _tankMoveSound = UnityEngine.Resources.Load<AudioClip>("Audio/tankMove");
             _tankShotSound = UnityEngine.Resources.Load<AudioClip>("Audio/tankShot");
             _tankDestroySound = UnityEngine.Resources.Load<AudioClip>("Audio/tankDestroy");
-            
         }
 
         private void Update()
@@ -67,7 +63,6 @@ namespace Resources.Code.Scripts
             target = transform.position;
 
 
-
             _shotParticles = transform.GetChild(1).GetComponent<ParticleSystem>();
         }
 
@@ -84,32 +79,28 @@ namespace Resources.Code.Scripts
             _shotParticles.Play();
 
             StartCoroutine(tileScript.TriggerExplosion());
-
         }
-        
+
         public void Shrapnel(GameObject selectedTile)
         {
             Debug.Log(selectedTile.GetComponent<MapTile>().GetTop());
 
-            
 
             Debug.Log("Shrapnel!");
 
             _shotAudioSource.PlayOneShot(_tankShotSound, 1.0f);
             _shotParticles.Play();
-            
+
             foreach (var go in selectedTile.GetComponent<MapTile>().movementLists[1])
             {
                 var mapTile = go.GetComponent<MapTile>();
                 var tilePos = mapTile.GetTop();
-                
-                
+
+
                 mapTile.HighlightAttack();
-                
+
                 StartCoroutine(mapTile.TriggerExplosion());
             }
-
-            
         }
 
         public void Special(GameObject selectedTile)
@@ -125,8 +116,6 @@ namespace Resources.Code.Scripts
             _shotParticles.Play();
 
             StartCoroutine(tileScript.TriggerExplosion());
-            
-            
         }
     }
 }
