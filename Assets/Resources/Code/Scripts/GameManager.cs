@@ -472,7 +472,7 @@ namespace Resources.Code.Scripts
                 var distEnemyToPlayer = CalculateDistance(enemyTankTile.GetTop(), targetedPlayerTile.GetTop());
                 
                 //Randomly decide if the enemy is going to move or attack, and execute the corresponding function
-                switch (Random.Range(0, 1))
+                switch (Random.Range(0, 2))
                 {
                     case 0:
                         EnemyMove(enemyTankGameObject, targetedPlayerTileGameObject);
