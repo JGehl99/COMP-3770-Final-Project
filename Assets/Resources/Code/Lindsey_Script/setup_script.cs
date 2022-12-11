@@ -26,17 +26,16 @@ public class setup_script : MonoBehaviour{
     private Animator Ally_animator, Amount_animator,Team_animator;
     //ALLY_SLIDER-END-----------------------------
 
-/*
+
     //ENEMY-SLIDER-START------------------
     public GameObject Enemy_Slider_Menu;
     public GameObject EnemyAmountOfTanks_Panel;
     public Button EnemyAmount_Button,Enemy_Slider_Button;
-    public bool slider_update;
-    public Slider EnemySlider_Update;
+    public Slider EnemySlider;
     public int EnemySliderAmount;
     public TMP_Text EnemyTankAmount_Text;
     //ENEMY-SLIDER-END-------------
-*/
+
 
     void Start(){
         //MAIN
@@ -75,11 +74,11 @@ public class setup_script : MonoBehaviour{
         Team_animator = team_options_panel.GetComponent<Animator>();
 
         //ENEMY-SLIDER
-        /*
-        Amount_Button.onClick.AddListener(showAmount);
-        Enemy_Slider_Button.onClick.AddListener(ShowHideMenu);
-        enemy_tank_amount_text.text = "";
-        */
+        
+        EnemyAmount_Button.onClick.AddListener(Enemy_showAmount);
+        Enemy_Slider_Button.onClick.AddListener(Enemy_ShowHideMenu);
+        EnemyTankAmount_Text.text = "";
+        
     }
 
     void onSubmit(string name){
@@ -186,9 +185,9 @@ public class setup_script : MonoBehaviour{
         }
     }
     //ENEMY-SLIDER START---------
-    /*
+    
 
-  public void ShowHideMenu(){
+  public void Enemy_ShowHideMenu(){
         if(Enemy_Slider_Menu != null){
             Animator animator = Enemy_Slider_Menu.GetComponent<Animator>();
             if(animator != null){
@@ -198,19 +197,22 @@ public class setup_script : MonoBehaviour{
         }
     }
 
-    void showAmount(){
+    void Enemy_showAmount(){
         Debug.Log("amount of tanks");
-        if(amount_of_tanks_panel != null){
-            Animator animator = amount_of_tanks_panel.GetComponent<Animator>();
+        if(EnemyAmountOfTanks_Panel != null){
+            Animator animator = EnemyAmountOfTanks_Panel.GetComponent<Animator>();
             if(animator != null){
                 bool isOpen = animator.GetBool("Show");
                 animator.SetBool("Show",!isOpen);
             }
         }
-        slider_update = true;    
+        EnemySliderAmount = (int)EnemySlider.value;
+        EnemyTankAmount_Text.text = EnemySliderAmount.ToString();
+        DontDestroyOnLoad_Script.Instance.Enemy_Amount_of_Tanks= EnemySliderAmount;
+         
     }
 
-    */
+    
 
     //ENEMY-SLIDER ENDS---
 
