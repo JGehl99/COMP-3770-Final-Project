@@ -26,7 +26,6 @@ public class setup_script : MonoBehaviour{
     private Animator Ally_animator, Amount_animator,Team_animator;
     //ALLY_SLIDER-END-----------------------------
 
-
     //ENEMY-SLIDER-START------------------
     public GameObject Enemy_Slider_Menu;
     public GameObject EnemyAmountOfTanks_Panel;
@@ -35,7 +34,6 @@ public class setup_script : MonoBehaviour{
     public int EnemySliderAmount;
     public TMP_Text EnemyTankAmount_Text;
     //ENEMY-SLIDER-END-------------
-
 
     void Start(){
         //MAIN
@@ -74,15 +72,12 @@ public class setup_script : MonoBehaviour{
         Team_animator = team_options_panel.GetComponent<Animator>();
 
         //ENEMY-SLIDER
-        
         EnemyAmount_Button.onClick.AddListener(Enemy_showAmount);
         Enemy_Slider_Button.onClick.AddListener(Enemy_ShowHideMenu);
         EnemyTankAmount_Text.text = "";
-        
     }
 
-    void onSubmit(string name){
-        Debug.Log("name: "+name);
+    void onSubmit(string name){//gets the entered text from the InputField, and updates the users name
         team_name_text.text = name;
     }
 
@@ -127,26 +122,29 @@ public class setup_script : MonoBehaviour{
             emblem2.enabled = false;
             emblem3.enabled = false;
             emblem4.enabled = false;
+            playerIcon.rectTransform.sizeDelta = new Vector2(75, 75);
         }
         if(Clicked_Button_Name == "emblem2"){
             emblem2.enabled = !emblem2.enabled;
             emblem1.enabled = false;
             emblem3.enabled = false;
             emblem4.enabled = false;
+            playerIcon.rectTransform.sizeDelta = new Vector2(75, 75);
         }
         if(Clicked_Button_Name=="emblem3"){
             emblem3.enabled = !emblem3.enabled;
             emblem2.enabled = false;
             emblem1.enabled = false;
             emblem4.enabled = false;
+            playerIcon.rectTransform.sizeDelta = new Vector2(100, 75);
         }
         if(Clicked_Button_Name=="emblem4"){
             emblem4.enabled = !emblem4.enabled;
             emblem2.enabled = false;
             emblem3.enabled = false;
             emblem1.enabled = false;
+            playerIcon.rectTransform.sizeDelta = new Vector2(100, 75);
         }
-     
     }
 
     public void ShowHideMenu(){
@@ -184,9 +182,9 @@ public class setup_script : MonoBehaviour{
             }
         }
     }
-    //ENEMY-SLIDER START---------
-    
 
+
+  //ENEMY-SLIDER START---------
   public void Enemy_ShowHideMenu(){
         if(Enemy_Slider_Menu != null){
             Animator animator = Enemy_Slider_Menu.GetComponent<Animator>();
@@ -208,12 +206,7 @@ public class setup_script : MonoBehaviour{
         }
         EnemySliderAmount = (int)EnemySlider.value;
         EnemyTankAmount_Text.text = EnemySliderAmount.ToString();
-        DontDestroyOnLoad_Script.Instance.Enemy_Amount_of_Tanks= EnemySliderAmount;
-         
+        DontDestroyOnLoad_Script.Instance.Enemy_Amount_of_Tanks= EnemySliderAmount;    
     }
-
-    
-
     //ENEMY-SLIDER ENDS---
-
 }

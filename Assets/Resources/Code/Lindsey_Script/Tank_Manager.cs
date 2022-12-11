@@ -19,6 +19,10 @@ public class Tank_Manager : MonoBehaviour{
     public GameObject Edit_Tanks_Panel;
 
     public GameObject PV1,PV2,Sarg_M_Diesel,L_Pistol,Medic;
+
+
+    [SerializeField] float _degreesPerSecond = 30f;
+    [SerializeField] Vector3 _axis = Vector3.forward;
    
     void Start(){
         Next_Button.onClick.AddListener(NextTank);
@@ -113,7 +117,6 @@ public class Tank_Manager : MonoBehaviour{
             Selected_Tanks_tmp[2] = TankDB.GetTank(Current_Tank).Tank;
             CheckMark3.enabled = true;
         }
-        
         else if(DontDestroyOnLoad_Script.Instance.Ally_Amount_of_Tanks>3&&Selected_Tanks_tmp[3]==null){
             Selected_Tanks_tmp[3] = TankDB.GetTank(Current_Tank).Tank;
             CheckMark4.enabled = true;
@@ -151,5 +154,6 @@ public class Tank_Manager : MonoBehaviour{
         name_text.text = tank.Tank_Name;
         tank_information_text.text = tank.Tank_Information;
         //tank model not moving to correct place
+        //tank.Tank.transform.Rotate( _axis.normalized * _degreesPerSecond * Time.deltaTime );
     }
 }
