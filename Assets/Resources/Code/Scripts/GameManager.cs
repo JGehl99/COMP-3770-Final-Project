@@ -1,8 +1,10 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.EventSystems;
 using UnityEngine.InputSystem;
+using Random = UnityEngine.Random;
 
 namespace Resources.Code.Scripts
 {
@@ -404,7 +406,12 @@ namespace Resources.Code.Scripts
             _isAttacking = true;
             _attackType = 1;
         }
-        
+
+        public void OnHit(Tank tank)
+        {
+            //TODO Detect if a tank is hit or not
+        }
+
         public void Move()
         {
             var tank = _selectedTank.GetComponent<Tank>();
