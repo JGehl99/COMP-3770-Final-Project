@@ -39,8 +39,6 @@ namespace Resources.Code.Scripts
         private GameObject _shot1Button;
         private GameObject _shot2Button;
         
-        private List<GameObject> tanks;
-
 
         //**********************
         // Scripts
@@ -72,7 +70,6 @@ namespace Resources.Code.Scripts
         private int _attackType;
         private bool _isAttacking = false;
         private bool _isMoving = false;
-        private bool _EnemyTurnDone = false;
         private Vector3 _coordinates;
 
 
