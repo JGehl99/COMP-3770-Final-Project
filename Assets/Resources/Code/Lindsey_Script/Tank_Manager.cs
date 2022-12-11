@@ -20,7 +20,6 @@ public class Tank_Manager : MonoBehaviour{
 
     public GameObject PV1,PV2,Sarg_M_Diesel,L_Pistol,Medic;
 
-
     [SerializeField] float _degreesPerSecond = 30f;
     [SerializeField] Vector3 _axis = Vector3.forward;
    
@@ -43,13 +42,19 @@ public class Tank_Manager : MonoBehaviour{
         CheckMark5.enabled = false;
         CheckMark6.enabled = false;
         
-        if(Tank_Amount ==3){
+        if(DontDestroyOnLoad_Script.Instance.Ally_Amount_of_Tanks ==3){
             Tank_Amount1_Image.enabled= true;
             Tank_Amount2_Image.enabled = true;
             Tank_Amount3_Image.enabled= true;
+            Tank_Amount4_Image.enabled= false;
+            Tank_Amount5_Image.enabled= false;
+            Tank_Amount6_Image.enabled= false;
+            CheckBox4.enabled = false;
+            CheckBox5.enabled = false;
+            CheckBox6.enabled = false; 
         }
 
-        if(Tank_Amount == 4){
+        if(DontDestroyOnLoad_Script.Instance.Ally_Amount_of_Tanks == 4){
             Tank_Amount4_Image.enabled= true;
             Tank_Amount5_Image.enabled= false;
             Tank_Amount6_Image.enabled= false;
@@ -57,7 +62,7 @@ public class Tank_Manager : MonoBehaviour{
             CheckBox5.enabled = false;
             CheckBox6.enabled = false; 
         }
-        if(Tank_Amount == 5){
+        if(DontDestroyOnLoad_Script.Instance.Ally_Amount_of_Tanks == 5){
             Tank_Amount4_Image.enabled= true;
             Tank_Amount5_Image.enabled= true;
             Tank_Amount6_Image.enabled= false;
@@ -65,7 +70,7 @@ public class Tank_Manager : MonoBehaviour{
             CheckBox5.enabled = true;
             CheckBox6.enabled = false; 
         }
-        if(Tank_Amount == 6){
+        if(DontDestroyOnLoad_Script.Instance.Ally_Amount_of_Tanks == 6){
             Tank_Amount4_Image.enabled= true;
             Tank_Amount5_Image.enabled= true;
             Tank_Amount6_Image.enabled= true;
@@ -73,8 +78,6 @@ public class Tank_Manager : MonoBehaviour{
             CheckBox5.enabled = true;
             CheckBox6.enabled = true; 
         }
-  
-    
         Selected_Tanks_tmp = new GameObject[DontDestroyOnLoad_Script.Instance.Ally_Amount_of_Tanks]; 
     }
 

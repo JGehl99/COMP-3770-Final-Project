@@ -64,7 +64,7 @@ public class setup_script : MonoBehaviour{
         Option_Button.onClick.AddListener(showOptions);
         Team_Button.onClick.AddListener(showTeam);
         
-        //DontDestroyOnLoad_Script.Instance.Ally_Amount_of_Tanks =3;
+        DontDestroyOnLoad_Script.Instance.Ally_Amount_of_Tanks =3;
 
         Ally_animator = Ally_Slider_Menu.GetComponent<Animator>();
         Ally_animator.SetBool("Show",true);
@@ -75,6 +75,19 @@ public class setup_script : MonoBehaviour{
         EnemyAmount_Button.onClick.AddListener(Enemy_showAmount);
         Enemy_Slider_Button.onClick.AddListener(Enemy_ShowHideMenu);
         EnemyTankAmount_Text.text = "";
+    }
+
+    void Update(){
+        if(AllyAmountOfTanks_Panel != null){
+            AllySliderAmount = (int)AllySlider.value;
+            AllyTankAmount_Text.text = AllySliderAmount.ToString();
+            DontDestroyOnLoad_Script.Instance.Ally_Amount_of_Tanks= AllySliderAmount; 
+        }
+        if(EnemyAmountOfTanks_Panel != null){
+            EnemySliderAmount = (int)EnemySlider.value;
+            EnemyTankAmount_Text.text = EnemySliderAmount.ToString();
+            DontDestroyOnLoad_Script.Instance.Enemy_Amount_of_Tanks= EnemySliderAmount;  
+        }
     }
 
     void onSubmit(string name){//gets the entered text from the InputField, and updates the users name
@@ -114,9 +127,7 @@ public class setup_script : MonoBehaviour{
     }
 
     void DisplayEmblem(){
-        string Clicked_Button_Name = EventSystem.current.currentSelectedGameObject.name;
-        //Debug.Log("BUTTON: "+Clicked_Button_Name);
-
+        string Clicked_Button_Name = EventSystem.current.currentSelectedGameObject.name;//gets name of button
         if(Clicked_Button_Name == "emblem1"){
             emblem1.enabled = !emblem1.enabled; 
             emblem2.enabled = false;
@@ -163,10 +174,8 @@ public class setup_script : MonoBehaviour{
                 bool isOpen = Amount_animator.GetBool("Show");
                 Amount_animator.SetBool("Show",!isOpen);
             }
+          
         }
-        AllySliderAmount = (int)AllySlider.value;
-        AllyTankAmount_Text.text = AllySliderAmount.ToString();
-        DontDestroyOnLoad_Script.Instance.Ally_Amount_of_Tanks= AllySliderAmount;   
     }
 
     void showOptions(){
@@ -183,7 +192,6 @@ public class setup_script : MonoBehaviour{
         }
     }
 
-
   //ENEMY-SLIDER START---------
   public void Enemy_ShowHideMenu(){
         if(Enemy_Slider_Menu != null){
@@ -195,7 +203,7 @@ public class setup_script : MonoBehaviour{
         }
     }
 
-    void Enemy_showAmount(){
+    void Enemy_showAmount(){//lets the user select amount of enemy tanks
         Debug.Log("amount of tanks");
         if(EnemyAmountOfTanks_Panel != null){
             Animator animator = EnemyAmountOfTanks_Panel.GetComponent<Animator>();
@@ -204,9 +212,7 @@ public class setup_script : MonoBehaviour{
                 animator.SetBool("Show",!isOpen);
             }
         }
-        EnemySliderAmount = (int)EnemySlider.value;
-        EnemyTankAmount_Text.text = EnemySliderAmount.ToString();
-        DontDestroyOnLoad_Script.Instance.Enemy_Amount_of_Tanks= EnemySliderAmount;    
+        
     }
     //ENEMY-SLIDER ENDS---
 }
