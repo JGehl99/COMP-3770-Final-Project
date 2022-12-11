@@ -408,7 +408,7 @@ namespace Resources.Code.Scripts
                         EnemyMove(enemyTankGameObject, targetedPlayerTileGameObject);
                         break;
                     default:
-                        EnemyAttack(enemyTankGameObject, targetedPlayerTile, distEnemyToPlayer);
+                        EnemyAttack(enemyTankGameObject, targetedPlayerTileGameObject, distEnemyToPlayer);
                         break;
                 }
             }
@@ -418,18 +418,18 @@ namespace Resources.Code.Scripts
          * Param1: GameObject - The tank that is firing
          * Param2: MapTile - The tile that the tank will be firing on
          * Param3: float - The distance to the target tile*/
-        public void EnemyAttack(GameObject tank, MapTile targetTile, float distance)
+        public void EnemyAttack(GameObject tank, GameObject targetTile, float distance)
         {
             tank.GetComponent<Tank>().hasAttacked = true;
             var attackType = Random.Range(0, 1);
             switch (attackType)
             {
                 case 0:
-                    tank.GetComponent<Tank>().Recoilless(targetTile.GetTop());
+                    tank.GetComponent<Tank>().Recoilless(targetTile);
                     print("Recoiless Attack");
                     break;
                 case 1:
-                    tank.GetComponent<Tank>().Special(targetTile.GetTop());
+                    tank.GetComponent<Tank>().Special(targetTile);
                     print("Special Attack");
                     break;
             }
@@ -486,10 +486,10 @@ namespace Resources.Code.Scripts
             switch (_attackType)
             {
                 case 0:
-                    _selectedTank.GetComponent<Tank>().Recoilless(_selectedTile.GetComponent<MapTile>().GetTop());
+                    _selectedTank.GetComponent<Tank>().Recoilless(_selectedTile);
                     break;
                 case 1:
-                    _selectedTank.GetComponent<Tank>().Special(_selectedTile.GetComponent<MapTile>().GetTop());
+                    _selectedTank.GetComponent<Tank>().Special(_selectedTile);
                     break;
             }
 
