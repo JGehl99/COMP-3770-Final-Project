@@ -38,7 +38,7 @@ RenderSettings:
   m_ReflectionIntensity: 1
   m_CustomReflection: {fileID: 0}
   m_Sun: {fileID: 0}
-  m_IndirectSpecularColor: {r: 0.44657826, g: 0.49641263, b: 0.57481676, a: 1}
+  m_IndirectSpecularColor: {r: 0.44657874, g: 0.49641275, b: 0.5748172, a: 1}
   m_UseRadianceAmbientProbe: 0
 --- !u!157 &3
 LightmapSettings:
@@ -303,7 +303,7 @@ GameObject:
   - component: {fileID: 117102915}
   - component: {fileID: 117102914}
   m_Layer: 5
-  m_Name: emblem1_image
+  m_Name: Color
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -321,12 +321,12 @@ RectTransform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
-  m_Father: {fileID: 1448741579}
+  m_Father: {fileID: 1893706714}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 0, y: 0}
+  m_AnchoredPosition: {x: -109.99996, y: 0}
   m_SizeDelta: {x: 75, y: 75}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &117102914
@@ -349,7 +349,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_Sprite: {fileID: 21300000, guid: 135f8dd024cf28b4495d1efd8c463182, type: 3}
+  m_Sprite: {fileID: 0}
   m_Type: 1
   m_PreserveAspect: 0
   m_FillCenter: 1
@@ -380,7 +380,7 @@ GameObject:
   - component: {fileID: 173375651}
   - component: {fileID: 173375650}
   m_Layer: 5
-  m_Name: emblem1
+  m_Name: EmblemOne
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -450,7 +450,19 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 173375651}
   m_OnClick:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 1915805128}
+        m_TargetAssemblyTypeName: SetupScript, Assembly-CSharp
+        m_MethodName: ChooseEmblem
+        m_Mode: 3
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
 --- !u!114 &173375651
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -501,7 +513,7 @@ GameObject:
   - component: {fileID: 191538369}
   - component: {fileID: 191538368}
   m_Layer: 5
-  m_Name: Team_Colours
+  m_Name: TeamColors
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -584,7 +596,7 @@ GameObject:
   - component: {fileID: 226331765}
   - component: {fileID: 226331764}
   m_Layer: 5
-  m_Name: Player_Icon
+  m_Name: TeamInfoPanel
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -597,19 +609,19 @@ RectTransform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 226331762}
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_LocalScale: {x: 0.9999999, y: 0.9999999, z: 0.9999999}
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 419504396}
-  - {fileID: 564282611}
+  - {fileID: 1893706714}
   m_Father: {fileID: 959821829}
   m_RootOrder: 6
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 1, y: 1}
   m_AnchorMax: {x: 1, y: 1}
-  m_AnchoredPosition: {x: -175, y: -63.800293}
+  m_AnchoredPosition: {x: -174.99988, y: -63.800278}
   m_SizeDelta: {x: 350, y: 120}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &226331764
@@ -738,7 +750,7 @@ GameObject:
   - component: {fileID: 264154327}
   - component: {fileID: 264154326}
   m_Layer: 5
-  m_Name: emblem_image
+  m_Name: TeamEmblemsTitle
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -814,7 +826,7 @@ GameObject:
   - component: {fileID: 297308607}
   - component: {fileID: 297308606}
   m_Layer: 5
-  m_Name: Amount
+  m_Name: AmountOfTanksEnemies
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -982,7 +994,7 @@ GameObject:
   - component: {fileID: 341282831}
   - component: {fileID: 341282832}
   m_Layer: 5
-  m_Name: Slider
+  m_Name: AmountOfTanksEnemiesSlider
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -1061,7 +1073,19 @@ MonoBehaviour:
   m_Value: 3
   m_OnValueChanged:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 1915805128}
+        m_TargetAssemblyTypeName: SetupScript, Assembly-CSharp
+        m_MethodName: OnEnemyNumberOfTanksAmountChanged
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
 --- !u!1 &373360548
 GameObject:
   m_ObjectHideFlags: 0
@@ -1074,7 +1098,7 @@ GameObject:
   - component: {fileID: 373360551}
   - component: {fileID: 373360550}
   m_Layer: 5
-  m_Name: Header_Tittle
+  m_Name: AlliesPanelTitle
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -1152,7 +1176,7 @@ GameObject:
   - component: {fileID: 377021631}
   - component: {fileID: 377021630}
   m_Layer: 5
-  m_Name: Back_Button
+  m_Name: Back
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -1176,8 +1200,8 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 1}
   m_AnchorMax: {x: 0, y: 1}
-  m_AnchoredPosition: {x: 103, y: -65}
-  m_SizeDelta: {x: 175, y: 100}
+  m_AnchoredPosition: {x: 125, y: -75}
+  m_SizeDelta: {x: 200, y: 100}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &377021630
 MonoBehaviour:
@@ -1222,7 +1246,19 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 377021631}
   m_OnClick:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 1915805128}
+        m_TargetAssemblyTypeName: SetupScript, Assembly-CSharp
+        m_MethodName: BackToMainMenu
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
 --- !u!114 &377021631
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1274,7 +1310,7 @@ GameObject:
   - component: {fileID: 402671086}
   - component: {fileID: 402671085}
   m_Layer: 5
-  m_Name: Team_Option
+  m_Name: TeamOptionsButton
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -1294,7 +1330,7 @@ RectTransform:
   m_Children:
   - {fileID: 1091354610}
   m_Father: {fileID: 541045726}
-  m_RootOrder: 3
+  m_RootOrder: 1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 1}
   m_AnchorMax: {x: 0.5, y: 1}
@@ -1344,7 +1380,19 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 402671086}
   m_OnClick:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 1915805128}
+        m_TargetAssemblyTypeName: SetupScript, Assembly-CSharp
+        m_MethodName: ToggleTeamOptionsPanel
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
 --- !u!114 &402671086
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1471,7 +1519,7 @@ GameObject:
   - component: {fileID: 419504398}
   - component: {fileID: 419504397}
   m_Layer: 5
-  m_Name: player_Text
+  m_Name: TeamName
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -1607,7 +1655,7 @@ GameObject:
   - component: {fileID: 465369544}
   - component: {fileID: 465369543}
   m_Layer: 5
-  m_Name: Amont_of_Tanks_Option
+  m_Name: EnemiesAmountOfTanksButton
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -1677,7 +1725,19 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 465369544}
   m_OnClick:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 1915805128}
+        m_TargetAssemblyTypeName: SetupScript, Assembly-CSharp
+        m_MethodName: ToggleEnemyAmountOfTanksPanel
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
 --- !u!114 &465369544
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1729,7 +1789,7 @@ GameObject:
   - component: {fileID: 535981077}
   - component: {fileID: 535981079}
   m_Layer: 5
-  m_Name: amount_of_tanks_panel_ally
+  m_Name: AlliesAmountOfTanksPanel
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -1829,7 +1889,7 @@ GameObject:
   - component: {fileID: 541045727}
   - component: {fileID: 541045731}
   m_Layer: 5
-  m_Name: Allies_Slider_Panel
+  m_Name: AlliesPanel
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -1848,9 +1908,9 @@ RectTransform:
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 373360549}
+  - {fileID: 402671084}
   - {fileID: 1877288074}
   - {fileID: 2065311681}
-  - {fileID: 402671084}
   m_Father: {fileID: 873476070}
   m_RootOrder: 1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -2065,7 +2125,7 @@ GameObject:
   - component: {fileID: 549067134}
   - component: {fileID: 549067136}
   m_Layer: 5
-  m_Name: Team_Options_area
+  m_Name: TeamOptionsPanel
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -2079,8 +2139,8 @@ RectTransform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 549067132}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0.000091552734}
-  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0.00009155273}
+  m_LocalScale: {x: 0.9999999, y: 0.9999999, z: 0.9999999}
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 2114962275}
@@ -2091,7 +2151,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 1, y: 0}
   m_AnchorMax: {x: 1, y: 0}
-  m_AnchoredPosition: {x: -402, y: -363}
+  m_AnchoredPosition: {x: -402.00018, y: -362.99997}
   m_SizeDelta: {x: 800, y: 700}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &549067134
@@ -2287,84 +2347,6 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 549677490}
   m_CullTransparentMesh: 1
---- !u!1 &564282610
-GameObject:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  serializedVersion: 6
-  m_Component:
-  - component: {fileID: 564282611}
-  - component: {fileID: 564282613}
-  - component: {fileID: 564282612}
-  m_Layer: 5
-  m_Name: player_icon
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 1
---- !u!224 &564282611
-RectTransform:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 564282610}
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_ConstrainProportionsScale: 0
-  m_Children:
-  - {fileID: 1472511934}
-  - {fileID: 1448741579}
-  m_Father: {fileID: 226331763}
-  m_RootOrder: 1
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
-  m_AnchorMin: {x: 0.5, y: 0.5}
-  m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: -110, y: 0}
-  m_SizeDelta: {x: 100, y: 100}
-  m_Pivot: {x: 0.5, y: 0.5}
---- !u!114 &564282612
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 564282610}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: fe87c0e1cc204ed48ad3b37840f39efc, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  m_Material: {fileID: 0}
-  m_Color: {r: 1, g: 1, b: 1, a: 1}
-  m_RaycastTarget: 1
-  m_RaycastPadding: {x: 0, y: 0, z: 0, w: 0}
-  m_Maskable: 1
-  m_OnCullStateChanged:
-    m_PersistentCalls:
-      m_Calls: []
-  m_Sprite: {fileID: 21300000, guid: a4cfc1bff301a2946b12cb1033d66645, type: 3}
-  m_Type: 0
-  m_PreserveAspect: 0
-  m_FillCenter: 1
-  m_FillMethod: 4
-  m_FillAmount: 1
-  m_FillClockwise: 1
-  m_FillOrigin: 0
-  m_UseSpriteMesh: 0
-  m_PixelsPerUnitMultiplier: 1
---- !u!222 &564282613
-CanvasRenderer:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 564282610}
-  m_CullTransparentMesh: 1
 --- !u!1 &613949748
 GameObject:
   m_ObjectHideFlags: 0
@@ -2376,7 +2358,7 @@ GameObject:
   - component: {fileID: 613949749}
   - component: {fileID: 613949750}
   m_Layer: 5
-  m_Name: Slider
+  m_Name: AlliesAmountOfTanksSlider
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -2455,7 +2437,19 @@ MonoBehaviour:
   m_Value: 3
   m_OnValueChanged:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 1915805128}
+        m_TargetAssemblyTypeName: SetupScript, Assembly-CSharp
+        m_MethodName: OnAlliesNumberOfTanksAmountChanged
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
 --- !u!1 &642312005
 GameObject:
   m_ObjectHideFlags: 0
@@ -2645,7 +2639,7 @@ RectTransform:
   m_AnchoredPosition: {x: 0, y: 0}
   m_SizeDelta: {x: -20, y: 0}
   m_Pivot: {x: 0.5, y: 0.5}
---- !u!1 &717950892
+--- !u!1 &734495375
 GameObject:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -2653,43 +2647,43 @@ GameObject:
   m_PrefabAsset: {fileID: 0}
   serializedVersion: 6
   m_Component:
-  - component: {fileID: 717950893}
-  - component: {fileID: 717950895}
-  - component: {fileID: 717950894}
+  - component: {fileID: 734495376}
+  - component: {fileID: 734495378}
+  - component: {fileID: 734495377}
   m_Layer: 5
-  m_Name: emblem2_image
+  m_Name: Emblem
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
---- !u!224 &717950893
+--- !u!224 &734495376
 RectTransform:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 717950892}
+  m_GameObject: {fileID: 734495375}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
-  m_Father: {fileID: 1448741579}
+  m_Father: {fileID: 1893706714}
   m_RootOrder: 1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 0, y: 0}
+  m_AnchoredPosition: {x: -109.99996, y: 0}
   m_SizeDelta: {x: 75, y: 75}
   m_Pivot: {x: 0.5, y: 0.5}
---- !u!114 &717950894
+--- !u!114 &734495377
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 717950892}
+  m_GameObject: {fileID: 734495375}
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: fe87c0e1cc204ed48ad3b37840f39efc, type: 3}
@@ -2703,8 +2697,8 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_Sprite: {fileID: 21300000, guid: 6427507ed5d64304eab48089c3889b85, type: 3}
-  m_Type: 0
+  m_Sprite: {fileID: 0}
+  m_Type: 1
   m_PreserveAspect: 0
   m_FillCenter: 1
   m_FillMethod: 4
@@ -2712,14 +2706,14 @@ MonoBehaviour:
   m_FillClockwise: 1
   m_FillOrigin: 0
   m_UseSpriteMesh: 0
-  m_PixelsPerUnitMultiplier: 1
---- !u!222 &717950895
+  m_PixelsPerUnitMultiplier: 10
+--- !u!222 &734495378
 CanvasRenderer:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 717950892}
+  m_GameObject: {fileID: 734495375}
   m_CullTransparentMesh: 1
 --- !u!1 &745935758
 GameObject:
@@ -2989,7 +2983,7 @@ GameObject:
   - component: {fileID: 838035395}
   - component: {fileID: 838035394}
   m_Layer: 5
-  m_Name: background_image
+  m_Name: BackgroundImage
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -3066,7 +3060,7 @@ GameObject:
   - component: {fileID: 838913645}
   - component: {fileID: 838913644}
   m_Layer: 5
-  m_Name: Start_Game_Button
+  m_Name: StartGame
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -3090,8 +3084,8 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 1, y: 0}
   m_AnchorMax: {x: 1, y: 0}
-  m_AnchoredPosition: {x: -121, y: 68}
-  m_SizeDelta: {x: 220, y: 100}
+  m_AnchoredPosition: {x: -125, y: 75}
+  m_SizeDelta: {x: 200, y: 100}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &838913644
 MonoBehaviour:
@@ -3136,7 +3130,19 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 838913645}
   m_OnClick:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 1915805128}
+        m_TargetAssemblyTypeName: SetupScript, Assembly-CSharp
+        m_MethodName: StartGame
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
 --- !u!114 &838913645
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -3187,7 +3193,7 @@ GameObject:
   - component: {fileID: 873476072}
   - component: {fileID: 873476071}
   m_Layer: 0
-  m_Name: Ally_Slider_Folder
+  m_Name: Allies
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -3342,7 +3348,7 @@ GameObject:
   - component: {fileID: 929487303}
   - component: {fileID: 929487302}
   m_Layer: 5
-  m_Name: Header_Tittle
+  m_Name: EnemiesTitle
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -3420,7 +3426,7 @@ GameObject:
   - component: {fileID: 940557230}
   - component: {fileID: 940557229}
   m_Layer: 0
-  m_Name: Enemy_Button
+  m_Name: EnemiesButton
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -3440,7 +3446,7 @@ RectTransform:
   m_Children:
   - {fileID: 1726167912}
   m_Father: {fileID: 1169946448}
-  m_RootOrder: 1
+  m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
@@ -3490,7 +3496,19 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 940557230}
   m_OnClick:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 1915805128}
+        m_TargetAssemblyTypeName: SetupScript, Assembly-CSharp
+        m_MethodName: ToggleEnemyPanel
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
 --- !u!114 &940557230
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -3618,7 +3636,7 @@ GameObject:
   - component: {fileID: 959821827}
   - component: {fileID: 959821826}
   m_Layer: 5
-  m_Name: GameSetUp_Canvas
+  m_Name: Canvas
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -3804,7 +3822,7 @@ MonoBehaviour:
   m_enableAutoSizing: 0
   m_fontSizeMin: 18
   m_fontSizeMax: 72
-  m_fontStyle: 0
+  m_fontStyle: 1
   m_HorizontalAlignment: 2
   m_VerticalAlignment: 512
   m_textAlignment: 65535
@@ -3861,7 +3879,7 @@ GameObject:
   - component: {fileID: 1042090116}
   - component: {fileID: 1042090115}
   m_Layer: 5
-  m_Name: emblem3
+  m_Name: EmblemThree
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -3931,7 +3949,19 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 1042090116}
   m_OnClick:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 1915805128}
+        m_TargetAssemblyTypeName: SetupScript, Assembly-CSharp
+        m_MethodName: ChooseEmblem
+        m_Mode: 3
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 2
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
 --- !u!114 &1042090116
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -4184,7 +4214,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: Team
+  m_text: Team Options
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
   m_sharedMaterial: {fileID: 2180264, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
@@ -4365,7 +4395,7 @@ GameObject:
   - component: {fileID: 1134336906}
   - component: {fileID: 1134336905}
   m_Layer: 5
-  m_Name: Amount
+  m_Name: AlliesAmountOfTanks
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -4442,7 +4472,7 @@ GameObject:
   - component: {fileID: 1138793547}
   - component: {fileID: 1138793546}
   m_Layer: 5
-  m_Name: border
+  m_Name: AmountOfTanksEnemiesTitle
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -4507,42 +4537,6 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1138793544}
   m_CullTransparentMesh: 1
---- !u!1 &1143034983
-GameObject:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  serializedVersion: 6
-  m_Component:
-  - component: {fileID: 1143034984}
-  m_Layer: 5
-  m_Name: script
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 1
---- !u!224 &1143034984
-RectTransform:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1143034983}
-  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0.00003410975}
-  m_LocalScale: {x: 0.55885416, y: 0.55885416, z: 0.55885416}
-  m_ConstrainProportionsScale: 0
-  m_Children: []
-  m_Father: {fileID: 1169946448}
-  m_RootOrder: 0
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
-  m_AnchorMin: {x: 0.5, y: 0.5}
-  m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: -285.01617, y: 2.4448164}
-  m_SizeDelta: {x: 100, y: 100}
-  m_Pivot: {x: 0.5, y: 0.5}
 --- !u!1 &1146936989
 GameObject:
   m_ObjectHideFlags: 0
@@ -4556,7 +4550,7 @@ GameObject:
   - component: {fileID: 1146936992}
   - component: {fileID: 1146936991}
   m_Layer: 5
-  m_Name: button_colour_yellow
+  m_Name: Yellow
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -4626,7 +4620,19 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 1146936992}
   m_OnClick:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 1915805128}
+        m_TargetAssemblyTypeName: SetupScript, Assembly-CSharp
+        m_MethodName: ChooseColor
+        m_Mode: 3
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 3
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
 --- !u!114 &1146936992
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -4677,7 +4683,7 @@ GameObject:
   - component: {fileID: 1169946450}
   - component: {fileID: 1169946449}
   m_Layer: 0
-  m_Name: 'Enemy_Slider_Folder '
+  m_Name: Enemies
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -4695,7 +4701,6 @@ RectTransform:
   m_LocalScale: {x: 1.7893757, y: 1.7893757, z: 1.7893757}
   m_ConstrainProportionsScale: 0
   m_Children:
-  - {fileID: 1143034984}
   - {fileID: 940557228}
   - {fileID: 1436319767}
   - {fileID: 1842389377}
@@ -4757,7 +4762,7 @@ GameObject:
   - component: {fileID: 1190480195}
   - component: {fileID: 1190480194}
   m_Layer: 5
-  m_Name: Team_Colour_Text_image
+  m_Name: TeamColorsTitle
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -4912,7 +4917,7 @@ MonoBehaviour:
   m_enableAutoSizing: 0
   m_fontSizeMin: 18
   m_fontSizeMax: 72
-  m_fontStyle: 0
+  m_fontStyle: 1
   m_HorizontalAlignment: 2
   m_VerticalAlignment: 512
   m_textAlignment: 65535
@@ -4956,82 +4961,6 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1210684774}
   m_CullTransparentMesh: 1
---- !u!1 &1232692190
-GameObject:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  serializedVersion: 6
-  m_Component:
-  - component: {fileID: 1232692191}
-  - component: {fileID: 1232692193}
-  - component: {fileID: 1232692192}
-  m_Layer: 5
-  m_Name: emblem4_image
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 1
---- !u!224 &1232692191
-RectTransform:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1232692190}
-  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_ConstrainProportionsScale: 0
-  m_Children: []
-  m_Father: {fileID: 1448741579}
-  m_RootOrder: 3
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
-  m_AnchorMin: {x: 0.5, y: 0.5}
-  m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 0, y: 0}
-  m_SizeDelta: {x: 75, y: 75}
-  m_Pivot: {x: 0.5, y: 0.5}
---- !u!114 &1232692192
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1232692190}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: fe87c0e1cc204ed48ad3b37840f39efc, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  m_Material: {fileID: 0}
-  m_Color: {r: 1, g: 1, b: 1, a: 1}
-  m_RaycastTarget: 1
-  m_RaycastPadding: {x: 0, y: 0, z: 0, w: 0}
-  m_Maskable: 1
-  m_OnCullStateChanged:
-    m_PersistentCalls:
-      m_Calls: []
-  m_Sprite: {fileID: 21300000, guid: 073467d6e048ad84491d0122f1085517, type: 3}
-  m_Type: 0
-  m_PreserveAspect: 0
-  m_FillCenter: 1
-  m_FillMethod: 4
-  m_FillAmount: 1
-  m_FillClockwise: 1
-  m_FillOrigin: 0
-  m_UseSpriteMesh: 0
-  m_PixelsPerUnitMultiplier: 1
---- !u!222 &1232692193
-CanvasRenderer:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1232692190}
-  m_CullTransparentMesh: 1
 --- !u!1 &1280495239
 GameObject:
   m_ObjectHideFlags: 0
@@ -5044,7 +4973,7 @@ GameObject:
   - component: {fileID: 1280495242}
   - component: {fileID: 1280495241}
   m_Layer: 5
-  m_Name: border
+  m_Name: AlliesAmountOfTanksTitle
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -5121,7 +5050,7 @@ GameObject:
   - component: {fileID: 1311643371}
   - component: {fileID: 1311643370}
   m_Layer: 5
-  m_Name: Text (TMP)
+  m_Name: AlliesAmountOfTanksText
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -5257,7 +5186,7 @@ GameObject:
   - component: {fileID: 1384232981}
   - component: {fileID: 1384232980}
   m_Layer: 5
-  m_Name: button_colour_green
+  m_Name: Green
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -5327,7 +5256,19 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 1384232981}
   m_OnClick:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 1915805128}
+        m_TargetAssemblyTypeName: SetupScript, Assembly-CSharp
+        m_MethodName: ChooseColor
+        m_Mode: 3
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 1
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
 --- !u!114 &1384232981
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -5379,7 +5320,7 @@ GameObject:
   - component: {fileID: 1436319770}
   - component: {fileID: 1436319772}
   m_Layer: 5
-  m_Name: Enemy_Slider_Panel
+  m_Name: EnemiesPanel
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -5400,7 +5341,7 @@ RectTransform:
   - {fileID: 929487301}
   - {fileID: 465369542}
   m_Father: {fileID: 1169946448}
-  m_RootOrder: 2
+  m_RootOrder: 1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 0, y: 1}
@@ -5465,46 +5406,6 @@ Animator:
   m_HasTransformHierarchy: 1
   m_AllowConstantClipSamplingOptimization: 1
   m_KeepAnimatorControllerStateOnDisable: 0
---- !u!1 &1448741578
-GameObject:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  serializedVersion: 6
-  m_Component:
-  - component: {fileID: 1448741579}
-  m_Layer: 5
-  m_Name: emblems
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 1
---- !u!224 &1448741579
-RectTransform:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1448741578}
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_ConstrainProportionsScale: 0
-  m_Children:
-  - {fileID: 117102913}
-  - {fileID: 717950893}
-  - {fileID: 1994189905}
-  - {fileID: 1232692191}
-  m_Father: {fileID: 564282611}
-  m_RootOrder: 1
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
-  m_AnchorMin: {x: 0.5, y: 0.5}
-  m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 0, y: 0}
-  m_SizeDelta: {x: 100, y: 100}
-  m_Pivot: {x: 0.5, y: 0.5}
 --- !u!1 &1454326550
 GameObject:
   m_ObjectHideFlags: 0
@@ -5724,7 +5625,7 @@ GameObject:
   - component: {fileID: 1466462177}
   - component: {fileID: 1466462180}
   m_Layer: 5
-  m_Name: button_colour_red
+  m_Name: Red
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -5850,13 +5751,13 @@ MonoBehaviour:
     callback:
       m_PersistentCalls:
         m_Calls:
-        - m_Target: {fileID: 11500000, guid: 4dc17513882e05945b5a379c3a79641f, type: 3}
-          m_TargetAssemblyTypeName: 
-          m_MethodName: 
-          m_Mode: 1
+        - m_Target: {fileID: 1915805128}
+          m_TargetAssemblyTypeName: SetupScript, Assembly-CSharp
+          m_MethodName: ChooseColor
+          m_Mode: 3
           m_Arguments:
             m_ObjectArgument: {fileID: 0}
-            m_ObjectArgumentAssemblyTypeName: 
+            m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
             m_IntArgument: 0
             m_FloatArgument: 0
             m_StringArgument: 
@@ -5954,82 +5855,6 @@ MonoBehaviour:
   m_EffectColor: {r: 0, g: 0, b: 0, a: 1}
   m_EffectDistance: {x: 3, y: 3}
   m_UseGraphicAlpha: 1
---- !u!1 &1472511933
-GameObject:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  serializedVersion: 6
-  m_Component:
-  - component: {fileID: 1472511934}
-  - component: {fileID: 1472511936}
-  - component: {fileID: 1472511935}
-  m_Layer: 5
-  m_Name: colour
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 1
---- !u!224 &1472511934
-RectTransform:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1472511933}
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_ConstrainProportionsScale: 0
-  m_Children: []
-  m_Father: {fileID: 564282611}
-  m_RootOrder: 0
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
-  m_AnchorMin: {x: 0.5, y: 0.5}
-  m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 0, y: 0}
-  m_SizeDelta: {x: 75, y: 75}
-  m_Pivot: {x: 0.5, y: 0.5}
---- !u!114 &1472511935
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1472511933}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: fe87c0e1cc204ed48ad3b37840f39efc, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  m_Material: {fileID: 0}
-  m_Color: {r: 1, g: 1, b: 1, a: 1}
-  m_RaycastTarget: 1
-  m_RaycastPadding: {x: 0, y: 0, z: 0, w: 0}
-  m_Maskable: 1
-  m_OnCullStateChanged:
-    m_PersistentCalls:
-      m_Calls: []
-  m_Sprite: {fileID: 0}
-  m_Type: 0
-  m_PreserveAspect: 0
-  m_FillCenter: 1
-  m_FillMethod: 4
-  m_FillAmount: 1
-  m_FillClockwise: 1
-  m_FillOrigin: 0
-  m_UseSpriteMesh: 0
-  m_PixelsPerUnitMultiplier: 1
---- !u!222 &1472511936
-CanvasRenderer:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1472511933}
-  m_CullTransparentMesh: 1
 --- !u!1 &1513037479
 GameObject:
   m_ObjectHideFlags: 0
@@ -6150,7 +5975,7 @@ GameObject:
   - component: {fileID: 1560726307}
   - component: {fileID: 1560726306}
   m_Layer: 5
-  m_Name: team_name_input
+  m_Name: TeamNameInput
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -6256,7 +6081,19 @@ MonoBehaviour:
       m_Calls: []
   m_OnValueChanged:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 1915805128}
+        m_TargetAssemblyTypeName: SetupScript, Assembly-CSharp
+        m_MethodName: OnTeamNameChanged
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
   m_OnTouchScreenKeyboardStatusChanged:
     m_PersistentCalls:
       m_Calls: []
@@ -6326,7 +6163,7 @@ GameObject:
   - component: {fileID: 1588343799}
   - component: {fileID: 1588343798}
   m_Layer: 5
-  m_Name: emblem2
+  m_Name: EmblemTwo
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -6396,7 +6233,19 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 1588343799}
   m_OnClick:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 1915805128}
+        m_TargetAssemblyTypeName: SetupScript, Assembly-CSharp
+        m_MethodName: ChooseEmblem
+        m_Mode: 3
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 1
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
 --- !u!114 &1588343799
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -6448,7 +6297,7 @@ GameObject:
   - component: {fileID: 1616863489}
   - component: {fileID: 1616863488}
   m_Layer: 5
-  m_Name: button_colour_orange
+  m_Name: Orange
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -6518,7 +6367,19 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 1616863489}
   m_OnClick:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 1915805128}
+        m_TargetAssemblyTypeName: SetupScript, Assembly-CSharp
+        m_MethodName: ChooseColor
+        m_Mode: 3
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 4
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
 --- !u!114 &1616863489
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -6890,7 +6751,7 @@ GameObject:
   - component: {fileID: 1726035137}
   - component: {fileID: 1726035136}
   m_Layer: 5
-  m_Name: button_colour_purple
+  m_Name: Purple
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -6960,7 +6821,19 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 1726035137}
   m_OnClick:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 1915805128}
+        m_TargetAssemblyTypeName: SetupScript, Assembly-CSharp
+        m_MethodName: ChooseColor
+        m_Mode: 3
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 5
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
 --- !u!114 &1726035137
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -7088,7 +6961,7 @@ GameObject:
   - component: {fileID: 1748383618}
   - component: {fileID: 1748383617}
   m_Layer: 5
-  m_Name: emblem4
+  m_Name: EmblemFour
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -7158,7 +7031,19 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 1748383618}
   m_OnClick:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 1915805128}
+        m_TargetAssemblyTypeName: SetupScript, Assembly-CSharp
+        m_MethodName: ChooseEmblem
+        m_Mode: 3
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 3
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
 --- !u!114 &1748383618
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -7339,7 +7224,7 @@ GameObject:
   - component: {fileID: 1842389379}
   - component: {fileID: 1842389381}
   m_Layer: 5
-  m_Name: amount_of_tanks_panel_enemy
+  m_Name: AmountOfTanksEnemiesPanel
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -7361,7 +7246,7 @@ RectTransform:
   - {fileID: 341282831}
   - {fileID: 297308605}
   m_Father: {fileID: 1169946448}
-  m_RootOrder: 3
+  m_RootOrder: 2
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0.5}
   m_AnchorMax: {x: 0, y: 0.5}
@@ -7439,7 +7324,7 @@ GameObject:
   - component: {fileID: 1877288076}
   - component: {fileID: 1877288075}
   m_Layer: 5
-  m_Name: Amont_of_Tanks_Option
+  m_Name: AmountOfTanksButton
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -7459,7 +7344,7 @@ RectTransform:
   m_Children:
   - {fileID: 543999366}
   m_Father: {fileID: 541045726}
-  m_RootOrder: 1
+  m_RootOrder: 2
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
@@ -7509,7 +7394,19 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 1877288076}
   m_OnClick:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 1915805128}
+        m_TargetAssemblyTypeName: SetupScript, Assembly-CSharp
+        m_MethodName: ToggleAlliesAmountOfTanksPanel
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
 --- !u!114 &1877288076
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -7548,6 +7445,44 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1877288073}
   m_CullTransparentMesh: 1
+--- !u!1 &1893706713
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1893706714}
+  m_Layer: 5
+  m_Name: TeamEmblem
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!224 &1893706714
+RectTransform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1893706713}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children:
+  - {fileID: 117102913}
+  - {fileID: 734495376}
+  m_Father: {fileID: 226331763}
+  m_RootOrder: 1
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+  m_AnchorMin: {x: 0.5, y: 0.5}
+  m_AnchorMax: {x: 0.5, y: 0.5}
+  m_AnchoredPosition: {x: 0, y: 0}
+  m_SizeDelta: {x: 100, y: 100}
+  m_Pivot: {x: 0.5, y: 0.5}
 --- !u!1 &1898842717
 GameObject:
   m_ObjectHideFlags: 0
@@ -7560,7 +7495,7 @@ GameObject:
   - component: {fileID: 1898842720}
   - component: {fileID: 1898842719}
   m_Layer: 5
-  m_Name: Text (TMP)
+  m_Name: AmountOfTanksEnemiesText
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -7819,43 +7754,20 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e438d8d91531e7c429efecde55b8b92b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  get_team_name: {fileID: 1560726306}
-  team_name_text: {fileID: 419504397}
-  redButton: {fileID: 1466462177}
-  greenButton: {fileID: 1384232980}
-  blueButton: {fileID: 2009615652}
-  yellowButton: {fileID: 1146936991}
-  orangeButton: {fileID: 1616863488}
-  purpleButton: {fileID: 1726035136}
-  Emblem1_Button: {fileID: 173375650}
-  Emblem2_Button: {fileID: 1588343798}
-  Emblem3_Button: {fileID: 1042090115}
-  Emblem4_Button: {fileID: 1748383617}
-  Back_Button: {fileID: 377021630}
-  Start_Button: {fileID: 838913644}
-  team_name: 
-  playerIcon: {fileID: 1472511935}
-  emblem1: {fileID: 117102914}
-  emblem2: {fileID: 717950894}
-  emblem3: {fileID: 1994189906}
-  emblem4: {fileID: 1232692192}
-  Ally_Slider_Menu: {fileID: 541045725}
-  team_options_panel: {fileID: 549067132}
-  AllyAmountOfTanks_Panel: {fileID: 535981075}
-  AllyAmount_Button: {fileID: 1877288075}
-  Option_Button: {fileID: 2065311682}
-  Team_Button: {fileID: 402671085}
-  Ally_Slider_Button: {fileID: 1917102239}
-  AllySlider: {fileID: 613949750}
-  AllySliderAmount: 3
-  AllyTankAmount_Text: {fileID: 1311643370}
-  Enemy_Slider_Menu: {fileID: 1436319766}
-  EnemyAmountOfTanks_Panel: {fileID: 1842389376}
-  EnemyAmount_Button: {fileID: 465369543}
-  Enemy_Slider_Button: {fileID: 940557229}
-  EnemySlider: {fileID: 341282832}
-  EnemySliderAmount: 0
-  EnemyTankAmount_Text: {fileID: 1898842719}
+  alliesPanel: {fileID: 541045725}
+  teamOptionsPanel: {fileID: 549067132}
+  alliesAmountOfTanksPanel: {fileID: 535981075}
+  enemyPanel: {fileID: 1436319766}
+  enemyAmountOfTanksPanel: {fileID: 1842389376}
+  alliesAmountOfTanksSliderAmount: 3
+  enemyAmountOfTanksSliderAmount: 0
+  alliesAmountOfTanksSlider: {fileID: 613949750}
+  enemyAmountOfTanksSlider: {fileID: 341282832}
+  allyTankAmountText: {fileID: 1311643370}
+  enemyTankAmountText: {fileID: 1898842719}
+  teamNameText: {fileID: 419504397}
+  teamNameInput: {fileID: 1560726306}
+  playerIcon: {fileID: 1893706713}
 --- !u!1 &1917102237
 GameObject:
   m_ObjectHideFlags: 0
@@ -7869,7 +7781,7 @@ GameObject:
   - component: {fileID: 1917102240}
   - component: {fileID: 1917102239}
   m_Layer: 0
-  m_Name: Ally_Button
+  m_Name: AlliesButton
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -7939,7 +7851,19 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 1917102240}
   m_OnClick:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 1915805128}
+        m_TargetAssemblyTypeName: SetupScript, Assembly-CSharp
+        m_MethodName: ToggleAlliesPanel
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
 --- !u!114 &1917102240
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -8103,7 +8027,7 @@ GameObject:
   - component: {fileID: 1992051169}
   - component: {fileID: 1992051168}
   m_Layer: 5
-  m_Name: Gamesetup_Image
+  m_Name: GameSetupImage
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -8167,82 +8091,6 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1992051166}
   m_CullTransparentMesh: 1
---- !u!1 &1994189904
-GameObject:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  serializedVersion: 6
-  m_Component:
-  - component: {fileID: 1994189905}
-  - component: {fileID: 1994189907}
-  - component: {fileID: 1994189906}
-  m_Layer: 5
-  m_Name: emblem3_image
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 1
---- !u!224 &1994189905
-RectTransform:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1994189904}
-  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_ConstrainProportionsScale: 0
-  m_Children: []
-  m_Father: {fileID: 1448741579}
-  m_RootOrder: 2
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
-  m_AnchorMin: {x: 0.5, y: 0.5}
-  m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 8, y: 0}
-  m_SizeDelta: {x: 75, y: 75}
-  m_Pivot: {x: 0.5, y: 0.5}
---- !u!114 &1994189906
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1994189904}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: fe87c0e1cc204ed48ad3b37840f39efc, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  m_Material: {fileID: 0}
-  m_Color: {r: 1, g: 1, b: 1, a: 1}
-  m_RaycastTarget: 1
-  m_RaycastPadding: {x: 0, y: 0, z: 0, w: 0}
-  m_Maskable: 1
-  m_OnCullStateChanged:
-    m_PersistentCalls:
-      m_Calls: []
-  m_Sprite: {fileID: 21300000, guid: 5e58803620a41794686a2922096530ac, type: 3}
-  m_Type: 0
-  m_PreserveAspect: 0
-  m_FillCenter: 1
-  m_FillMethod: 4
-  m_FillAmount: 1
-  m_FillClockwise: 1
-  m_FillOrigin: 0
-  m_UseSpriteMesh: 0
-  m_PixelsPerUnitMultiplier: 1
---- !u!222 &1994189907
-CanvasRenderer:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1994189904}
-  m_CullTransparentMesh: 1
 --- !u!1 &2009615650
 GameObject:
   m_ObjectHideFlags: 0
@@ -8256,7 +8104,7 @@ GameObject:
   - component: {fileID: 2009615653}
   - component: {fileID: 2009615652}
   m_Layer: 5
-  m_Name: button_colour_blue
+  m_Name: Blue
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -8326,7 +8174,19 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 2009615653}
   m_OnClick:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 1915805128}
+        m_TargetAssemblyTypeName: SetupScript, Assembly-CSharp
+        m_MethodName: ChooseColor
+        m_Mode: 3
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 2
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
 --- !u!114 &2009615653
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -8456,7 +8316,7 @@ GameObject:
   - component: {fileID: 2065311683}
   - component: {fileID: 2065311682}
   m_Layer: 5
-  m_Name: Choose_Tanks_Option
+  m_Name: TankOptionsButton
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -8476,7 +8336,7 @@ RectTransform:
   m_Children:
   - {fileID: 549677491}
   m_Father: {fileID: 541045726}
-  m_RootOrder: 2
+  m_RootOrder: 3
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0}
   m_AnchorMax: {x: 0.5, y: 0}
@@ -8526,7 +8386,19 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 2065311683}
   m_OnClick:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 1915805128}
+        m_TargetAssemblyTypeName: SetupScript, Assembly-CSharp
+        m_MethodName: TankSelection
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
 --- !u!114 &2065311683
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -8577,7 +8449,7 @@ GameObject:
   - component: {fileID: 2114962277}
   - component: {fileID: 2114962276}
   m_Layer: 5
-  m_Name: Team_Emblems
+  m_Name: TeamEmblems
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0

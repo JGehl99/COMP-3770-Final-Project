@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 
 [CreateAssetMenu]
-public class Tank_Database : ScriptableObject{
+public class TankDatabase : ScriptableObject{
     
     public Tanks[] tank;
     public int TankCount{

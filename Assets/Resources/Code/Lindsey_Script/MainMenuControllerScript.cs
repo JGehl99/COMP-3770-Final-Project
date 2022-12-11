@@ -6,71 +6,75 @@ using UnityEngine.SceneManagement;
 using UnityEditor;
 
 public class MainMenuControllerScript : MonoBehaviour{
-    public Button Play_Button,Exit_GameOption_Button,Settings_Button,Instruction_Button, HighScore_Button, Quit_Button,File_Button;
-    public GameObject Quit_Panel, GameType_Panel;
-    public GameObject[] Selected_Tanks; 
+    
+    //*********************
+    // Game Objects
+    //**********************
+
+    public GameObject quitPanel;
+    public GameObject gameTypePanel;
+    public GameObject[] selectedTanks; 
+    
+    //*********************
+    // Stuff for files
+    //**********************
+
     public string filePath; 
-    public RawImage file_Viewer;
+    public RawImage fileViewer;
     //public File load_file; 
 
-    void Start(){
-        Play_Button.onClick.AddListener(PlayGame);
-        Instruction_Button.onClick.AddListener(Instructions);
-        HighScore_Button.onClick.AddListener(HighScores);
-        Quit_Button.onClick.AddListener(QuitGame); 
-        Settings_Button.onClick.AddListener(Settings); 
-        Exit_GameOption_Button.onClick.AddListener(Exit_GameOption); 
-        //File_Button.onClick.AddListener(FindFile); 
+    
+    public void OpenGameTypePanel()
+    {
+        gameTypePanel.SetActive(true);
     }
-
-    void PlayGame(){
-        if(GameType_Panel == true){
-            GameType_Panel.SetActive(true);
-        }
+    
+    public void CloseGameTypePanel()
+    {
+        gameTypePanel.SetActive(false);
     }
-
-    void Exit_GameOption(){
-        if(GameType_Panel == true){
-            GameType_Panel.SetActive(false);
-        }
-    }
-
-    void Instructions(){
+    
+    public void Instructions()
+    {
         SceneManager.LoadScene("Instructions");
     }
-
-    void Settings(){
+    
+    public void Settings()
+    {
         SceneManager.LoadScene("GameSettings");
     }
-
-    void HighScores(){
+    
+    public void HighScores()
+    {
         SceneManager.LoadScene("HighScores");
     }
 
-    public void GameType_Selection(int choice){//choice == 1 new game    //choice == 0 load game
-        if(choice ==1){
-            Debug.Log("New Game");
-            SceneManager.LoadScene("GameSetUp");
-        }
-        else{
-            Debug.Log("Load Game");
-        }
+    public void GameSetUp()
+    {
+        SceneManager.LoadScene("GameSetUp");
     }
 
-    public void QuitGame_Selection(int choice){//choice == 0 no    //choice == 1 yes
-        if(choice ==1){
-            Application.Quit();
-        }
-        else{
-            Quit_Panel.SetActive(false);
-        }
+    public void LoadGame()
+    {
+        Debug.Log("Load Game");
     }
-  
-    void QuitGame(){
-        if(Quit_Panel == true){//makes quit_panel appear asking if user wants to quit the game 
-            Quit_Panel.SetActive(true);
-        }
+    
+    public void OpenQuitPanel()
+    {
+        quitPanel.SetActive(true);
     }
+
+    public void CloseQuitPanel()
+    {
+        quitPanel.SetActive(false);
+    }
+
+    public void QuitGame()
+    {
+        Application.Quit();
+    }
+
+
 /*
     public void FindFile(){
         var browser = new BrowserProperties();

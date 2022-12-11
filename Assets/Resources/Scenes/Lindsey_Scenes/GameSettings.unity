@@ -38,7 +38,7 @@ RenderSettings:
   m_ReflectionIntensity: 1
   m_CustomReflection: {fileID: 0}
   m_Sun: {fileID: 0}
-  m_IndirectSpecularColor: {r: 0.44657826, g: 0.49641263, b: 0.57481676, a: 1}
+  m_IndirectSpecularColor: {r: 0.44657874, g: 0.49641275, b: 0.5748172, a: 1}
   m_UseRadianceAmbientProbe: 0
 --- !u!157 &3
 LightmapSettings:
@@ -1116,7 +1116,7 @@ RectTransform:
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
   m_AnchoredPosition: {x: 0, y: 0}
-  m_SizeDelta: {x: 1920, y: 900}
+  m_SizeDelta: {x: 1920, y: 1080}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &829291640
 MonoBehaviour:
@@ -1185,14 +1185,13 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 740a949e2e068ea4d8cabd47efb90667, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  Back_Button: {fileID: 1652644977}
-  Volume_Button: {fileID: 657869230}
-  volume_on: {fileID: 938488939}
-  volume_off: {fileID: 1303339362}
-  SFX_Slider: {fileID: 1858824408}
-  Music_Slider: {fileID: 201226782}
-  Master_Slider: {fileID: 1759650335}
-  Volume_State: 1
+  volumeButton: {fileID: 0}
+  volumeOn: {fileID: 0}
+  volumeOff: {fileID: 0}
+  sfxSlider: {fileID: 0}
+  musicSlider: {fileID: 0}
+  masterSlider: {fileID: 0}
+  volumeState: 1
 --- !u!4 &842108729
 Transform:
   m_ObjectHideFlags: 0
@@ -1842,7 +1841,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 1}
   m_AnchorMax: {x: 0.5, y: 1}
-  m_AnchoredPosition: {x: 0, y: -57}
+  m_AnchoredPosition: {x: 0, y: -100}
   m_SizeDelta: {x: 400, y: 150}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1285779134
@@ -2355,7 +2354,7 @@ GameObject:
   - component: {fileID: 1652644978}
   - component: {fileID: 1652644977}
   m_Layer: 5
-  m_Name: back_button
+  m_Name: Back
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -2379,7 +2378,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 1}
   m_AnchorMax: {x: 0, y: 1}
-  m_AnchoredPosition: {x: 119, y: -62}
+  m_AnchoredPosition: {x: 125, y: -75}
   m_SizeDelta: {x: 200, y: 100}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1652644977
@@ -2425,7 +2424,19 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 1652644978}
   m_OnClick:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 842108728}
+        m_TargetAssemblyTypeName: GameSettingsScript, Assembly-CSharp
+        m_MethodName: BackToMainMenu
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
 --- !u!114 &1652644978
 MonoBehaviour:
   m_ObjectHideFlags: 0

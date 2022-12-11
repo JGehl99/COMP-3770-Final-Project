@@ -5,8 +5,8 @@ using UnityEngine.UI;
 using TMPro; 
 using UnityEngine.SceneManagement;
 
-public class Tank_Manager : MonoBehaviour{
-    public Tank_Database TankDB;
+public class TankManager : MonoBehaviour{
+    public TankDatabase TankDB;
     public Button Next_Button,Prev_Button,Choose_Button, Back_Button, confirm_Button;
     public TMP_Text name_text,tank_information_text; 
     public GameObject tank_model;
@@ -20,6 +20,7 @@ public class Tank_Manager : MonoBehaviour{
 
     public GameObject PV1,PV2,Sarg_M_Diesel,L_Pistol,Medic;
 
+
     [SerializeField] float _degreesPerSecond = 30f;
     [SerializeField] Vector3 _axis = Vector3.forward;
    
@@ -32,8 +33,8 @@ public class Tank_Manager : MonoBehaviour{
         Edit_Tanks_Button.onClick.AddListener(EditTanks);
 
         updateTank(Current_Tank);
-        Debug.Log("TANK AMOUNT: "+DontDestroyOnLoad_Script.Instance.Ally_Amount_of_Tanks);
-        Tank_Amount = DontDestroyOnLoad_Script.Instance.Ally_Amount_of_Tanks;
+        Debug.Log("TANK AMOUNT: "+DontDestroyOnLoadScript.instance.allyAmountOfTanks);
+        Tank_Amount = DontDestroyOnLoadScript.instance.allyAmountOfTanks;
 
         CheckMark1.enabled = false;
         CheckMark2.enabled = false;
@@ -42,19 +43,13 @@ public class Tank_Manager : MonoBehaviour{
         CheckMark5.enabled = false;
         CheckMark6.enabled = false;
         
-        if(DontDestroyOnLoad_Script.Instance.Ally_Amount_of_Tanks ==3){
+        if(Tank_Amount ==3){
             Tank_Amount1_Image.enabled= true;
             Tank_Amount2_Image.enabled = true;
             Tank_Amount3_Image.enabled= true;
-            Tank_Amount4_Image.enabled= false;
-            Tank_Amount5_Image.enabled= false;
-            Tank_Amount6_Image.enabled= false;
-            CheckBox4.enabled = false;
-            CheckBox5.enabled = false;
-            CheckBox6.enabled = false; 
         }
 
-        if(DontDestroyOnLoad_Script.Instance.Ally_Amount_of_Tanks == 4){
+        if(Tank_Amount == 4){
             Tank_Amount4_Image.enabled= true;
             Tank_Amount5_Image.enabled= false;
             Tank_Amount6_Image.enabled= false;
@@ -62,7 +57,7 @@ public class Tank_Manager : MonoBehaviour{
             CheckBox5.enabled = false;
             CheckBox6.enabled = false; 
         }
-        if(DontDestroyOnLoad_Script.Instance.Ally_Amount_of_Tanks == 5){
+        if(Tank_Amount == 5){
             Tank_Amount4_Image.enabled= true;
             Tank_Amount5_Image.enabled= true;
             Tank_Amount6_Image.enabled= false;
@@ -70,7 +65,7 @@ public class Tank_Manager : MonoBehaviour{
             CheckBox5.enabled = true;
             CheckBox6.enabled = false; 
         }
-        if(DontDestroyOnLoad_Script.Instance.Ally_Amount_of_Tanks == 6){
+        if(Tank_Amount == 6){
             Tank_Amount4_Image.enabled= true;
             Tank_Amount5_Image.enabled= true;
             Tank_Amount6_Image.enabled= true;
@@ -78,7 +73,9 @@ public class Tank_Manager : MonoBehaviour{
             CheckBox5.enabled = true;
             CheckBox6.enabled = true; 
         }
-        Selected_Tanks_tmp = new GameObject[DontDestroyOnLoad_Script.Instance.Ally_Amount_of_Tanks]; 
+  
+    
+        Selected_Tanks_tmp = new GameObject[DontDestroyOnLoadScript.instance.allyAmountOfTanks]; 
     }
 
      void EditTanks(){
@@ -120,21 +117,21 @@ public class Tank_Manager : MonoBehaviour{
             Selected_Tanks_tmp[2] = TankDB.GetTank(Current_Tank).Tank;
             CheckMark3.enabled = true;
         }
-        else if(DontDestroyOnLoad_Script.Instance.Ally_Amount_of_Tanks>3&&Selected_Tanks_tmp[3]==null){
+        else if(DontDestroyOnLoadScript.instance.allyAmountOfTanks>3&&Selected_Tanks_tmp[3]==null){
             Selected_Tanks_tmp[3] = TankDB.GetTank(Current_Tank).Tank;
             CheckMark4.enabled = true;
         }
-        else if(DontDestroyOnLoad_Script.Instance.Ally_Amount_of_Tanks>3&&Selected_Tanks_tmp[4]==null){
+        else if(DontDestroyOnLoadScript.instance.allyAmountOfTanks>3&&Selected_Tanks_tmp[4]==null){
             Selected_Tanks_tmp[4] = TankDB.GetTank(Current_Tank).Tank;
             CheckMark5.enabled = true;
         }
-        else if(DontDestroyOnLoad_Script.Instance.Ally_Amount_of_Tanks>3&&Selected_Tanks_tmp[5]==null){
+        else if(DontDestroyOnLoadScript.instance.allyAmountOfTanks>3&&Selected_Tanks_tmp[5]==null){
             Selected_Tanks_tmp[5] = TankDB.GetTank(Current_Tank).Tank;
             CheckMark6.enabled = true;
         }
     }
 
-    void BackToGameSetUp(){
+    public void BackToGameSetUp(){
         SceneManager.LoadScene("GameSetUp");
     }
 
