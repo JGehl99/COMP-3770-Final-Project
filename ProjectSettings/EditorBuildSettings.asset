@@ -26,4 +26,10 @@ EditorBuildSettings:
   - enabled: 1
     path: Assets/Resources/Scenes/Lindsey_Scenes/TankSelection.unity
     guid: 19aa14576d7dcff44a1ed18dacd7eefc
+  - enabled: 1
+    path: Assets/Resources/Scenes/Lindsey_Scenes/Codex.unity
+    guid: 891a6679879587e498bdffeb10e0eaa4
+  - enabled: 1
+    path: Assets/Resources/Scenes/MapTestScene.unity
+    guid: 0556e53decc33a34d89930bc257dbb99
   m_configObjects: {}

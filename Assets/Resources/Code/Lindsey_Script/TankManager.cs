@@ -47,6 +47,9 @@ public class TankManager : MonoBehaviour{
             Tank_Amount1_Image.enabled= true;
             Tank_Amount2_Image.enabled = true;
             Tank_Amount3_Image.enabled= true;
+            CheckBox4.enabled = false;
+            CheckBox5.enabled = false;
+            CheckBox6.enabled = false; 
         }
 
         if(Tank_Amount == 4){

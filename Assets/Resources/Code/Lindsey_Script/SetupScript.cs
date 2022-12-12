@@ -125,7 +125,7 @@ public class SetupScript : MonoBehaviour{
     }
 
     public void StartGame(){
-        Debug.Log("Start Game");
+        SceneManager.LoadScene("MapTestScene");
     }
     
     public void TankSelection(){

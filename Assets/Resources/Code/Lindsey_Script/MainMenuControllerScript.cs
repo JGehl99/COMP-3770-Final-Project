@@ -15,15 +15,6 @@ public class MainMenuControllerScript : MonoBehaviour{
     public GameObject gameTypePanel;
     public GameObject[] selectedTanks; 
     
-    //*********************
-    // Stuff for files
-    //**********************
-
-    public string filePath; 
-    public RawImage fileViewer;
-    //public File load_file; 
-
-    
     public void OpenGameTypePanel()
     {
         gameTypePanel.SetActive(true);
@@ -37,6 +28,11 @@ public class MainMenuControllerScript : MonoBehaviour{
     public void Instructions()
     {
         SceneManager.LoadScene("Instructions");
+    }
+        
+    public void Codex()
+    {
+        SceneManager.LoadScene("Codex");
     }
     
     public void Settings()
@@ -74,29 +70,4 @@ public class MainMenuControllerScript : MonoBehaviour{
         Application.Quit();
     }
 
-
-/*
-    public void FindFile(){
-        var browser = new BrowserProperties();
-        //browser.filter();
-        new FileBrowser().OpenFileBrowser (browser,path =>{
-        
-            StartCoroutine(LoadFile(path));
-        });
-    }
-
-    IEnumerator LoadFile(string path){
-        if (www.result != UnityWebRequest.Result.Success) {
-            Debug.Log(www.error);
-        }
-        else {
-            // Show results as text
-            Debug.Log(www.downloadHandler.text);
- 
-            // Or retrieve results as binary data
-            byte[] results = www.downloadHandler.data;
-        }
-    }
-
- */
 }

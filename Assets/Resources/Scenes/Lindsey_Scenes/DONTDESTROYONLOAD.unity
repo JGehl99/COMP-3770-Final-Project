@@ -348,12 +348,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 1714d22a65b0b4444acad7325bc81620, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  Ally_Amount_of_Tanks: 3
-  Enemy_Amount_of_Tanks: 3
-  Background_Music: {fileID: 976578660}
-  SFX_Music: {fileID: 0}
-  Background_Music_Volume: 0
-  SFX_Music_Volume: 0
+  allyAmountOfTanks: 3
+  enemyAmountOfTanks: 3
+  backgroundMusicVolume: 1
+  sfxMusicVolume: 1
+  backgroundMusic: {fileID: 0}
+  sfxMusic: {fileID: 0}
 --- !u!1 &1516149466
 GameObject:
   m_ObjectHideFlags: 0
