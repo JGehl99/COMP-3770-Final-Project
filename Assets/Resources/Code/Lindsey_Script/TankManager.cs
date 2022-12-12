@@ -47,6 +47,9 @@ public class TankManager : MonoBehaviour{
             Tank_Amount1_Image.enabled= true;
             Tank_Amount2_Image.enabled = true;
             Tank_Amount3_Image.enabled= true;
+            Tank_Amount4_Image.enabled= false;
+            Tank_Amount5_Image.enabled= false;
+            Tank_Amount6_Image.enabled= false;
             CheckBox4.enabled = false;
             CheckBox5.enabled = false;
             CheckBox6.enabled = false; 
@@ -106,6 +109,15 @@ public class TankManager : MonoBehaviour{
         Debug.Log("cur tank name: "+TankDB.GetTank(Current_Tank).Tank);
         updateTank(Current_Tank);
     }
+
+    /*
+       0 => CreateTankGameObject("Lt", 100, 3, tile),
+                    1 => CreateTankGameObject("Sgt", 100, 3, tile),
+                    2 => CreateTankGameObject("Cpl", 100, 3, tile),
+                    3 => CreateTankGameObject("Fm", 100, 3, tile),
+                    4 => CreateTankGameObject("Psc", 100, 3, tile),
+                    _ => CreateTankGameObject("Lt", 100, 3, tile)
+    */
 
     void ChooseTank(){
         if(Selected_Tanks_tmp[0]==null){
