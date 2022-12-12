@@ -18,6 +18,8 @@ public class Codex_Script : MonoBehaviour
     public GameObject PV2Panel;
     public GameObject medicPanel;
     public GameObject pistonPanel;
+    public GameObject enemyPanel;
+    public GameObject overallPanel;
   
 
     //**********************
@@ -28,6 +30,8 @@ public class Codex_Script : MonoBehaviour
     private Animator _PV2Animator;
     private Animator _medicAnimator;
     private Animator _pistolAnimator;
+    private Animator _enemyAnimator;
+    private Animator _overallAnimator;
 
     
     void Start(){
@@ -37,6 +41,8 @@ public class Codex_Script : MonoBehaviour
         _PV2Animator = PV2Panel.GetComponent<Animator>();
         _medicAnimator = medicPanel.GetComponent<Animator>();
         _pistolAnimator = pistonPanel.GetComponent<Animator>();
+        _enemyAnimator = enemyPanel.GetComponent<Animator>();
+        _overallAnimator = overallPanel.GetComponent<Animator>();
     }
 
     public void ToggleSargPanel()
@@ -46,6 +52,8 @@ public class Codex_Script : MonoBehaviour
         HidePanel(_PV2Animator);
         HidePanel(_medicAnimator);
         HidePanel(_pistolAnimator);
+        HidePanel(_enemyAnimator);
+        HidePanel(_overallAnimator);
         
         // Toggle Sarg panel
         TogglePanel(_sargDieselAnimator);
@@ -58,6 +66,8 @@ public class Codex_Script : MonoBehaviour
         HidePanel(_PV2Animator);
         HidePanel(_medicAnimator);
         HidePanel(_pistolAnimator);
+        HidePanel(_enemyAnimator);
+        HidePanel(_overallAnimator);
         
         // Toggle PV1 panel
         TogglePanel(_PV1Animator);
@@ -70,6 +80,8 @@ public class Codex_Script : MonoBehaviour
         HidePanel(_sargDieselAnimator);
         HidePanel(_medicAnimator);
         HidePanel(_pistolAnimator);
+        HidePanel(_enemyAnimator);
+        HidePanel(_overallAnimator);
         
         // Toggle PV2 panel
         TogglePanel(_PV2Animator);
@@ -82,6 +94,8 @@ public class Codex_Script : MonoBehaviour
         HidePanel(_PV2Animator);
         HidePanel(_sargDieselAnimator);
         HidePanel(_pistolAnimator);
+        HidePanel(_enemyAnimator);
+        HidePanel(_overallAnimator);
         
         // Toggle Medic panel
         TogglePanel(_medicAnimator);
@@ -94,9 +108,39 @@ public class Codex_Script : MonoBehaviour
         HidePanel(_PV2Animator);
         HidePanel(_medicAnimator);
         HidePanel(_sargDieselAnimator);
+        HidePanel(_enemyAnimator);
+        HidePanel(_overallAnimator);
         
         // Toggle Pistol panel
         TogglePanel(_pistolAnimator);
+    }
+
+    public void ToggleEnemyPanel()
+    {
+        // Close other panels
+        HidePanel(_PV1Animator);
+        HidePanel(_PV2Animator);
+        HidePanel(_medicAnimator);
+        HidePanel(_sargDieselAnimator);
+        HidePanel(_pistolAnimator);
+        HidePanel(_overallAnimator);
+        
+        // Toggle enemy panel
+        TogglePanel(_enemyAnimator);
+    }
+
+    public void ToggleOverallPanel()
+    {
+        // Close other panels
+        HidePanel(_PV1Animator);
+        HidePanel(_PV2Animator);
+        HidePanel(_medicAnimator);
+        HidePanel(_sargDieselAnimator);
+        HidePanel(_enemyAnimator);
+        HidePanel(_pistolAnimator);
+        
+        // Toggle overall panel
+        TogglePanel(_overallAnimator);
     }
 
 

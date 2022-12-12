@@ -13,6 +13,8 @@ public class TankManager : MonoBehaviour{
     private int Current_Tank =0,Tank_Amount;
     public Image Tank_Amount1_Image,Tank_Amount2_Image,Tank_Amount3_Image,Tank_Amount4_Image,Tank_Amount5_Image,Tank_Amount6_Image;
     public GameObject[] Selected_Tanks_tmp; 
+    public GameObject[] allTanks; 
+    public int selectedCharacter =0;
     public Image CheckMark1,CheckMark2,CheckMark3,CheckMark4,CheckMark5,CheckMark6;
     public Image CheckBox4,CheckBox5,CheckBox6;
     public Button Edit_Tanks_Button,Edit_Tanks_Next_Button,Edit_Tanks_Prev_Button,Edit_Tanks_Exit_Button,Edit_Tanks_Delete_Button;
@@ -20,19 +22,16 @@ public class TankManager : MonoBehaviour{
 
     public GameObject PV1,PV2,Sarg_M_Diesel,L_Pistol,Medic;
 
-
-    [SerializeField] float _degreesPerSecond = 30f;
-    [SerializeField] Vector3 _axis = Vector3.forward;
    
     void Start(){
-        Next_Button.onClick.AddListener(NextTank);
-        Prev_Button.onClick.AddListener(PrevTank);
-        Choose_Button.onClick.AddListener(ChooseTank);
-        Back_Button.onClick.AddListener(BackToGameSetUp);
-        confirm_Button.onClick.AddListener(BackToGameSetUp);
-        Edit_Tanks_Button.onClick.AddListener(EditTanks);
+        Next_Button.onClick.AddListener(NextCharacter);
+        Prev_Button.onClick.AddListener(PrevCharacter);
+        //Choose_Button.onClick.AddListener(ChooseTank);
+        //Back_Button.onClick.AddListener(BackToGameSetUp);
+        //confirm_Button.onClick.AddListener(BackToGameSetUp);
+        //Edit_Tanks_Button.onClick.AddListener(EditTanks);
 
-        updateTank(Current_Tank);
+        //updateTank(Current_Tank);
         Debug.Log("TANK AMOUNT: "+DontDestroyOnLoadScript.instance.allyAmountOfTanks);
         Tank_Amount = DontDestroyOnLoadScript.instance.allyAmountOfTanks;
 
@@ -43,19 +42,21 @@ public class TankManager : MonoBehaviour{
         CheckMark5.enabled = false;
         CheckMark6.enabled = false;
         
-        if(Tank_Amount ==3){
+        if(DontDestroyOnLoadScript.instance.allyAmountOfTanks ==3){
             Tank_Amount1_Image.enabled= true;
             Tank_Amount2_Image.enabled = true;
             Tank_Amount3_Image.enabled= true;
+
             Tank_Amount4_Image.enabled= false;
             Tank_Amount5_Image.enabled= false;
             Tank_Amount6_Image.enabled= false;
+
             CheckBox4.enabled = false;
             CheckBox5.enabled = false;
             CheckBox6.enabled = false; 
         }
 
-        if(Tank_Amount == 4){
+        if(DontDestroyOnLoadScript.instance.allyAmountOfTanks == 4){
             Tank_Amount4_Image.enabled= true;
             Tank_Amount5_Image.enabled= false;
             Tank_Amount6_Image.enabled= false;
@@ -63,7 +64,7 @@ public class TankManager : MonoBehaviour{
             CheckBox5.enabled = false;
             CheckBox6.enabled = false; 
         }
-        if(Tank_Amount == 5){
+        if(DontDestroyOnLoadScript.instance.allyAmountOfTanks == 5){
             Tank_Amount4_Image.enabled= true;
             Tank_Amount5_Image.enabled= true;
             Tank_Amount6_Image.enabled= false;
@@ -71,7 +72,7 @@ public class TankManager : MonoBehaviour{
             CheckBox5.enabled = true;
             CheckBox6.enabled = false; 
         }
-        if(Tank_Amount == 6){
+        if(DontDestroyOnLoadScript.instance.allyAmountOfTanks == 6){
             Tank_Amount4_Image.enabled= true;
             Tank_Amount5_Image.enabled= true;
             Tank_Amount6_Image.enabled= true;
@@ -79,8 +80,6 @@ public class TankManager : MonoBehaviour{
             CheckBox5.enabled = true;
             CheckBox6.enabled = true; 
         }
-  
-    
         Selected_Tanks_tmp = new GameObject[DontDestroyOnLoadScript.instance.allyAmountOfTanks]; 
     }
 
@@ -90,17 +89,24 @@ public class TankManager : MonoBehaviour{
         }
     }
 
-    void NextTank(){
-        Animator PV1_animator = PV1.GetComponent<Animator>();
-        PV1_animator.SetBool("Next",true);
+    public void BackToGameSetUp(){
+        SceneManager.LoadScene("GameSetUp");
+    }
 
-        Animator PV2_animator = PV2.GetComponent<Animator>();
-        PV2_animator.SetBool("Next",true);
 
-        Animator Sarg_M_Diesel_animator = Sarg_M_Diesel.GetComponent<Animator>();
-        Sarg_M_Diesel_animator.SetBool("Next",true);
-
+    public void NextCharacter(){
+        /*
+      
+        
+        //updateTank(Current_Tank);
+        allTanks[selectedCharacter].SetActive(false);
+        selectedCharacter = (selectedCharacter+1)%allTanks.Length;
+        allTanks[selectedCharacter].SetActive(false);
+      
+        */
         Current_Tank++;
+        
+        TankDB.GetTank(Current_Tank).Tank.SetActive(true);
 
         if(Current_Tank >= TankDB.TankCount){
             Current_Tank = 0; 
@@ -110,16 +116,26 @@ public class TankManager : MonoBehaviour{
         updateTank(Current_Tank);
     }
 
-    /*
-       0 => CreateTankGameObject("Lt", 100, 3, tile),
-                    1 => CreateTankGameObject("Sgt", 100, 3, tile),
-                    2 => CreateTankGameObject("Cpl", 100, 3, tile),
-                    3 => CreateTankGameObject("Fm", 100, 3, tile),
-                    4 => CreateTankGameObject("Psc", 100, 3, tile),
-                    _ => CreateTankGameObject("Lt", 100, 3, tile)
-    */
+    
+    public void PrevCharacter(){
+        /*
+        allTanks[selectedCharacter].SetActive(false);
+        selectedCharacter--;
+        if(selectedCharacter <0 ){
+            selectedCharacter+=allTanks.Length;
+        }
+        allTanks[selectedCharacter].SetActive(true);
+        */
+        Current_Tank--;
+        if(Current_Tank < 0 ){
+            Current_Tank = TankDB.TankCount -1;
+        }
+        Debug.Log("cur tank name: "+TankDB.GetTank(Current_Tank).Tank_Name);
+        Debug.Log("cur tank model: "+TankDB.GetTank(Current_Tank).Tank);
+        updateTank(Current_Tank);
+    }
 
-    void ChooseTank(){
+     void ChooseTank(){
         if(Selected_Tanks_tmp[0]==null){
             Selected_Tanks_tmp[0] = TankDB.GetTank(Current_Tank).Tank;
             CheckMark1.enabled = true;
@@ -145,10 +161,44 @@ public class TankManager : MonoBehaviour{
             CheckMark6.enabled = true;
         }
     }
-
-    public void BackToGameSetUp(){
-        SceneManager.LoadScene("GameSetUp");
+      private void updateTank(int Current_Tank){
+        Tanks tank = TankDB.GetTank(Current_Tank); 
+        tank_model = tank.Tank;
+        name_text.text = tank.Tank_Name;
+        tank_information_text.text = tank.Tank_Information;
+        //tank model not moving to correct place
+        //tank.Tank.transform.Rotate( _axis.normalized * _degreesPerSecond * Time.deltaTime );
     }
+
+
+
+/*
+    void NextTank(){
+        /*
+  
+
+        Current_Tank++;
+
+        if(Current_Tank >= TankDB.TankCount){
+            Current_Tank = 0; 
+        }
+        Debug.Log("cur tank name: "+TankDB.GetTank(Current_Tank).Tank_Name);
+        Debug.Log("cur tank name: "+TankDB.GetTank(Current_Tank).Tank);
+        updateTank(Current_Tank);
+    }
+
+    /*
+       0 => CreateTankGameObject("Lt", 100, 3, tile),
+                    1 => CreateTankGameObject("Sgt", 100, 3, tile),
+                    2 => CreateTankGameObject("Cpl", 100, 3, tile),
+                    3 => CreateTankGameObject("Fm", 100, 3, tile),
+                    4 => CreateTankGameObject("Psc", 100, 3, tile),
+                    _ => CreateTankGameObject("Lt", 100, 3, tile)
+    
+
+   
+
+   
 
     void PrevTank(){
         Animator animator = PV1.GetComponent<Animator>();
@@ -163,12 +213,6 @@ public class TankManager : MonoBehaviour{
         updateTank(Current_Tank);
     }
 
-    private void updateTank(int Current_Tank){
-        Tanks tank = TankDB.GetTank(Current_Tank); 
-        tank_model = tank.Tank;
-        name_text.text = tank.Tank_Name;
-        tank_information_text.text = tank.Tank_Information;
-        //tank model not moving to correct place
-        //tank.Tank.transform.Rotate( _axis.normalized * _degreesPerSecond * Time.deltaTime );
-    }
+  
+    */
 }

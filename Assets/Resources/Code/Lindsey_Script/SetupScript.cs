@@ -108,11 +108,13 @@ public class SetupScript : MonoBehaviour{
     public void OnAlliesNumberOfTanksAmountChanged()
     {
         allyTankAmountText.text = alliesAmountOfTanksSlider.value.ToString(CultureInfo.CurrentCulture);
+        DontDestroyOnLoadScript.instance.allyAmountOfTanks=(int)alliesAmountOfTanksSlider.value;
     }
     
     public void OnEnemyNumberOfTanksAmountChanged()
     {
         enemyTankAmountText.text = enemyAmountOfTanksSlider.value.ToString(CultureInfo.CurrentCulture);
+        DontDestroyOnLoadScript.instance.enemyAmountOfTanks =(int) enemyAmountOfTanksSlider.value;
     }
 
     
