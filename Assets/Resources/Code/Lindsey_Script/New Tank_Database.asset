@@ -15,8 +15,8 @@ MonoBehaviour:
   tank:
   - Tank_Name: Private 1st Class Hull
     Tank: {fileID: 8137661484639146203, guid: 5e034c693fa06424a883c6e2a707b8c8, type: 3}
-    Tank_Information: 'Scout:\nFighting Type:\nLow Damage, High Health, Can Move
-      Further\nAttacks: Recoilless, Shrapnel, EMP'
+    Tank_Information: 'Scout:  Fighting Type: Low Damage, High Health, Can Move Further\nAttacks:
+      Recoilless, Shrapnel, EMP'
   - Tank_Name: Private 2nd Class Clutch
     Tank: {fileID: 1360866686235990610, guid: 105f8a4d85477de4d8a5edd43f0997de, type: 3}
     Tank_Information: 'DPS: Fighting Type: High Damage, Low Health, Precision Shot.

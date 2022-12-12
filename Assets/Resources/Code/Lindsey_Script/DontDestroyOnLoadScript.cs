@@ -21,6 +21,9 @@ public class DontDestroyOnLoadScript: MonoBehaviour{
     [Range(1, 6)]
     public int enemyAmountOfTanks = 3;
 
+   
+    public int[] selectedTanks = {-1,-1,-1,-1,-1,-1};
+
     [Range(0f, 1f)]
     public float backgroundMusicVolume = 1f;
     

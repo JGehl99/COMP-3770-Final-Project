@@ -52,7 +52,7 @@ namespace Resources.Code.Scripts
         
         // Tile ID
         public string id;
-        private int _tileType = 0;
+        //private int _tileType = 0;
 
         public void Instantiate(int xi, float y, int zi, Vector3 bounds)
         {
