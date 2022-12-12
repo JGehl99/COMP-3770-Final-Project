@@ -22,6 +22,7 @@ public class GameSettingsScript : MonoBehaviour{
     
     void OnEnable(){
         musicSlider.onValueChanged.AddListener(delegate { changeVolume(musicSlider.value); });
+        masterSlider.onValueChanged.AddListener(delegate { changeVolume(masterSlider.value); });
     }
 
     void changeVolume(float sliderValue){
@@ -30,6 +31,7 @@ public class GameSettingsScript : MonoBehaviour{
 
     void OnDisable(){
         musicSlider.onValueChanged.RemoveAllListeners();
+        masterSlider.onValueChanged.RemoveAllListeners();
     }
 
     void Volume_Adjust(){

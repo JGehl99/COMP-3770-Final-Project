@@ -12,18 +12,6 @@ public class MainMenuControllerScript : MonoBehaviour{
     //**********************
 
     public GameObject quitPanel;
-    public GameObject gameTypePanel;
-    public GameObject[] selectedTanks; 
-    
-    public void OpenGameTypePanel()
-    {
-        gameTypePanel.SetActive(true);
-    }
-    
-    public void CloseGameTypePanel()
-    {
-        gameTypePanel.SetActive(false);
-    }
     
     public void Instructions()
     {
