@@ -1,4 +1,5 @@
 ﻿using System.Collections.Generic;
+using TMPro;
 using UnityEngine;
 using UnityEngine.EventSystems;
 using UnityEngine.InputSystem;
@@ -31,10 +32,16 @@ namespace Resources.Code.Scripts
         private GameObject _cameraGameObject;
         private GameObject _canvasGameObject;
         private GameObject _attackInfoGameObject;
+        private GameObject _leftPanel;
+        private GameObject _rightPanel;
+        private GameObject _title;
+        private TextMeshProUGUI _titleText;
         private GameObject _fireButton;
         private GameObject _moveButton;
         private GameObject _shot1Button;
         private GameObject _shot2Button;
+        private GameObject _shot3Button;
+        
 
 
         //**********************
@@ -92,17 +99,27 @@ namespace Resources.Code.Scripts
             _attackInfoGameObject = _canvasGameObject.transform.GetChild(0).gameObject;
             _attackInfoGameObject.SetActive(false);
 
-            _shot1Button = _attackInfoGameObject.transform.GetChild(1).gameObject;
+            _leftPanel = _attackInfoGameObject.transform.GetChild(0).gameObject;
+            _rightPanel = _attackInfoGameObject.transform.GetChild(1).gameObject;
+            _title = _attackInfoGameObject.transform.GetChild(2).gameObject;
+
+            _shot1Button = _leftPanel.transform.GetChild(0).gameObject;
             _shot1Button.SetActive(true);
 
-            _shot2Button = _attackInfoGameObject.transform.GetChild(2).gameObject;
+            _shot2Button = _leftPanel.transform.GetChild(1).gameObject;
             _shot2Button.SetActive(true);
+            
+            _shot3Button = _leftPanel.transform.GetChild(2).gameObject;
+            _shot3Button.SetActive(true);
 
-            _fireButton = _attackInfoGameObject.transform.GetChild(4).gameObject;
+            _moveButton = _rightPanel.transform.GetChild(0).gameObject;
+            _moveButton.SetActive(true);
+            
+            _fireButton = _rightPanel.transform.GetChild(1).gameObject;
             _fireButton.SetActive(false);
 
-            _moveButton = _attackInfoGameObject.transform.GetChild(5).gameObject;
-            _moveButton.SetActive(true);
+            _titleText = _title.GetComponent<TextMeshProUGUI>();
+
 
 
             //**********************
