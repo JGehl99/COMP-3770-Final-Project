@@ -38,6 +38,10 @@ namespace Resources.Code.Scripts
         private GameObject _moveButton;
         private GameObject _shot1Button;
         private GameObject _shot2Button;
+
+        //Tank list for all in-game tanks and checker for EnemyMove
+        private List<GameObject> _tanks;
+        private bool _tileContainsTank = false;
         
 
         //**********************
@@ -142,7 +146,15 @@ namespace Resources.Code.Scripts
             // Spawn Characters on map
             _playerManager.SpawnTanks(new List<int> { 0, 1, 2 }, _mapManager.MapArray);
             _enemyManager.SpawnTanks(3, _mapManager.MapArray, maxMapX);
+            _tanks = new List<GameObject>();
+            _tanks.AddRange(_playerManager.tankList);
+            _tanks.AddRange(_enemyManager.tankList);
 
+            foreach (var go in _mapManager.MapArray)
+            {
+                go.GetComponent<MapTile>().tanks = _tanks;
+            }
+            
             //**********************
             // Set up Camera
             //**********************
@@ -299,11 +311,12 @@ namespace Resources.Code.Scripts
         private void SelectTile(GameObject go)
         {
             if (_selectedTile != null) UnselectTile();
+            
+            _selectedTile = go;
+            
             if (_selectedTank.GetComponent<Tank>().currentTile == _selectedTile) return;
             
             _fireButton.SetActive(true);
-
-            _selectedTile = go;
 
             if (_attackType == 0)
             {
@@ -458,7 +471,7 @@ namespace Resources.Code.Scripts
             foreach (var enemyTankGameObject in _enemyManager.tankList)
             {
                 //Target a random player
-                var rand = Random.Range(0, _playerManager.tankList.Count - 1);
+                var rand = Random.Range(0, _playerManager.tankList.Count);
                 var targetedPlayerTank = _playerManager.tankList[rand].GetComponent<Tank>();
 
                 //GameObjects
@@ -509,7 +522,7 @@ namespace Resources.Code.Scripts
         public void EnemyAttack(GameObject tank, GameObject targetTile, float distance)
         {
             tank.GetComponent<Tank>().hasAttacked = true;
-            var attackType = Random.Range(0, 1);
+            var attackType = Random.Range(0, 3);
             switch (attackType)
             {
                 case 0:
@@ -545,16 +558,31 @@ namespace Resources.Code.Scripts
             
             foreach (var tile in enemyTileMovementList)
             {
-                var candidateTilePos = tile.GetComponent<MapTile>().GetTop();
-                candidateTilePos.y = 0;
-
-                var closestTilePos = closestTile.GetComponent<MapTile>().GetTop();
-                closestTilePos.y = 0;
-
-                if (Vector3.Distance(playerTilePos, closestTilePos) > Vector3.Distance(playerTilePos, candidateTilePos))
+                
+                foreach (var go1 in _tanks)
                 {
-                    closestTile = tile;
+                    if (tile == go1.GetComponent<Tank>().currentTile)
+                    {
+                        _tileContainsTank = true;
+                    }
                 }
+
+                if (!_tileContainsTank)
+                {
+                    var candidateTilePos = tile.GetComponent<MapTile>().GetTop();
+                    candidateTilePos.y = 0;
+
+                    var closestTilePos = closestTile.GetComponent<MapTile>().GetTop();
+                    closestTilePos.y = 0;
+
+                    if (Vector3.Distance(playerTilePos, closestTilePos) > Vector3.Distance(playerTilePos, candidateTilePos))
+                    {
+                        closestTile = tile;
+                    }
+                }
+                
+                _tileContainsTank = false;
+                
             }
 
             _enemyManager.MoveTank(enemyTank, closestTile);

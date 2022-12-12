@@ -62,6 +62,9 @@ namespace Resources.Code.Scripts
         // Tile ID
         public string id;
         private int _tileType = 0;
+        
+        public List<GameObject> tanks;
+        private bool _tileContainsTank = false;
 
         public void Start()
         {
@@ -138,14 +141,30 @@ namespace Resources.Code.Scripts
         {
             foreach (var go in movementLists[moveDistance])
             {
-                var mapTile = go.GetComponent<MapTile>();
-                mapTile.isHighlighted = true;
-                
-                var mat1 = mapTile._defaultMaterial;
-                var mat2 = mapTile._hoverMaterial;
 
-                go.GetComponent<MeshRenderer>().material.Lerp(mat1, mat2, 1.0f);
+                foreach (var go1 in tanks)
+                {
+                    if (go == go1.GetComponent<Tank>().currentTile)
+                    {
+                        _tileContainsTank = true;
+                    }
+                }
+
+                if (!_tileContainsTank)
+                {
+                    var mapTile = go.GetComponent<MapTile>();
+                    mapTile.isHighlighted = true;
+                
+                    var mat1 = mapTile._defaultMaterial;
+                    var mat2 = mapTile._hoverMaterial;
+
+                    go.GetComponent<MeshRenderer>().material.Lerp(mat1, mat2, 1.0f);
+                }
+                
+                _tileContainsTank = false;
+                
             }
+            
         }
 
         //UnHighlight function changes the material of the gameObject

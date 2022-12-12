@@ -84,8 +84,7 @@ namespace Resources.Code.Scripts
         public void Shrapnel(GameObject selectedTile)
         {
             Debug.Log(selectedTile.GetComponent<MapTile>().GetTop());
-
-
+            
             Debug.Log("Shrapnel!");
 
             _shotAudioSource.PlayOneShot(_tankShotSound, 1.0f);
@@ -95,9 +94,6 @@ namespace Resources.Code.Scripts
             {
                 var mapTile = go.GetComponent<MapTile>();
                 var tilePos = mapTile.GetTop();
-
-
-                mapTile.HighlightAttack();
 
                 StartCoroutine(mapTile.TriggerExplosion());
             }
