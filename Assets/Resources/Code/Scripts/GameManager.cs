@@ -241,6 +241,7 @@ namespace Resources.Code.Scripts
             }
             else if (_enemyScore == DontDestroyOnLoadScript.instance.allyAmountOfTanks)
             {
+                SceneManager.LoadScene("GameOver");
                 print("You Lose");
             }
 
