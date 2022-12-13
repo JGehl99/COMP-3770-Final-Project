@@ -320,7 +320,7 @@ namespace Resources.Code.Scripts
                                 UnselectTank();
                             }
                         }
-                        else if (_selectedTank != null && _isAttacking)
+                        else if (_selectedTank != null && !_selectedTank.GetComponent<Tank>().hasAttacked)
                         {
                             SelectTile(go);
                         }
