@@ -1,8 +1,10 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.EventSystems;
 using UnityEngine.InputSystem;
+using Random = UnityEngine.Random;
 
 namespace Resources.Code.Scripts
 {
@@ -49,8 +51,8 @@ namespace Resources.Code.Scripts
         //**********************
 
         private MapManager _mapManager;
-        private PlayerManager _playerManager;
-        private EnemyManager _enemyManager;
+        public PlayerManager playerManager;
+        public EnemyManager enemyManager;
 
         private Camera _camera;
         
@@ -75,6 +77,11 @@ namespace Resources.Code.Scripts
         private bool _isAttacking = false;
         private bool _isMoving = false;
         private Vector3 _coordinates;
+        
+        //Scores
+        private int _playerScore = 0;
+        private int _enemyScore = 0;
+        
 
 
         private void Start()
@@ -94,11 +101,11 @@ namespace Resources.Code.Scripts
 
             // Set up PlayerManager
             _playerManagerGameObject = CreateCharacterManagerGameObject('p');
-            _playerManager = _playerManagerGameObject.GetComponent<PlayerManager>();
+            playerManager = _playerManagerGameObject.GetComponent<PlayerManager>();
 
             // Set up EnemyManager
             _enemyManagerGameObject = CreateCharacterManagerGameObject('e');
-            _enemyManager = _enemyManagerGameObject.GetComponent<EnemyManager>();
+            enemyManager = _enemyManagerGameObject.GetComponent<EnemyManager>();
 
             //Setup canvas
             _canvasGameObject = GameObject.Find("Canvas");
@@ -128,11 +135,11 @@ namespace Resources.Code.Scripts
             _mapManager.LoadModels();
 
             // Load Tank Models
-            _playerManager.LoadModels();
+            playerManager.LoadModels();
 
             //TODO: Create EnemyManager
             // Load Enemy Tank Models
-            _enemyManager.LoadModels();
+            enemyManager.LoadModels();
 
 
             //********************************
@@ -144,11 +151,11 @@ namespace Resources.Code.Scripts
 
             //TODO: Get selection list from Setup Scene
             // Spawn Characters on map
-            _playerManager.SpawnTanks(new List<int> { 0, 1, 2 }, _mapManager.MapArray);
-            _enemyManager.SpawnTanks(3, _mapManager.MapArray, maxMapX);
+            playerManager.SpawnTanks(new List<int> { 0, 1, 2 }, _mapManager.MapArray);
+            enemyManager.SpawnTanks(3, _mapManager.MapArray, maxMapX);
             _tanks = new List<GameObject>();
-            _tanks.AddRange(_playerManager.tankList);
-            _tanks.AddRange(_enemyManager.tankList);
+            _tanks.AddRange(playerManager.tankList);
+            _tanks.AddRange(enemyManager.tankList);
 
             foreach (var go in _mapManager.MapArray)
             {
@@ -172,7 +179,9 @@ namespace Resources.Code.Scripts
                 lowerLeftTile.z,
                 topRightTile.x,
                 topRightTile.z,
-                _playerManager.tankList
+                playerManager.tankList,
+                enemyManager.tankList,
+                this
             );
 
             _camera = Camera.main;
@@ -188,6 +197,55 @@ namespace Resources.Code.Scripts
 
             _audioSource.clip = _backgroundMusic;
             _audioSource.Play();
+        }
+
+        public void Update()
+        {
+            List<GameObject> copyPlayerTanks = playerManager.tankList;
+            List<GameObject> copyEmemyTanks = enemyManager.tankList;
+
+            int nPlayerTanks = copyPlayerTanks.Count;
+            int nEnemyTanks = copyEmemyTanks.Count;
+            
+            for(int i = 0; i < nPlayerTanks; i++)
+            {
+                var go = copyPlayerTanks[i];
+                if (go.GetComponent<Tank>().hasDied)
+                {
+                    go.SetActive(false);
+                    playerManager.tankList.RemoveAt(i);
+                    _enemyScore += 1;
+                    Debug.Log(_enemyScore);
+                    break;
+                }
+            }
+            
+            
+            
+            for(int i = 0; i < nEnemyTanks; i++)
+            {
+                var go = copyEmemyTanks[i];
+                if (go.GetComponent<Tank>().hasDied)
+                {
+                    go.SetActive(false);
+                    enemyManager.tankList.RemoveAt(i);
+                    _playerScore += 1;
+                    Debug.Log(_playerScore);
+                    break;
+                }
+            }
+            
+
+            if (_playerScore == 3)
+            {
+                print("You Win");
+            }
+            else if (_enemyScore == 3)
+            {
+                print("You Loss");
+            }
+
+
         }
 
 
@@ -226,7 +284,7 @@ namespace Resources.Code.Scripts
                             if (!tankScript.hasMoved)
                             {
                                 // Move tank then unselect tank
-                                _playerManager.MoveTank(_selectedTank, go);
+                                playerManager.MoveTank(_selectedTank, go);
                                 tankScript.hasMoved = true;
                                 _isMoving = false;
                                 UnselectTank();
@@ -263,7 +321,7 @@ namespace Resources.Code.Scripts
             UnselectTank();
         }
 
-        private void SelectTank(GameObject go)
+        public void SelectTank(GameObject go)
         {
             UnselectTile();
             _selectedTank = go;
@@ -295,7 +353,7 @@ namespace Resources.Code.Scripts
             _attackInfoGameObject.SetActive(true);
         }
 
-        private void UnselectTank()
+        public void UnselectTank()
         {
             if (_selectedTank == null) return;
 
@@ -445,13 +503,10 @@ namespace Resources.Code.Scripts
             switch (_attackType)
             {
                 case 0:
-                    _selectedTank.GetComponent<Tank>().Recoilless(_selectedTile);
+                    _selectedTank.GetComponent<Tank>().Recoilless(_selectedTile, false);
                     break;
                 case 1:
                     _selectedTank.GetComponent<Tank>().Shrapnel(_selectedTile);
-                    break;
-                case 2:
-                    _selectedTank.GetComponent<Tank>().Special(_selectedTile);
                     break;
             }
 
@@ -468,11 +523,11 @@ namespace Resources.Code.Scripts
             
             Debug.Log("Enemies Turn");
 
-            foreach (var enemyTankGameObject in _enemyManager.tankList)
+            foreach (var enemyTankGameObject in enemyManager.tankList)
             {
                 //Target a random player
-                var rand = Random.Range(0, _playerManager.tankList.Count);
-                var targetedPlayerTank = _playerManager.tankList[rand].GetComponent<Tank>();
+                var rand = Random.Range(0, playerManager.tankList.Count);
+                var targetedPlayerTank = playerManager.tankList[rand].GetComponent<Tank>();
 
                 //GameObjects
                 var targetedPlayerTileGameObject = targetedPlayerTank.currentTile;
@@ -505,7 +560,7 @@ namespace Resources.Code.Scripts
          */
         private void ResetTanks()
         {
-            foreach (var go in _playerManager.tankList)
+            foreach (var go in playerManager.tankList)
             {
                 var tank = go.GetComponent<Tank>();
 
@@ -521,23 +576,24 @@ namespace Resources.Code.Scripts
          * Param3: float - The distance to the target tile*/
         public void EnemyAttack(GameObject tank, GameObject targetTile, float distance)
         {
-            tank.GetComponent<Tank>().hasAttacked = true;
-            var attackType = Random.Range(0, 3);
-            switch (attackType)
+            if (!tank.GetComponent<Tank>().hasDied)
             {
-                case 0:
-                    tank.GetComponent<Tank>().Recoilless(targetTile);
-                    print("Recoiless Attack");
-                    break;
-                case 1:
-                    tank.GetComponent<Tank>().Shrapnel(targetTile);
-                    print("Shrapnel Attack");
-                    break;
-                case 2:
-                    tank.GetComponent<Tank>().Special(targetTile);
-                    print("Special Attack");
-                    break;
+                tank.GetComponent<Tank>().hasAttacked = true;
+                var attackType = Random.Range(0, 2);
+                switch (attackType)
+                {
+                    case 0:
+                        tank.GetComponent<Tank>().Recoilless(targetTile, true);
+                        print("Recoiless Attack");
+                        break;
+                    case 1:
+                        tank.GetComponent<Tank>().Shrapnel(targetTile);
+                        print("Shrapnel Attack");
+                        break;
+                } 
             }
+
+            
         }
 
         /* EnemyMove
@@ -546,46 +602,50 @@ namespace Resources.Code.Scripts
          * and then move towards them. */
         public void EnemyMove(GameObject enemyTank, GameObject targetedPlayerTileGameObject)
         {
-            Debug.Log("Moving!!!");
-
-            var enemyTileMovementList =
-                enemyTank.GetComponent<Tank>().currentTile.GetComponent<MapTile>().enemyMovementLists[2];
-            
-            var playerTilePos = targetedPlayerTileGameObject.GetComponent<MapTile>().GetTop();
-            playerTilePos.y = 0;
-
-            var closestTile = enemyTank.GetComponent<Tank>().currentTile;
-            
-            foreach (var tile in enemyTileMovementList)
+            if (!enemyTank.GetComponent<Tank>().hasDied)
             {
-                
-                foreach (var go1 in _tanks)
+                Debug.Log("Moving!!!");
+
+                var enemyTileMovementList =
+                    enemyTank.GetComponent<Tank>().currentTile.GetComponent<MapTile>().enemyMovementLists[2];
+            
+                var playerTilePos = targetedPlayerTileGameObject.GetComponent<MapTile>().GetTop();
+                playerTilePos.y = 0;
+
+                var closestTile = enemyTank.GetComponent<Tank>().currentTile;
+            
+                foreach (var tile in enemyTileMovementList)
                 {
-                    if (tile == go1.GetComponent<Tank>().currentTile)
+                
+                    foreach (var go1 in _tanks)
                     {
-                        _tileContainsTank = true;
+                        if (tile == go1.GetComponent<Tank>().currentTile)
+                        {
+                            _tileContainsTank = true;
+                        }
                     }
+
+                    if (!_tileContainsTank)
+                    {
+                        var candidateTilePos = tile.GetComponent<MapTile>().GetTop();
+                        candidateTilePos.y = 0;
+
+                        var closestTilePos = closestTile.GetComponent<MapTile>().GetTop();
+                        closestTilePos.y = 0;
+
+                        if (Vector3.Distance(playerTilePos, closestTilePos) > Vector3.Distance(playerTilePos, candidateTilePos))
+                        {
+                            closestTile = tile;
+                        }
+                    }
+                
+                    _tileContainsTank = false;
+                
                 }
 
-                if (!_tileContainsTank)
-                {
-                    var candidateTilePos = tile.GetComponent<MapTile>().GetTop();
-                    candidateTilePos.y = 0;
-
-                    var closestTilePos = closestTile.GetComponent<MapTile>().GetTop();
-                    closestTilePos.y = 0;
-
-                    if (Vector3.Distance(playerTilePos, closestTilePos) > Vector3.Distance(playerTilePos, candidateTilePos))
-                    {
-                        closestTile = tile;
-                    }
-                }
-                
-                _tileContainsTank = false;
-                
+                enemyManager.MoveTank(enemyTank, closestTile);
             }
-
-            _enemyManager.MoveTank(enemyTank, closestTile);
+            
         }
 
         /* Returns the distance between 2 gi ven points in Vector3 space

@@ -64,7 +64,8 @@ namespace Resources.Code.Scripts
         private int _tileType = 0;
         
         public List<GameObject> tanks;
-        private bool _tileContainsTank = false;
+        public bool tileContainsTank = false;
+        public GameObject tankOnTile;
 
         public void Start()
         {
@@ -146,11 +147,11 @@ namespace Resources.Code.Scripts
                 {
                     if (go == go1.GetComponent<Tank>().currentTile)
                     {
-                        _tileContainsTank = true;
+                        tileContainsTank = true;
                     }
                 }
 
-                if (!_tileContainsTank)
+                if (!tileContainsTank)
                 {
                     var mapTile = go.GetComponent<MapTile>();
                     mapTile.isHighlighted = true;
@@ -161,7 +162,7 @@ namespace Resources.Code.Scripts
                     go.GetComponent<MeshRenderer>().material.Lerp(mat1, mat2, 1.0f);
                 }
                 
-                _tileContainsTank = false;
+                tileContainsTank = false;
                 
             }
             

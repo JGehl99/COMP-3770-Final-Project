@@ -1,4 +1,5 @@
 ﻿using UnityEngine;
+using UnityEngine.UI;
 
 namespace Resources.Code.Scripts
 {
@@ -26,6 +27,12 @@ namespace Resources.Code.Scripts
 
         private ParticleSystem _shotParticles;
 
+        private GameObject _healthBar;
+        private GameObject _health;
+
+        public bool hasDied;
+
+
         private void Start()
         {
             _movementAudioSource = gameObject.AddComponent<AudioSource>();
@@ -34,6 +41,10 @@ namespace Resources.Code.Scripts
             _tankMoveSound = UnityEngine.Resources.Load<AudioClip>("Audio/tankMove");
             _tankShotSound = UnityEngine.Resources.Load<AudioClip>("Audio/tankShot");
             _tankDestroySound = UnityEngine.Resources.Load<AudioClip>("Audio/tankDestroy");
+
+            hasDied = false;
+            
+            
         }
 
         private void Update()
@@ -50,6 +61,13 @@ namespace Resources.Code.Scripts
             {
                 _movementAudioSource.Stop();
             }
+
+            if (health == 0)
+            {
+                hasDied = true;
+            }
+
+
         }
 
         public void Create(string tankNameIn, int healthIn, int moveDistanceIn, GameObject tile)
@@ -66,7 +84,7 @@ namespace Resources.Code.Scripts
             _shotParticles = transform.GetChild(1).GetComponent<ParticleSystem>();
         }
 
-        public void Recoilless(GameObject selectedTile)
+        public void Recoilless(GameObject selectedTile, bool playerTank)
         {
             Debug.Log(selectedTile.GetComponent<MapTile>().GetTop());
 
@@ -74,11 +92,14 @@ namespace Resources.Code.Scripts
             var tilePos = tileScript.GetTop();
 
             Debug.Log("Recoilless!");
-
+            
             _shotAudioSource.PlayOneShot(_tankShotSound, 1.0f);
             _shotParticles.Play();
-
+            
             StartCoroutine(tileScript.TriggerExplosion());
+            
+            TakeDamage(tileScript);
+
         }
 
         public void Shrapnel(GameObject selectedTile)
@@ -96,22 +117,39 @@ namespace Resources.Code.Scripts
                 var tilePos = mapTile.GetTop();
 
                 StartCoroutine(mapTile.TriggerExplosion());
+                
+                TakeDamage(mapTile);
             }
         }
 
-        public void Special(GameObject selectedTile)
+        public void TakeDamage(MapTile selectedTile)
         {
-            Debug.Log(selectedTile.GetComponent<MapTile>().GetTop());
-
             var tileScript = selectedTile.GetComponent<MapTile>();
-            var tilePos = tileScript.GetTop();
+            
+            if (tileScript.tankOnTile != null)
+            {
+                var tankHit = tileScript.tankOnTile;
+                
+                tankHit.GetComponent<Tank>().health -= 25;
+                
 
-            Debug.Log("Special!");
+                var newScaleX = tankHit.transform.GetChild(2).localScale.x - 2.5;
 
-            _shotAudioSource.PlayOneShot(_tankShotSound, 1.0f);
-            _shotParticles.Play();
+                var newPosX = tankHit.transform.GetChild(2).localPosition.x - 1;
 
-            StartCoroutine(tileScript.TriggerExplosion());
+                Vector3 newScale = new Vector3((float)newScaleX, 2.5f, 0.1f);
+                
+                Vector3 newPos = new Vector3(newPosX, 15.0f, 0.0f);
+
+                tankHit.transform.GetChild(2).localScale = newScale;
+                tankHit.transform.GetChild(2).localPosition = newPos;
+                
+                Debug.Log(tankHit.GetComponent<Tank>().health);
+                
+                
+
+            }
         }
+
     }
 }

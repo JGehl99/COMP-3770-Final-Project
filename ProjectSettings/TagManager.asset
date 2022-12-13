@@ -8,6 +8,7 @@ TagManager:
   - Tile
   - Tank
   - Enemy
+  - Health
   layers:
   - Default
   - TransparentFX

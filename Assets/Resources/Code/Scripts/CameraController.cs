@@ -1,4 +1,6 @@
+using System;
 using System.Collections.Generic;
+using Resources.Code.Scripts;
 using UnityEngine;
 using UnityEngine.InputSystem;
 
@@ -23,8 +25,15 @@ public class CameraController : MonoBehaviour
 
     private float _zoomDis = 40f;
 
-    private List<GameObject> _tanks;
-    private int _tankCount = 0;
+    private List<GameObject> _playerTanks;
+    private List<GameObject> _enemyTanks;
+    private GameManager _gm;
+    
+    private int _playerCount = 0;
+    private int _enemyCount = 0;
+    private bool _capsPressed = false;
+    private bool _tabPressed = false;
+    Vector3 tankPos;
 
     private float _lowerBoundX;
     private float _lowerBoundZ;
@@ -38,13 +47,18 @@ public class CameraController : MonoBehaviour
         
     }
 
-    public void Setup(float lowerBoundX, float lowerBoundY, float upperBoundX, float upperBoundY, List<GameObject> tankList)
+    public void Setup(float lowerBoundX, float lowerBoundY, float upperBoundX, float upperBoundY, List<GameObject> playerTanks, List<GameObject> enemyTanks, GameManager gm)
     {
         _lowerBoundX = lowerBoundX;
         _lowerBoundZ = lowerBoundY;
         _upperBoundX = upperBoundX;
         _upperBoundZ = upperBoundY;
-        _tanks = tankList;
+        _playerTanks = playerTanks;
+        _enemyTanks = enemyTanks;
+        _gm = gm;
+
+        tankPos = playerTanks[0].transform.position;
+
     }
 
     private void OnEnable()
@@ -119,7 +133,17 @@ public class CameraController : MonoBehaviour
     
     private void CenterCameraToPlayer(int tankCount)
     {
-        Vector3 tankPos = _tanks[tankCount].transform.position;
+        tankPos = _playerTanks[tankCount].transform.position;
+        
+        tankPos = CheckBounds(tankPos);
+        
+        transform.position = tankPos;
+        
+    }
+    
+    private void CenterCameraToEnemy(int tankCount)
+    {
+        Vector3 tankPos = _enemyTanks[tankCount].transform.position;
         
         tankPos = CheckBounds(tankPos);
         
@@ -157,20 +181,29 @@ public class CameraController : MonoBehaviour
 
         return t;
     }
-    
+
+    private void FixedUpdate()
+    {
+        
+    }
+
     private void Update()
     {
         if (Input.GetKeyDown(KeyCode.Tab))
         {
-            CenterCameraToPlayer(_tankCount);
-            if (_tankCount < 2)
-            {
-                _tankCount++; 
-            }
-            else
-            {
-                _tankCount = 0;
-            }
+            _gm.UnselectTank();
+            _tabPressed = true;
+            tankPos = _gm.playerManager.tankList[_playerCount].transform.position;
+            tankPos = CheckBounds(tankPos);
+            _gm.SelectTank(_playerTanks[_playerCount]);
+        }
+        
+        if (Input.GetKeyDown(KeyCode.CapsLock))
+        {
+            _capsPressed = true;
+            tankPos = _gm.enemyManager.tankList[_enemyCount].transform.position;
+            tankPos = CheckBounds(tankPos);
+            
         }
         else
         {
@@ -180,7 +213,42 @@ public class CameraController : MonoBehaviour
             
         }
         
+        if (transform.position != tankPos)
+        {
+            transform.position = Vector3.Lerp(transform.position, tankPos, Time.deltaTime * 5f);
+        }
+        
         UpdaterCameraPosition();
+        
+        if (_tabPressed)
+        {
+            if (_playerCount < _gm.playerManager.tankList.Count)
+            {
+                _playerCount++; 
+            }
+            else
+            {
+                _playerCount = 0;
+            }
+
+            _tabPressed = false;
+
+        }
+
+        if (_capsPressed)
+        {
+            if (_enemyCount < _gm.enemyManager.tankList.Count)
+            {
+                _enemyCount++; 
+            }
+            else
+            {
+                _enemyCount = 0;
+            }
+
+            _capsPressed = false;
+
+        }
         
     }
 }

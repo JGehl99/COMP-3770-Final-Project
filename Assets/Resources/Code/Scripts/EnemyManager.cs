@@ -57,6 +57,7 @@ namespace Resources.Code.Scripts
             var target = tile.GetComponent<MapTile>().GetTop();
             target.y += 6.25f; // Adjust for tank model height
             tank.GetComponent<Tank>().target = target;
+            tile.GetComponent<MapTile>().tankOnTile = tank;
         }
 
         private GameObject CreateTankGameObject(string tankName, int health, int moveDistance, GameObject tile)
@@ -69,6 +70,7 @@ namespace Resources.Code.Scripts
             go.tag = "Enemy";
             go.GetComponent<Tank>().Create(tankName, health, moveDistance, tile);
             go.name = "Enemy-" + tankName;
+            tile.GetComponent<MapTile>().tankOnTile = go;
             return go;
         }
     }
