@@ -1142,7 +1142,7 @@ MonoBehaviour:
     m_PersistentCalls:
       m_Calls: []
   m_text: Use WASD to move the camera over the world map. To rotate, Click the  middle
-    mouse button and drag. TAB to snap over player tanks and CAPS to snap  over enemy
+    mouse button and drag. TAB to snap over player tanks and CAPS to snap over enemy
     tanks.
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
@@ -1701,7 +1701,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: Enemies will either shoot or move toward you. Once the enemys turn has
+  m_text: Enemies will either shoot or move toward you. Once the enemies turn has
     finished, all ally tanks actions will be reset and you will be able to shoot
     and move each of your tanks.
   m_isRightToLeft: 0
@@ -1915,7 +1915,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: "Click on a ally tank to access the tanks actions. To shoot, select one
+  m_text: "Click on an ally tank to access the tanks actions. To shoot, select one
     of the shot types and then select the tile you wish to shoot at. Once a tile
     has been selected click the Fire button to execute the shot.\n\nTo move, again
     select a tank either by pressing TAB or clicking the tank and select the move
