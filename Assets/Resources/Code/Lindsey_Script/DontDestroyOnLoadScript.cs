@@ -1,5 +1,6 @@
 using UnityEngine;
 using UnityEngine.SceneManagement;
+using System.Collections.Generic;
 
 
 public class DontDestroyOnLoadScript: MonoBehaviour{
@@ -21,7 +22,8 @@ public class DontDestroyOnLoadScript: MonoBehaviour{
     [Range(1, 6)]
     public int enemyAmountOfTanks = 1;
 
-    public int[] selectedTanks = {-1,-1,-1,-1,-1,-1};
+    //public List<int> selectedTanks; 
+    public int[] selectedTanks= {-1,-1,-1};
 
     public int selectedColor = 0;
     
@@ -47,13 +49,14 @@ public class DontDestroyOnLoadScript: MonoBehaviour{
         }
         
         instance = this;
-        
+
         //Don't destroy values between each scene change
         DontDestroyOnLoad(gameObject);
     }
     
     private void Start(){
-        
+        //selectedTanks = new List<int>();
+
         // Get AudioSource component for bg music
         backgroundMusic = GetComponent<AudioSource>();
         

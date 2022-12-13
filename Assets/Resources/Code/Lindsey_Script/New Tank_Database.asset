@@ -13,7 +13,7 @@ MonoBehaviour:
   m_Name: New Tank_Database
   m_EditorClassIdentifier: 
   tank:
-  - Tank_Name: Private 1st Class Hull
+  - Tank_Name: Private Hull
     Tank: {fileID: 8137661484639146203, guid: 5e034c693fa06424a883c6e2a707b8c8, type: 3}
     Tank_Information: 'Scout:  Fighting Type: Low Damage, High Health, Can Move Further\nAttacks:
       Recoilless, Shrapnel, EMP'
