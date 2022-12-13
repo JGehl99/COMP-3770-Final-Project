@@ -161,7 +161,7 @@ namespace Resources.Code.Scripts
 
             //TODO: Get selection list from Setup Scene
             // Spawn Characters on map
-            playerManager.SpawnTanks(new List<int> { 0, 1, 2 }, _mapManager.MapArray);
+            playerManager.SpawnTanks(DontDestroyOnLoadScript.instance.selectedTanks.ToList(), _mapManager.MapArray);
             enemyManager.SpawnTanks(_numberOfEnemies, _mapManager.MapArray, maxMapX);
             _tanks = new List<GameObject>();
             _tanks.AddRange(playerManager.tankList);

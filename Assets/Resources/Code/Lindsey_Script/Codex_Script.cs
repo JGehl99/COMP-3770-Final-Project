@@ -158,6 +158,4 @@ public class Codex_Script : MonoBehaviour
     {
         animator.SetBool("Show", false);
     }
-
-
 }
