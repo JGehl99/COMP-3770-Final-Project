@@ -53,8 +53,10 @@ public class CameraController : MonoBehaviour
         _playerTanks = playerTanks;
         _enemyTanks = enemyTanks;
         _gm = gm;
+        
+        Debug.Log(_gm.playerManager.tankList.Count);
 
-        tankPos = playerTanks[0].transform.position;
+        tankPos = Vector3.zero;
 
     }
 
@@ -187,15 +189,14 @@ public class CameraController : MonoBehaviour
         {
             _gm.UnselectTank();
             _tabPressed = true;
-            tankPos = _gm.playerManager.tankList[_playerCount-1].transform.position;
+            tankPos = _gm.playerManager.tankList[_playerCount].transform.position;
             tankPos = CheckBounds(tankPos);
-            _gm.SelectTank(_playerTanks[_playerCount-1]);
+            _gm.SelectTank(_playerTanks[_playerCount]);
         }
-        
         if (Input.GetKeyDown(KeyCode.CapsLock))
         {
             _capsPressed = true;
-            tankPos = _gm.enemyManager.tankList[_enemyCount-1].transform.position;
+            tankPos = _gm.enemyManager.tankList[_enemyCount].transform.position;
             tankPos = CheckBounds(tankPos);
             
         }
@@ -207,16 +208,22 @@ public class CameraController : MonoBehaviour
         }
 
         
-        if (transform.position != tankPos)
+        if (transform.position != tankPos && tankPos != Vector3.zero)
         {
-            transform.position = Vector3.Lerp(transform.position, tankPos, Time.deltaTime * 5f);
+            transform.position = Vector3.MoveTowards(transform.position, tankPos, Time.deltaTime * 500f);
+            
+            if (transform.position == tankPos)
+            {
+                tankPos = Vector3.zero;
+            }
         }
+
         
         UpdaterCameraPosition();
         
         if (_tabPressed)
         {
-            if (_playerCount < _gm.playerManager.tankList.Count)
+            if (_playerCount < _gm.playerManager.tankList.Count - 1)
             {
                 _playerCount++; 
             }
@@ -231,7 +238,7 @@ public class CameraController : MonoBehaviour
 
         if (_capsPressed)
         {
-            if (_enemyCount < _gm.enemyManager.tankList.Count)
+            if (_enemyCount < _gm.enemyManager.tankList.Count - 1)
             {
                 _enemyCount++; 
             }

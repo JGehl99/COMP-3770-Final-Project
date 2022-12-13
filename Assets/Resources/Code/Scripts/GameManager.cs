@@ -6,6 +6,7 @@ using UnityEngine;
 using UnityEngine.EventSystems;
 using UnityEngine.InputSystem;
 using Random = UnityEngine.Random;
+using UnityEngine.SceneManagement;
 
 namespace Resources.Code.Scripts
 {
@@ -116,8 +117,12 @@ namespace Resources.Code.Scripts
             _tankActionsPanel = _canvasGameObject.transform.GetChild(0).gameObject;
             _tankActionsPanel.SetActive(false);
             
+            
             _leftPanel = _tankActionsPanel.transform.GetChild(0).gameObject;
             _rightPanel = _tankActionsPanel.transform.GetChild(1).gameObject;
+            
+            _title = _tankActionsPanel.transform.GetChild(2).gameObject;
+            _titleText = _title.GetComponent<TextMeshProUGUI>();
             
             _shot1Button = _leftPanel.transform.GetChild(0).gameObject;
             _shot1Button.SetActive(true);
@@ -229,13 +234,14 @@ namespace Resources.Code.Scripts
             }
             
 
-            if (_playerScore == 3)
+            if (_playerScore == DontDestroyOnLoadScript.instance.enemyAmountOfTanks)
             {
-                print("You Win");
+                SceneManager.LoadScene("WonGame");
+                // print("You Win");
             }
-            else if (_enemyScore == 3)
+            else if (_enemyScore == DontDestroyOnLoadScript.instance.allyAmountOfTanks)
             {
-                print("You Loss");
+                print("You Lose");
             }
 
 
@@ -344,6 +350,7 @@ namespace Resources.Code.Scripts
             }
 
             _tankActionsPanel.SetActive(true);
+            _titleText.text = tank.tankName;
         }
 
         public void UnselectTank()

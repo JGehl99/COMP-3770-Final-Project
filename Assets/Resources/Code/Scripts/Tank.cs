@@ -130,7 +130,7 @@ namespace Resources.Code.Scripts
             {
                 var tankHit = tileScript.tankOnTile;
                 
-                tankHit.GetComponent<Tank>().health -= 25;
+                tankHit.GetComponent<Tank>().health -= 100;
                 
 
                 var newScaleX = tankHit.transform.GetChild(2).localScale.x - 2.5;

@@ -32,4 +32,7 @@ EditorBuildSettings:
   - enabled: 1
     path: Assets/Resources/Scenes/MapTestScene.unity
     guid: 0556e53decc33a34d89930bc257dbb99
+  - enabled: 1
+    path: Assets/Resources/Scenes/Lindsey_Scenes/WonGame.unity
+    guid: 073df31480cdd394e8e194e40a3c0a3a
   m_configObjects: {}
