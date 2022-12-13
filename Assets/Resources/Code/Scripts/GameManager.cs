@@ -1,6 +1,6 @@
-﻿using System;
 using System.Collections.Generic;
 using Unity.VisualScripting;
+using TMPro;
 using UnityEngine;
 using UnityEngine.EventSystems;
 using UnityEngine.InputSystem;
@@ -36,6 +36,10 @@ namespace Resources.Code.Scripts
         private GameObject _cameraGameObject;
         private GameObject _canvasGameObject;
         private GameObject _attackInfoGameObject;
+        private GameObject _leftPanel;
+        private GameObject _rightPanel;
+        private GameObject _title;
+        private TextMeshProUGUI _titleText;
         private GameObject _fireButton;
         private GameObject _moveButton;
         private GameObject _shot1Button;
@@ -55,15 +59,8 @@ namespace Resources.Code.Scripts
         public EnemyManager enemyManager;
 
         private Camera _camera;
-        
-        
-        //*************
-        // Audio
-        //*************
 
-        private AudioSource _audioSource;
-        private AudioClip _backgroundMusic;
-        
+
         //*********************************************
         // Variables for Currently Selected Tank & Tile
         //*********************************************
@@ -77,6 +74,8 @@ namespace Resources.Code.Scripts
         private bool _isAttacking = false;
         private bool _isMoving = false;
         private Vector3 _coordinates;
+
+
         
         //Scores
         private int _playerScore = 0;
@@ -185,18 +184,6 @@ namespace Resources.Code.Scripts
             );
 
             _camera = Camera.main;
-            
-            
-            //**************
-            // Set up Audio
-            //**************
-            
-            _audioSource = gameObject.AddComponent<AudioSource>();
-
-            _backgroundMusic = UnityEngine.Resources.Load<AudioClip>("Audio/backgroundMusic");
-
-            _audioSource.clip = _backgroundMusic;
-            _audioSource.Play();
         }
 
         public void Update()
@@ -391,7 +378,7 @@ namespace Resources.Code.Scripts
             }
             
             _attackInfoGameObject.SetActive(true);
-            
+
             _selectedTank.GetComponent<Tank>().transform.LookAt(_selectedTile.GetComponent<MapTile>().GetTop());
         }
 
