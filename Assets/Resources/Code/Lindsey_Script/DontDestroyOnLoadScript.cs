@@ -16,12 +16,11 @@ public class DontDestroyOnLoadScript: MonoBehaviour{
     //**********************
     
     [Range(1, 3)]
-    public int allyAmountOfTanks = 3; 
+    public int allyAmountOfTanks = 1; 
     
     [Range(1, 6)]
-    public int enemyAmountOfTanks = 3;
+    public int enemyAmountOfTanks = 1;
 
-   
     public int[] selectedTanks = {-1,-1,-1,-1,-1,-1};
 
     [Range(0f, 1f)]
@@ -57,8 +56,9 @@ public class DontDestroyOnLoadScript: MonoBehaviour{
         backgroundMusic = GetComponent<AudioSource>();
         
         // Play music
+        backgroundMusic.loop = true;
         backgroundMusic.Play(0);
-        
+
         // Load Main Menu scene
         SceneManager.LoadScene("Main Menu");
     }

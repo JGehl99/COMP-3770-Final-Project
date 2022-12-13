@@ -1,4 +1,5 @@
 using System.Collections.Generic;
+using Resources.Code.Scripts;
 using UnityEngine;
 using UnityEngine.InputSystem;
 
@@ -186,15 +187,15 @@ public class CameraController : MonoBehaviour
         {
             _gm.UnselectTank();
             _tabPressed = true;
-            tankPos = _gm.playerManager.tankList[_playerCount].transform.position;
+            tankPos = _gm.playerManager.tankList[_playerCount-1].transform.position;
             tankPos = CheckBounds(tankPos);
-            _gm.SelectTank(_playerTanks[_playerCount]);
+            _gm.SelectTank(_playerTanks[_playerCount-1]);
         }
         
         if (Input.GetKeyDown(KeyCode.CapsLock))
         {
             _capsPressed = true;
-            tankPos = _gm.enemyManager.tankList[_enemyCount].transform.position;
+            tankPos = _gm.enemyManager.tankList[_enemyCount-1].transform.position;
             tankPos = CheckBounds(tankPos);
             
         }
@@ -240,8 +241,6 @@ public class CameraController : MonoBehaviour
             }
 
             _capsPressed = false;
-
         }
-        
     }
 }

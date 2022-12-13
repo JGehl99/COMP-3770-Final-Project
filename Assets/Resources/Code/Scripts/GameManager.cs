@@ -1,4 +1,5 @@
 using System.Collections.Generic;
+using System.Linq;
 using Unity.VisualScripting;
 using TMPro;
 using UnityEngine;
@@ -20,9 +21,7 @@ namespace Resources.Code.Scripts
 
         [Range(2, 6)] public int maxMoveDistance;
 
-        [Range(2, 4)] public int numberOfPlayers;
 
-        [Range(2, 4)] public int numberOfEnemies;
 
 
         //**********************
@@ -35,7 +34,7 @@ namespace Resources.Code.Scripts
 
         private GameObject _cameraGameObject;
         private GameObject _canvasGameObject;
-        private GameObject _attackInfoGameObject;
+        private GameObject _tankActionsPanel;
         private GameObject _leftPanel;
         private GameObject _rightPanel;
         private GameObject _title;
@@ -74,8 +73,9 @@ namespace Resources.Code.Scripts
         private bool _isAttacking = false;
         private bool _isMoving = false;
         private Vector3 _coordinates;
-
-
+        
+        private int _numberOfEnemies;
+        private List<int> _tankSelection;
         
         //Scores
         private int _playerScore = 0;
@@ -89,6 +89,9 @@ namespace Resources.Code.Scripts
             // Set up GameManager
             //**********************
 
+            _tankSelection = DontDestroyOnLoadScript.instance.selectedTanks.ToList();
+            _numberOfEnemies = DontDestroyOnLoadScript.instance.enemyAmountOfTanks;
+            
 
             //**********************
             // Set up Managers
@@ -110,22 +113,25 @@ namespace Resources.Code.Scripts
             _canvasGameObject = GameObject.Find("Canvas");
 
             //Get UI object for AttackInfo
-            _attackInfoGameObject = _canvasGameObject.transform.GetChild(0).gameObject;
-            _attackInfoGameObject.SetActive(false);
-
-            _shot1Button = _attackInfoGameObject.transform.GetChild(1).gameObject;
+            _tankActionsPanel = _canvasGameObject.transform.GetChild(0).gameObject;
+            _tankActionsPanel.SetActive(false);
+            
+            _leftPanel = _tankActionsPanel.transform.GetChild(0).gameObject;
+            _rightPanel = _tankActionsPanel.transform.GetChild(1).gameObject;
+            
+            _shot1Button = _leftPanel.transform.GetChild(0).gameObject;
             _shot1Button.SetActive(true);
 
-            _shot2Button = _attackInfoGameObject.transform.GetChild(2).gameObject;
+            _shot2Button = _leftPanel.transform.GetChild(1).gameObject;
             _shot2Button.SetActive(true);
 
-            _fireButton = _attackInfoGameObject.transform.GetChild(4).gameObject;
-            _fireButton.SetActive(false);
-
-            _moveButton = _attackInfoGameObject.transform.GetChild(5).gameObject;
+            _moveButton = _rightPanel.transform.GetChild(0).gameObject;
             _moveButton.SetActive(true);
 
+            _fireButton = _rightPanel.transform.GetChild(1).gameObject;
+            _fireButton.SetActive(false);
 
+            
             //**********************
             // Load Models
             //**********************
@@ -151,7 +157,7 @@ namespace Resources.Code.Scripts
             //TODO: Get selection list from Setup Scene
             // Spawn Characters on map
             playerManager.SpawnTanks(new List<int> { 0, 1, 2 }, _mapManager.MapArray);
-            enemyManager.SpawnTanks(3, _mapManager.MapArray, maxMapX);
+            enemyManager.SpawnTanks(_numberOfEnemies, _mapManager.MapArray, maxMapX);
             _tanks = new List<GameObject>();
             _tanks.AddRange(playerManager.tankList);
             _tanks.AddRange(enemyManager.tankList);
@@ -337,7 +343,7 @@ namespace Resources.Code.Scripts
                 _shot2Button.SetActive(false);
             }
 
-            _attackInfoGameObject.SetActive(true);
+            _tankActionsPanel.SetActive(true);
         }
 
         public void UnselectTank()
@@ -350,7 +356,7 @@ namespace Resources.Code.Scripts
 
             _selectedTank = null;
             tank.currentTile.GetComponent<MapTile>().UnhighlightSelect();
-            _attackInfoGameObject.SetActive(false);
+            _tankActionsPanel.SetActive(false);
         }
 
         private void SelectTile(GameObject go)
@@ -377,7 +383,7 @@ namespace Resources.Code.Scripts
                 }
             }
             
-            _attackInfoGameObject.SetActive(true);
+            _tankActionsPanel.SetActive(true);
 
             _selectedTank.GetComponent<Tank>().transform.LookAt(_selectedTile.GetComponent<MapTile>().GetTop());
         }
