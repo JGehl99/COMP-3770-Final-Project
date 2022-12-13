@@ -127,7 +127,19 @@ public class SetupScript : MonoBehaviour{
     }
 
     public void StartGame(){
-        SceneManager.LoadScene("MapTestScene");
+        if (DontDestroyOnLoadScript.instance.selectedTanks[0] != -1 && DontDestroyOnLoadScript.instance.allyAmountOfTanks == 1)
+        {
+            SceneManager.LoadScene("MapTestScene");
+        }
+        else if (DontDestroyOnLoadScript.instance.selectedTanks[0] != -1 && DontDestroyOnLoadScript.instance.selectedTanks[1] != -1 && DontDestroyOnLoadScript.instance.allyAmountOfTanks == 2)
+        {
+            SceneManager.LoadScene("MapTestScene");
+        }
+        else if (DontDestroyOnLoadScript.instance.selectedTanks[0] != -1 && DontDestroyOnLoadScript.instance.selectedTanks[1] != -1 && DontDestroyOnLoadScript.instance.selectedTanks[2] != -1 && DontDestroyOnLoadScript.instance.allyAmountOfTanks == 3)
+        {
+            SceneManager.LoadScene("MapTestScene");
+        }
+        
     }
     
     public void TankSelection(){

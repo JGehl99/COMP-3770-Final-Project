@@ -15,9 +15,11 @@ public class TankManager : MonoBehaviour{
 
     public GameObject[] allTanks; 
     
-    public int selectedTank =0;
+    public int selectedTank = -1;
     public GameObject Tank2,Tank3;
     public TMP_Text chosenTank1,chosenTank2,chosenTank3;
+
+    public bool tankSelected;
    
     void Start()
     {     
@@ -27,18 +29,26 @@ public class TankManager : MonoBehaviour{
 
         if(DontDestroyOnLoadScript.instance.allyAmountOfTanks == 1){
             Tank2.SetActive(false);
-            Tank3.SetActive(false); 
+            Tank3.SetActive(false);
+            DontDestroyOnLoadScript.instance.selectedTanks[0] = -1;
         }
         else if(DontDestroyOnLoadScript.instance.allyAmountOfTanks == 2){
             _chosenTanksPanel.rectTransform.sizeDelta = new Vector2(450, 375);
             Tank2.SetActive(true);
             Tank3.SetActive(false);
+            DontDestroyOnLoadScript.instance.selectedTanks[1] = -1;
         }
         else if(DontDestroyOnLoadScript.instance.allyAmountOfTanks == 3){
             _chosenTanksPanel.rectTransform.sizeDelta = new Vector2(450, 500);
             Tank2.SetActive(true);
-            Tank3.SetActive(true); 
+            Tank3.SetActive(true);
+            DontDestroyOnLoadScript.instance.selectedTanks[2] = -1;
         }
+        
+        DeleteTank(1);
+        DeleteTank(2);
+        DeleteTank(3);
+        
     }
 
 
@@ -92,27 +102,14 @@ public class TankManager : MonoBehaviour{
         else if(DontDestroyOnLoadScript.instance.selectedTanks[1]==-1){
             DontDestroyOnLoadScript.instance.selectedTanks[1] = selectedTank;
             chosenTank2.text = tank.Tank_Name;
+            
         }
         else if(DontDestroyOnLoadScript.instance.selectedTanks[2]==-1){
             DontDestroyOnLoadScript.instance.selectedTanks[2] = selectedTank;
             chosenTank3.text = tank.Tank_Name;
+            
         }
-
-/*
-        if(DontDestroyOnLoadScript.instance.selectedTanks.IndexOf(selectedTank)==0){
-            chosenTank1.text = tank.Tank_Name;
-        } 
-        else if(DontDestroyOnLoadScript.instance.selectedTanks.IndexOf(selectedTank)==1){
-            chosenTank2.text = tank.Tank_Name;
-        } 
-        else if(DontDestroyOnLoadScript.instance.selectedTanks.IndexOf(selectedTank)==2){
-            chosenTank3.text = tank.Tank_Name;
-        } 
-        else{
-            return; 
-        }
-
-        */
+        
     }
 
     public void DeleteTank(int buttonNumber)
@@ -129,24 +126,5 @@ public class TankManager : MonoBehaviour{
             DontDestroyOnLoadScript.instance.selectedTanks[2] = -1;
             chosenTank3.text = "Tank3: Empty";
         }
-        /*
-        Tanks tank = TankDB.GetTank(selectedTank);
-            
-        if(buttonNumber==1){
-            chosenTank1.text = "Tank1: Empty";
-            DontDestroyOnLoadScript.instance.selectedTanks.Remove(selectedTank);
-        } 
-        else if(buttonNumber==2){
-            chosenTank2.text = "Tank2: Empty";
-            DontDestroyOnLoadScript.instance.selectedTanks.Remove(selectedTank);
-        } 
-        else if(buttonNumber==3){
-            chosenTank3.text = "Tank3: Empty";
-            DontDestroyOnLoadScript.instance.selectedTanks.Remove(selectedTank);
-        } 
-        else{
-            return; 
-        }
-        */
     }
 }

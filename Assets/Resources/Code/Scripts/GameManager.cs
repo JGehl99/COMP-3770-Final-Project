@@ -1,3 +1,4 @@
+using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using Unity.VisualScripting;
@@ -239,17 +240,43 @@ namespace Resources.Code.Scripts
 
             if (_playerScore == DontDestroyOnLoadScript.instance.enemyAmountOfTanks)
             {
-                SceneManager.LoadScene("WonGame");
+                Win();
                 // print("You Win");
             }
             else if (_enemyScore == DontDestroyOnLoadScript.instance.allyAmountOfTanks)
             {
-                SceneManager.LoadScene("GameOver");
-                print("You Lose");
+                Lose();
+                // print("You Lose");
             }
 
 
         }
+
+        private void Win()
+        {
+            StartCoroutine("GameWin");
+        }
+        
+        private void Lose()
+        {
+            StartCoroutine("GameLose");
+        }
+
+        IEnumerator GameWin()
+        {
+            yield return new WaitForSeconds(4f);
+            SceneManager.LoadScene("WonGame");
+        }
+        
+        IEnumerator GameLose()
+        {
+            yield return new WaitForSeconds(4f);
+            SceneManager.LoadScene("GameOver");
+        }
+
+
+
+
 
 
         //***************************

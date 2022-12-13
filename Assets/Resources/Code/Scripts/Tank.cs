@@ -62,7 +62,7 @@ namespace Resources.Code.Scripts
                 _movementAudioSource.Stop();
             }
 
-            if (health == 0)
+            if (health <= 0)
             {
                 hasDied = true;
             }
@@ -98,7 +98,7 @@ namespace Resources.Code.Scripts
             
             StartCoroutine(tileScript.TriggerExplosion());
             
-            TakeDamage(tileScript);
+            TakeDamage(tileScript, 0);
 
         }
 
@@ -118,19 +118,28 @@ namespace Resources.Code.Scripts
 
                 StartCoroutine(mapTile.TriggerExplosion());
                 
-                TakeDamage(mapTile);
+                TakeDamage(mapTile, 1);
             }
         }
 
-        public void TakeDamage(MapTile selectedTile)
+        public void TakeDamage(MapTile selectedTile, int shotType)
         {
             var tileScript = selectedTile.GetComponent<MapTile>();
             
             if (tileScript.tankOnTile != null)
             {
                 var tankHit = tileScript.tankOnTile;
+
+                if (shotType == 0)
+                {
+                    tankHit.GetComponent<Tank>().health -= 30;
+                }
+                else if(shotType == 1)
+                {
+                    tankHit.GetComponent<Tank>().health -= 15;
+                }
+
                 
-                tankHit.GetComponent<Tank>().health -= 100;
                 
 
                 var newScaleX = tankHit.transform.GetChild(2).localScale.x - 2.5;

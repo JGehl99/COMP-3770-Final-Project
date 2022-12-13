@@ -46,12 +46,12 @@ namespace Resources.Code.Scripts
                 var tile = GetValidSpawn(mapArray, 0, 10);
                 var tempTank = i switch
                 {
-                    0 => CreateTankGameObject("Lt", 100, 3, tile),
-                    1 => CreateTankGameObject("Sgt", 100, 3, tile),
-                    2 => CreateTankGameObject("Cpl", 100, 3, tile),
-                    3 => CreateTankGameObject("Fm", 100, 3, tile),
-                    4 => CreateTankGameObject("Psc", 100, 3, tile),
-                    _ => CreateTankGameObject("Lt", 100, 3, tile)
+                    0 => CreateTankGameObject("PVT Hull", 100, 3, tile),
+                    1 => CreateTankGameObject("PV2 Clutch", 100, 3, tile),
+                    2 => CreateTankGameObject("Cpl Sprocket", 100, 3, tile),
+                    3 => CreateTankGameObject("SGM Diesel", 100, 3, tile),
+                    4 => CreateTankGameObject("Lt Piston", 100, 3, tile),
+                    _ => CreateTankGameObject("Lt Piston", 100, 3, tile)
                 };
 
                 tankList.Add(tempTank);

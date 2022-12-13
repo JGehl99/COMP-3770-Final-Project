@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -9,6 +10,11 @@ public class InGameMenu : MonoBehaviour
     //on button press load a scene, in this case it would be the MainMenu scene.
     public void LoadScene(string scenename){
         SceneManager.LoadScene(scenename);
+    }
+
+    private void Start()
+    {
+        menu.SetActive(false);
     }
 
     //If escape is pressed, unloack the cursor, and if the menu is already active relock the cursor and remove the menu, it it isn't active make it active.
