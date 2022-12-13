@@ -151,6 +151,8 @@ public class SetupScript : MonoBehaviour{
             5 => new Color32(255, 0, 255, 255),
             _ => new Color32(255, 255, 255, 255)
         };
+        
+        DontDestroyOnLoadScript.instance.selectedColor = c;
     }
 
     public void ChooseEmblem(int e)

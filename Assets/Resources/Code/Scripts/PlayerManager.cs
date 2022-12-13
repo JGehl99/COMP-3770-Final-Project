@@ -7,6 +7,16 @@ namespace Resources.Code.Scripts
     {
         public List<GameObject> tankList;
         private List<int> _selection;
+        
+        private Material _matRed;
+        private Material _matGreen;
+        private Material _matBlue;
+        private Material _matYellow;
+        private Material _matOrange;
+        private Material _matPurple;
+
+        private Material _tankMat;
+        
 
         private int _numberOfPlayers;
         private GameObject _tankGameObject;
@@ -14,6 +24,13 @@ namespace Resources.Code.Scripts
         public void LoadModels()
         {
             _tankGameObject = UnityEngine.Resources.Load("Prefabs/Tank") as GameObject;
+            
+            _matRed = UnityEngine.Resources.Load("Materials/TankMatRed", typeof(Material)) as Material;
+            _matGreen = UnityEngine.Resources.Load("Materials/TankMatGreen", typeof(Material)) as Material;
+            _matBlue = UnityEngine.Resources.Load("Materials/TankMatBlue", typeof(Material)) as Material;
+            _matYellow = UnityEngine.Resources.Load("Materials/TankMatYellow", typeof(Material)) as Material;
+            _matOrange = UnityEngine.Resources.Load("Materials/TankMatOrange", typeof(Material)) as Material;
+            _matPurple = UnityEngine.Resources.Load("Materials/TankMatPurple", typeof(Material)) as Material;
         }
 
         public void SpawnTanks(List<int> playerSelection, GameObject[,] mapArray)
@@ -81,6 +98,33 @@ namespace Resources.Code.Scripts
             go.GetComponent<Tank>().Create(tankName, health, moveDistance, tile);
             go.name = "Tank-" + tankName;
             tile.GetComponent<MapTile>().tankOnTile = go;
+
+            _tankMat = DontDestroyOnLoadScript.instance.selectedColor switch
+            {
+                0 => _matRed,
+                1 => _matGreen,
+                2 => _matBlue,
+                3 => _matYellow,
+                4 => _matOrange,
+                5 => _matPurple,
+                _ => _matGreen
+            };
+
+            var mats = go.transform.GetChild(0).transform.GetChild(0).GetComponent<MeshRenderer>().materials;
+            mats[0] = _tankMat;
+            go.transform.GetChild(0).transform.GetChild(0).GetComponent<MeshRenderer>().materials = mats;
+            
+            mats = go.transform.GetChild(0).transform.GetChild(1).GetComponent<MeshRenderer>().materials;
+            mats[0] = _tankMat;
+            go.transform.GetChild(0).transform.GetChild(1).GetComponent<MeshRenderer>().materials = mats;
+            
+            mats = go.transform.GetChild(0).transform.GetChild(2).GetComponent<MeshRenderer>().materials;
+            mats[0] = _tankMat;
+            go.transform.GetChild(0).transform.GetChild(2).GetComponent<MeshRenderer>().materials = mats;
+            
+            mats = go.transform.GetChild(0).transform.GetChild(3).GetComponent<MeshRenderer>().materials;
+            mats[0] = _tankMat;
+            go.transform.GetChild(0).transform.GetChild(3).GetComponent<MeshRenderer>().materials = mats;
             
             return go;
         }

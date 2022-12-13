@@ -23,6 +23,8 @@ public class DontDestroyOnLoadScript: MonoBehaviour{
 
     public int[] selectedTanks = {-1,-1,-1,-1,-1,-1};
 
+    public int selectedColor = 0;
+    
     [Range(0f, 1f)]
     public float backgroundMusicVolume = 1f;
     
