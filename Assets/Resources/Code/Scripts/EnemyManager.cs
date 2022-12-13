@@ -7,11 +7,13 @@ namespace Resources.Code.Scripts
     {
         // private int _numOfEnemies = 3;
         private GameObject _tankGameObject;
+        private Material _enemyMat;
         public List<GameObject> tankList;
 
         public void LoadModels()
         {
             _tankGameObject = UnityEngine.Resources.Load("Prefabs/Tank") as GameObject;
+            _enemyMat = UnityEngine.Resources.Load("Materials/EnemyMaterial", typeof(Material)) as Material;
         }
 
         public void SpawnTanks(int numOfEnemies, GameObject[,] mapArray, int max)
@@ -71,6 +73,25 @@ namespace Resources.Code.Scripts
             go.GetComponent<Tank>().Create(tankName, health, moveDistance, tile);
             go.name = "Enemy-" + tankName;
             tile.GetComponent<MapTile>().tankOnTile = go;
+
+            
+            
+            var mats = go.transform.GetChild(0).transform.GetChild(0).GetComponent<MeshRenderer>().materials;
+            mats[0] = _enemyMat;
+            go.transform.GetChild(0).transform.GetChild(0).GetComponent<MeshRenderer>().materials = mats;
+            
+            mats = go.transform.GetChild(0).transform.GetChild(1).GetComponent<MeshRenderer>().materials;
+            mats[0] = _enemyMat;
+            go.transform.GetChild(0).transform.GetChild(1).GetComponent<MeshRenderer>().materials = mats;
+            
+            mats = go.transform.GetChild(0).transform.GetChild(2).GetComponent<MeshRenderer>().materials;
+            mats[0] = _enemyMat;
+            go.transform.GetChild(0).transform.GetChild(2).GetComponent<MeshRenderer>().materials = mats;
+            
+            mats = go.transform.GetChild(0).transform.GetChild(3).GetComponent<MeshRenderer>().materials;
+            mats[0] = _enemyMat;
+            go.transform.GetChild(0).transform.GetChild(3).GetComponent<MeshRenderer>().materials = mats;
+
             return go;
         }
     }
