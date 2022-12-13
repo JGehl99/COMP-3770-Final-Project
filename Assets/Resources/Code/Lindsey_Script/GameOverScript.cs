@@ -14,7 +14,7 @@ public class GameOverScript : MonoBehaviour
     }
 
     public void Replay(){
-        SceneManager.LoadScene("MapTestScene");
+        SceneManager.LoadScene("GameSetUp");
     }
     
     public void ExitGame(){

@@ -966,6 +966,7 @@ GameObject:
   - component: {fileID: 1047958221}
   - component: {fileID: 1047958220}
   - component: {fileID: 1047958219}
+  - component: {fileID: 1047958222}
   m_Layer: 5
   m_Name: Play
   m_TagString: Untagged
@@ -1050,6 +1051,18 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 0
         m_CallState: 2
+      - m_Target: {fileID: 11500000, guid: 93f64334e1d652b459f9fb8b289abc71, type: 3}
+        m_TargetAssemblyTypeName: MainMenuControllerScript, Assembly-CSharp
+        m_MethodName: 
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: 
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
 --- !u!114 &1047958220
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1088,6 +1101,21 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1047958217}
   m_CullTransparentMesh: 1
+--- !u!114 &1047958222
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1047958217}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 93f64334e1d652b459f9fb8b289abc71, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  transitionAnim: {fileID: 0}
+  panel: {fileID: 0}
+  sceneName: GameSetUp
 --- !u!1 &1082848839
 GameObject:
   m_ObjectHideFlags: 0
@@ -1676,8 +1704,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   quitPanel: {fileID: 6376244853247655279}
-  gameTypePanel: {fileID: 0}
-  selectedTanks: []
 --- !u!81 &1692242551
 AudioListener:
   m_ObjectHideFlags: 0
